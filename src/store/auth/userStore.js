@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { api } from "@/api/api.js";
+import { useAuthStore } from "@/store/auth/authStore.js";
 
 export const useUserStore = defineStore("user", () => {
   const isLoading = ref(false);
@@ -20,6 +21,10 @@ export const useUserStore = defineStore("user", () => {
     return api
       .get("/api/user")
       .then((response) => {
+        // Set global variable of isAuthenticated to true
+        const authStore = useAuthStore();
+        authStore.setIsAuthenticated(true);
+
         user.value = response.data.user;
         permissions.value = response.data.permissions;
       })

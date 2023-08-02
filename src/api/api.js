@@ -2,42 +2,16 @@ import axios from "axios";
 import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-const AUTH_TOKEN = sessionStorage.getItem("authToken");
 
 export const api = axios.create({
   baseURL: BACKEND_URL,
   timeout: 5000,
-  /*
-   * Add only in headers if the auth token exists
-   * */
-  ...(AUTH_TOKEN && {
-    headers: {
-      Authorization: `Bearer ${AUTH_TOKEN}`,
-      Accept: "application/json",
-    },
-  }),
-});
-
-/*
- * Request Interceptors
- *
- * Interceptors in Axios are a powerful feature
- * that allows you to intercept HTTP requests
- * and responses before they are handled by your application.
- *
- * */
-
-api.interceptors.request.use(
-  function (config) {
-    const AUTH_TOKEN = sessionStorage.getItem("authToken");
-    config.headers["Authorization"] = `Bearer ${AUTH_TOKEN}`;
-    return config;
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
+  withCredentials: true,
+});
 
 /*
  * Response Interceptors

@@ -1,13 +1,9 @@
 import { defineStore } from "pinia";
-import { computed } from "vue";
+import { ref } from "vue";
 import { api } from "@/api/api.js";
 
-const SESSION_STORAGE_KEY = "authToken";
-
 export const useAuthStore = defineStore("auth", () => {
-  const isAuthenticated = computed(() => {
-    return sessionStorage.getItem(SESSION_STORAGE_KEY) !== null;
-  });
+  const isAuthenticated = ref(false);
 
   const logout = () => {
     return api
@@ -21,5 +17,9 @@ export const useAuthStore = defineStore("auth", () => {
       });
   };
 
-  return { isAuthenticated, logout };
+  const setIsAuthenticated = (authenticated) => {
+    isAuthenticated.value = authenticated;
+  };
+
+  return { isAuthenticated, setIsAuthenticated, logout };
 });
