@@ -1,7 +1,6 @@
 import routes from "@/routes/routes.js";
 import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "@/store/auth/userStore.js";
-import { useAuthStore } from "@/store/auth/authStore.js";
 
 export const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.

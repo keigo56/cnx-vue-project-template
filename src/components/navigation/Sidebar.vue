@@ -33,19 +33,19 @@ const items = ref([
       {
         label: "Homepage",
         href: "/homepage",
-        active: isCurrentPathActive("/homepage"),
+        active: isCurrentPath("/homepage"),
         visible: true,
       },
       {
         label: "Page 2",
         href: "/",
-        active: isCurrentPathActive("/"),
+        active: isCurrentPath("/"),
         visible: true,
       },
       {
         label: "Page 3",
         href: "/",
-        active: isCurrentPathActive("/"),
+        active: isCurrentPath("/"),
         visible: true,
       },
     ],
@@ -83,19 +83,19 @@ const items = ref([
       {
         label: "Users",
         href: "/user-management/users",
-        active: isCurrentPathActive("/user-management/users"),
+        active: isCurrentPath("/user-management/users"),
         visible: hasPermission("view_users"),
       },
       {
         label: "Roles",
         href: "/user-management/roles",
-        active: isCurrentPathActive("/user-management/roles"),
+        active: isCurrentPath("/user-management/roles"),
         visible: hasPermission("view_roles"),
       },
       {
         label: "Permissions",
         href: "/user-management/permissions",
-        active: isCurrentPathActive("/user-management/permissions"),
+        active: isCurrentPath("/user-management/permissions"),
         visible: hasPermission("view_permissions"),
       },
     ],
@@ -108,14 +108,14 @@ const items = ref([
       {
         label: "Logs",
         href: "/audit-trail/logs",
-        active: isCurrentPathActive("/audit-trail/logs"),
+        active: isCurrentPath("/audit-trail/logs"),
         visible: hasPermission("view_logs"),
       },
     ],
   },
 ]);
 
-function isCurrentPathActive(path) {
+function isCurrentPath(path) {
   return route.path === path;
 }
 </script>
