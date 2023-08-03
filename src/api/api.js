@@ -47,6 +47,18 @@ api.interceptors.response.use(
         let authStore = useAuthStore();
         authStore.setIsAuthenticated(false);
       }
+
+      /*
+       * If received forbidden response, redirect to login page
+       */
+      if (error.response.status === 403) {
+        let toastNotification = useToastNotificationStore();
+        toastNotification.addToast({
+          type: "error",
+          title: "Forbidden",
+          message: "You do not have rights to perform this action",
+        });
+      }
     }
 
     if (error.code === "ERR_NETWORK") {
