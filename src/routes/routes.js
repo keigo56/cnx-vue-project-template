@@ -6,51 +6,63 @@ import UsersIndexPage from "@/pages/user-management/users/UsersIndexPage.vue";
 import RolesIndexPage from "@/pages/user-management/roles/RolesIndexPage.vue";
 import PermissionsIndexPage from "@/pages/user-management/permissions/PermissionsIndexPage.vue";
 import LogsIndexPage from "@/pages/audit-trail/logs/LogsIndexPage.vue";
-import { checkHasPermission } from "@/routes/middlewares.js";
+import LoginPage from "@/pages/auth/LoginPage.vue";
 
 const routes = [
   {
-    path: "/",
-    component: IndexPage,
-  },
-  {
-    path: "/homepage",
-    component: HomePage,
+    path: "/login",
+    component: LoginPage,
+    meta: {
+      middleware: ["guest"],
+    },
   },
   {
     path: "/auth/validate",
     component: SSOCallbackPage,
+    meta: {
+      middleware: ["guest"],
+    },
+  },
+  {
+    path: "/",
+    component: IndexPage,
+    meta: {
+      middleware: ["auth"],
+    },
+  },
+  {
+    path: "/homepage",
+    component: HomePage,
+    meta: {
+      middleware: ["auth"],
+    },
   },
   {
     path: "/user-management/users",
     component: UsersIndexPage,
-    beforeEnter: [checkHasPermission],
     meta: {
-      middleware: "view_users",
+      middleware: ["auth", "can:view_users"],
     },
   },
   {
     path: "/user-management/roles",
     component: RolesIndexPage,
-    beforeEnter: [checkHasPermission],
     meta: {
-      middleware: "view_roles",
+      middleware: ["auth", "can:view_roles"],
     },
   },
   {
     path: "/user-management/permissions",
     component: PermissionsIndexPage,
-    beforeEnter: [checkHasPermission],
     meta: {
-      middleware: "view_permissions",
+      middleware: ["auth", "can:view_permissions"],
     },
   },
   {
     path: "/audit-trail/logs",
     component: LogsIndexPage,
-    beforeEnter: [checkHasPermission],
     meta: {
-      middleware: "view_logs",
+      middleware: ["auth", "can:view_logs"],
     },
   },
   /*

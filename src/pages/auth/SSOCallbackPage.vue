@@ -44,15 +44,9 @@ onMounted(() => {
           },
         }
       )
-      .then((response) => {
-        /*
-         * Get the authenticated user from the API using the auth token provided
-         * Redirect to homepage if successful
-         * */
-        userStore.getUser().then(() => {
-          router.push({
-            path: "/",
-          });
+      .then(() => {
+        router.push({
+          path: "/",
         });
       });
   });

@@ -14,9 +14,9 @@ export const useLogoutModalStore = defineStore("logoutModalStore", () => {
     visible.value = false;
   }
 
-  function logout() {
+  async function logout() {
     closeModal();
-    authStore.logout();
+    await authStore.logout();
   }
 
   return { visible, openModal, closeModal, logout };

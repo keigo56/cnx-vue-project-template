@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useAuthStore } from "@/store/auth/authStore.js";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -22,18 +23,34 @@ api.interceptors.response.use(
     // Do something with response data
     return response;
   },
-  function (error) {
+  async function (error) {
     if (error.code === "ERR_BAD_REQUEST") {
       /*
        * If received an unauthenticated response, redirect to login page
        */
       if (error.response.status === 401) {
-        sessionStorage.clear();
+        let authStore = useAuthStore();
+        authStore.setIsAuthenticated(false);
+      }
+
+      /*
+       * If received an unauthenticated response, redirect to login page
+       */
+      if (error.response.status === 419) {
+        let toastNotification = useToastNotificationStore();
+        toastNotification.addToast({
+          type: "error",
+          title: "Session Expired",
+          message: "Please try to login again",
+        });
+
+        let authStore = useAuthStore();
+        authStore.setIsAuthenticated(false);
       }
     }
 
     if (error.code === "ERR_NETWORK") {
-      const toastNotification = useToastNotificationStore();
+      let toastNotification = useToastNotificationStore();
       toastNotification.addToast({
         type: "error",
         title: "Server Unavailable",
