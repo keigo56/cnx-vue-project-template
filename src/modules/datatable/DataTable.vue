@@ -70,7 +70,10 @@
               :key="row['id']"
               class="bg-white border-b dark:bg-dark-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
             >
-              <TableData class="w-4 px-4 py-3" v-if="props.multiSelect">
+              <TableData
+                class="w-4 px-4 py-3"
+                v-if="props.multiSelect"
+              >
                 <div class="flex items-center">
                   <input
                     v-model="selectedItems"
@@ -91,14 +94,20 @@
                 class="px-6 py-3 flex items-center space-x-3"
                 v-if="props.withActionItems"
               >
-                <slot :row="row" name="rowActionItems"></slot>
+                <slot
+                  :row="row"
+                  name="rowActionItems"
+                ></slot>
               </TableData>
             </TableRow>
           </tbody>
         </table>
       </div>
       <div class="py-3 px-3 dark:bg-dark-900">
-        <Pagination @change-page="changePage" :rows="datatableData.rows" />
+        <Pagination
+          @change-page="changePage"
+          :rows="datatableData.rows"
+        />
       </div>
     </Card>
   </div>
@@ -138,7 +147,7 @@ const props = defineProps({
   },
   canExport: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
