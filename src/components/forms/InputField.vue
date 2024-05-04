@@ -1,6 +1,7 @@
 <template>
   <div class="my-5">
     <label
+      v-show="showLabel"
       :for="props.id"
       :class="[
         props.error.length > 0
@@ -15,11 +16,13 @@
       :value="props.modelValue"
       @input="($event) => emit('update:modelValue', $event.target.value)"
       type="text"
+      :disabled="props.disabled"
+      :placeholder="props.placeholder"
       :id="props.id"
       :class="[
         props.error.length > 0
-          ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
-          : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+          ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-dark-100 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+          : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-dark-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
       ]"
     />
     <p
@@ -51,8 +54,20 @@ const props = defineProps({
     default: "Form Label",
     required: true,
   },
+  placeholder: {
+    type: String,
+    default: "",
+  },
   modelValue: {
     type: [String, Number],
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  showLabel: {
+    type: Boolean,
+    default: true,
   },
 });
 

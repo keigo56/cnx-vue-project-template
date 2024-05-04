@@ -1,5 +1,9 @@
 <template>
-  <TransitionRoot appear :show="props.isOpen === true" as="template">
+  <TransitionRoot
+    appear
+    :show="props.isOpen === true"
+    as="template"
+  >
     <Dialog
       as="div"
       @close="props.dismissible && emit('closedModal')"
@@ -36,7 +40,7 @@
               :style="{
                 width: props.width,
               }"
-              class="w-full transform rounded-md bg-white dark:bg-dark-100 dark:text-white p-6 text-left align-middle shadow-xl transition-all"
+              class="mt-16 w-full transform rounded-md bg-white dark:bg-dark-100 dark:text-white p-6 text-left align-middle shadow-xl transition-all"
             >
               <DialogTitle
                 as="h3"
