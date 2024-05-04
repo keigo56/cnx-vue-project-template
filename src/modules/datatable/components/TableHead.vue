@@ -3,7 +3,11 @@
     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-neutral-950 dark:text-gray-400"
   >
     <TableRow>
-      <TableHeading class="p-4" v-if="props.multiSelect">
+      <!-- MULTI SELECT -->
+      <TableHeading
+        class="p-4"
+        v-if="multiSelect"
+      >
         <div class="flex items-center">
           <input
             @click="changeSelectAll"
@@ -13,14 +17,43 @@
           />
         </div>
       </TableHeading>
+
+      <!-- ACTION ITEMS START -->
+      <TableHeading
+        v-show="actionItemPosition === 'start'"
+        class="px-6 py-3 w-24"
+        v-if="withActionItems && props.columns.length !== 0"
+      >
+        Actions
+      </TableHeading>
+
+      <!-- ACTUAL COLUMN HEADERS -->
+
+      <TableHeading
+        v-if="
+          props.columns.length === 0 &&
+          isLoading === true &&
+          showLoading === true
+        "
+        v-for="index in 5"
+        class="px-6 py-4 w-24"
+      >
+        <div class="flex items-center">
+          <div class="max-w-sm animate-pulse">
+            <div
+              class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-48"
+            ></div>
+          </div>
+        </div>
+      </TableHeading>
       <TableHeading
         @click="selectColumn(column)"
         v-for="column in props.columns"
         :key="column.key"
         :class="[
-          'px-6 py-3 cursor-pointer hover:bg-gray-100 hover:dark:bg-neutral-800',
+          'px-6 py-3 cursor-pointer hover:bg-gray-100 hover:dark:bg-neutral-900',
           selectedColumn.key === column.key
-            ? 'bg-gray-100 dark:bg-neutral-800'
+            ? 'bg-gray-100 dark:bg-neutral-900'
             : '',
         ]"
       >
@@ -43,7 +76,13 @@
           />
         </div>
       </TableHeading>
-      <TableHeading class="px-6 py-3 w-24" v-if="props.withActionItems">
+
+      <!-- ACTION ITEM END -->
+      <TableHeading
+        v-show="actionItemPosition === 'end'"
+        class="px-6 py-3 w-24"
+        v-if="withActionItems && props.columns.length !== 0"
+      >
         Actions
       </TableHeading>
     </TableRow>
@@ -54,25 +93,20 @@
 import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/vue/20/solid";
 import TableRow from "@/modules/datatable/components/TableRow.vue";
 import TableHeading from "@/modules/datatable/components/TableHeading.vue";
-import { nextTick, ref, watch } from "vue";
+import { ref, inject } from "vue";
 
 const selectPage = ref(false);
 
 const props = defineProps({
   columns: Array,
-  config: {
-    type: Array,
-    default: [],
-  },
-  multiSelect: {
-    type: Boolean,
-    default: false,
-  },
-  withActionItems: {
-    type: Boolean,
-    default: false,
-  },
 });
+
+const multiSelect = inject("multiSelect");
+const withActionItems = inject("withActionItems");
+const actionItemPosition = inject("actionItemPosition");
+const showLoading = inject("showLoading");
+const autoFetch = inject("autoFetch");
+const isLoading = inject("is-loading");
 
 const emit = defineEmits(["sortColumn", "selectAllChanged"]);
 
