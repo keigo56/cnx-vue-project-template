@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
+    "module": "ESNext",
+    "target": "ESNext",
+    "baseUrl": ".",
     "sourceMap": true,
-    "baseUrl": "./",
     "paths": {
      "@/*": ["src/*"]
     }
