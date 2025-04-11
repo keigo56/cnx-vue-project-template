@@ -233,10 +233,10 @@ watchDebounced(
 
     const searchTermLowerCase = searchTerm.value.toLowerCase();
     itemsRef.value = props.items.filter((item) =>
-      item.value.toLowerCase().includes(searchTermLowerCase)
+      item.value.toLowerCase().includes(searchTermLowerCase),
     );
   },
-  { debounce: props.serverSide === true ? 500 : 0 }
+  { debounce: props.serverSide === true ? 500 : 0 },
 );
 
 watch(props, (oldValue, newValue) => {
@@ -254,14 +254,14 @@ watch(
   () => props.error,
   (newValue, oldValue) => {
     errors.value = newValue;
-  }
+  },
 );
 
 watch(
   () => props.modelValue,
   (newValue, oldValue) => {
     errors.value = [];
-  }
+  },
 );
 
 const emit = defineEmits(["update:modelValue"]);
@@ -275,25 +275,3 @@ const fetchData = async () => {
   itemsRef.value = serverItemsData.data.items;
 };
 </script>
-
-<style>
-/* width */
-.dark .select-scroll::-webkit-scrollbar {
-  @apply w-3 h-2;
-}
-
-/* Track */
-.dark .select-scroll::-webkit-scrollbar-track {
-  @apply bg-neutral-600;
-}
-
-/* Handle */
-.dark .select-scroll::-webkit-scrollbar-thumb {
-  @apply bg-neutral-900 rounded-md;
-}
-
-/* Handle on hover */
-.dark .select-scroll::-webkit-scrollbar-thumb:hover {
-  @apply bg-neutral-800;
-}
-</style>
