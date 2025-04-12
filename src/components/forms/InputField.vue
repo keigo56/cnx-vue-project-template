@@ -1,12 +1,15 @@
 <template>
-  <div class="my-5">
+  <div>
     <label
       v-show="showLabel"
       :for="props.id"
+      class="block mb-2 text-sm font-medium"
       :class="[
         props.error.length > 0
-          ? 'block mb-2 text-sm font-medium text-red-900 dark:text-red-400'
-          : 'block mb-2 text-sm font-medium text-gray-900 dark:text-white',
+          ? 'text-red-500 dark:text-red-500'
+          : props.disabled
+            ? 'text-neutral-500 dark:text-neutral-500'
+            : 'text-neutral-900 dark:text-white',
       ]"
     >
       {{ props.label }}
@@ -20,14 +23,15 @@
       :placeholder="props.placeholder"
       :id="props.id"
       :class="[
+        'flex h-11 w-full',
         props.error.length > 0
-          ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-dark-100 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
-          : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-dark-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+          ? 'bg-red-50 text-red-900 placeholder-red-700 text-sm rounded-lg border-none ring-red-500 focus:ring-red-500 focus:ring-2 dark:bg-red-900/10 ring-2 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-400 dark:ring-red-700 dark:focus:ring-2 dark:border-none'
+          : 'py-2 px-3 bg-background border-input rounded-lg border text-sm placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium',
       ]"
     />
     <p
       v-show="props.error"
-      class="mt-1 text-xs text-red-600 dark:text-red-500 font-semibold"
+      class="mt-1 text-xs font-semibold text-red-500 dark:text-red-500"
     >
       {{ props.error[0] }}
     </p>

@@ -19,37 +19,57 @@
         }
       "
       week-start="0"
-      model-type="yyyy-MM-dd"
-      :enable-time-picker="false"
-      auto-apply
+      :model-type="props.modelType"
+      :enable-time-picker="props.enableTimePicker"
+      :multi-calendars="props.multiCalendars"
+      :time-picker-inline="true"
+      :start-time="[
+        { hours: 0, minutes: 0, seconds: 0 },
+        { hours: 23, minutes: 59, seconds: 59 },
+      ]"
       :clearable="false"
       :dark="themeStore.isDarkMode"
       :format="format"
       :min-date="props.minDate"
+      range
     >
       <template #dp-input="{ value }">
         <button
           type="button"
           id="week-range-input"
+          class="w-full text-sm text-left border rounded-lg border-input text-neutral-900 focus:ring-ring focus:ring-2 focus:border-input focus:ring-offset-2 focus:ring-offset-background dark:placeholder-neutral-400 dark:text-white"
           :class="[
+            props.size === 'md' ? 'h-11 px-2.5 py-2' : 'h-12 p-2.5',
             hasError
-              ? 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 px-3 text-left text-gray-900 shadow-sm ring-2 ring-inset ring-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 sm:text-sm sm:leading-6'
-              : 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 px-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-neutral-700 focus:outline-none focus:ring-2 focus:ring-gray-500 sm:text-sm sm:leading-6',
+              ? 'ring-2 border-none bg-red-50  text-red-900 placeholder-red-700  ring-red-500 focus:ring-red-500  dark:bg-red-900/10 dark:text-red-500 dark:placeholder-red-400 dark:ring-red-700 dark:focus:ring-red-700'
+              : props.disabled
+                ? 'cursor-not-allowed bg-neutral-100 dark:bg-neutral-800/50 dark:border-none'
+                : 'bg-background',
           ]"
-          class=""
         >
           <div class="flex items-center justify-between font-inter">
             <div>
               <span
                 v-show="!value"
-                class="font-semibold"
-                :class="[hasError ? 'text-red-500' : 'text-gray-500']"
+                :class="[
+                  hasError
+                    ? 'text-red-700 dark:text-red-400'
+                    : props.disabled
+                      ? 'text-neutral-400 dark:text-neutral-400'
+                      : 'text-neutral-400 dark:text-neutral-400',
+                ]"
               >
                 {{ props.placeholder }}
               </span>
               <span
-                class="text-sm"
-                :class="[hasError ? 'text-red-500' : 'dark:text-white']"
+                class="text-sm pr-4"
+                :class="[
+                  hasError
+                    ? 'text-red-700 dark:text-red-400'
+                    : props.disabled
+                      ? 'text-neutral-500 dark:text-neutral-400'
+                      : 'text-neutral-900 dark:text-white',
+                ]"
               >
                 {{ value }}
               </span>
@@ -62,7 +82,13 @@
                 stroke-width="1.5"
                 stroke="currentColor"
                 class="w-5 h-5"
-                :class="[hasError ? 'text-red-600' : 'text-gray-600']"
+                :class="[
+                  hasError
+                    ? 'text-red-700 dark:text-red-400'
+                    : props.disabled
+                      ? 'text-neutral-500 dark:text-neutral-400'
+                      : 'text-neutral-400 dark:text-neutral-400',
+                ]"
               >
                 <path
                   stroke-linecap="round"
@@ -77,7 +103,7 @@
     </VueDatePicker>
     <p
       v-show="hasError"
-      class="mt-1 text-xs text-red-600 dark:text-red-500 font-semibold"
+      class="mt-1 text-xs font-semibold text-red-600 dark:text-red-500"
     >
       {{ props.error[0] }}
     </p>
@@ -97,18 +123,21 @@ const props = defineProps({
   label: {
     type: String,
     default: "Form Label",
-    required: true,
   },
   placeholder: {
     type: String,
     default: "",
   },
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Array],
   },
   disabled: {
     type: Boolean,
     default: false,
+  },
+  size: {
+    type: String,
+    default: "default",
   },
   showLabel: {
     type: Boolean,
@@ -117,6 +146,18 @@ const props = defineProps({
   minDate: {
     type: Date,
     default: null,
+  },
+  enableTimePicker: {
+    type: Boolean,
+    default: false,
+  },
+  multiCalendars: {
+    type: Boolean,
+    default: false,
+  },
+  modelType: {
+    type: String,
+    default: "yyyy-MM-dd",
   },
 });
 
@@ -131,13 +172,56 @@ const hasError = computed({
 });
 
 const format = (dt) => {
-  const options = {
-    month: "long", // Full month name
-    year: "numeric", // Full numeric year
-    day: "numeric",
+  const optionsDate = {
+    month: "short", // Short month name (e.g., "Oct")
+    year: "numeric", // Full year (e.g., "2024")
+    day: "2-digit", // Day with two digits (e.g., "05")
   };
 
-  return dt.toLocaleString("en-US", options);
+  const optionsTime = {
+    hour: "2-digit", // Hour (e.g., "14")
+    minute: "2-digit", // Minutes (e.g., "30")
+    hour12: false, // Ensures 24-hour format
+  };
+
+  if (dt.length !== 2) {
+    return;
+  }
+
+  const startDate = dt[0];
+  const endDate = dt[1];
+
+  // Get today's date and reset the time to 00:00:00 for comparison
+  const today = new Date();
+  const startOfToday = new Date(today.setHours(0, 0, 0, 0));
+  const endOfToday = new Date(today.setHours(23, 59, 59, 0));
+
+  // Normalize startDate and endDate to ignore time
+  const normalizedStartDate = new Date(startDate);
+  const normalizedEndDate = new Date(new Date(endDate).setSeconds(59));
+
+  // Check if both dates are today
+  const isToday =
+    normalizedStartDate.getTime() === startOfToday.getTime() &&
+    normalizedEndDate.getTime() === endOfToday.getTime();
+
+  const formattedStartDate = startDate.toLocaleString("en-US", optionsDate);
+  const formattedStartDateTime = startDate
+    .toLocaleTimeString("en-US", optionsTime)
+    .replace(":", ":");
+
+  const formattedEndDate = endDate.toLocaleString("en-US", optionsDate);
+  const formattedEndDateTime = endDate
+    .toLocaleTimeString("en-US", optionsTime)
+    .replace(":", ":");
+
+  if (formattedStartDate === formattedEndDate) {
+    return isToday
+      ? "Today"
+      : `${formattedStartDate}${props.enableTimePicker ? ` ${formattedStartDateTime} - ${formattedEndDateTime}` : ""}`;
+  }
+
+  return `${formattedStartDate}${props.enableTimePicker ? ` ${formattedStartDateTime}` : ""} - ${formattedEndDate}${props.enableTimePicker ? ` ${formattedEndDateTime}` : ""}`;
 };
 
 const errors = ref([]);
@@ -164,9 +248,9 @@ watch(
   --dp-hover-color: #484848;
   --dp-hover-text-color: #fff;
   --dp-hover-icon-color: #959595;
-  --dp-primary-color: #312e81;
+  --dp-primary-color: #24e4cc;
   --dp-primary-disabled-color: #61a8ea;
-  --dp-primary-text-color: #fff;
+  --dp-primary-text-color: #161616;
   --dp-secondary-color: #a9a9a9;
   --dp-border-color: #2d2d2d;
   --dp-menu-border-color: #2d2d2d;
@@ -193,7 +277,7 @@ watch(
   --dp-hover-color: #f3f3f3;
   --dp-hover-text-color: #212121;
   --dp-hover-icon-color: #959595;
-  --dp-primary-color: #4f46e5;
+  --dp-primary-color: #003d5b;
   --dp-primary-disabled-color: #6bacea;
   --dp-primary-text-color: #f8f5f5;
   --dp-secondary-color: #c0c4cc;

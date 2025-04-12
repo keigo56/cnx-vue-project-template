@@ -1,17 +1,22 @@
 <template>
-  <div class="my-5">
+  <div>
     <label
       v-show="showLabel"
       :for="props.id"
+      class="block mb-2 text-sm font-medium"
       :class="[
         hasError
-          ? 'block mb-2 text-sm font-medium text-red-900 dark:text-red-400'
-          : 'block mb-2 text-sm font-medium text-gray-900 dark:text-white',
+          ? 'text-red-500 dark:text-red-600'
+          : props.disabled
+            ? 'text-neutral-500 dark:text-neutral-500'
+            : 'text-neutral-900 dark:text-white',
+        ,
       ]"
     >
       {{ props.label }}
     </label>
     <Listbox
+      :disabled="props.disabled"
       :model-value="props.modelValue"
       @update:model-value="
         (value) => {
@@ -19,33 +24,58 @@
         }
       "
     >
-      <div class="relative mt-1 font-inter">
+      <div class="relative font-inter">
         <ListboxButton
+          class="relative w-full text-sm text-left border rounded-lg border-input text-neutral-900 focus:ring-ring focus:ring-2 focus:border-input focus:ring-offset-2 focus:ring-offset-background dark:placeholder-neutral-400 dark:text-white"
           :class="[
+            props.size === 'sm' ? 'h-9 px-2 py-1' : 'h-11 p-2.5',
             hasError
-              ? 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-2 ring-inset ring-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 sm:text-sm sm:leading-6'
-              : 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-neutral-700 focus:outline-none focus:ring-2 focus:ring-gray-500 sm:text-sm sm:leading-6',
+              ? ' ring-2 border-none bg-red-50  text-red-900 placeholder-red-700  ring-red-500 focus:ring-red-500  dark:bg-red-900/10 dark:text-red-500 dark:placeholder-red-400 dark:ring-red-700 dark:focus:ring-red-700'
+              : props.disabled
+                ? 'cursor-not-allowed bg-neutral-100 dark:bg-neutral-800/50 dark:border-none'
+                : 'bg-background',
           ]"
         >
           <span
-            class="block truncate"
+            class="block mr-5 truncate"
+            :class="[
+              props.size === 'sm' ? 'text-xs' : 'text-sm',
+              hasError
+                ? 'text-red-700 dark:text-red-400'
+                : props.disabled
+                  ? 'text-neutral-500 dark:text-neutral-400'
+                  : 'text-neutral-900 dark:text-white',
+            ]"
             v-if="props.modelValue"
           >
-            {{ label }}
+            {{ props.loading === true ? "Loading..." : label }}
           </span>
           <span
-            class="block truncate font-semibold"
-            :class="[hasError ? 'text-red-500' : 'text-gray-500']"
+            class="block truncate"
+            :class="[
+              props.size === 'sm' ? 'text-xs' : 'text-sm',
+              hasError
+                ? 'text-red-700 dark:text-red-400'
+                : props.disabled
+                  ? 'text-neutral-400 dark:text-neutral-400'
+                  : 'text-neutral-400 dark:text-neutral-400',
+            ]"
             v-else
           >
             {{ props.placeholder }}
           </span>
           <span
-            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
+            class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
           >
             <ChevronUpDownIcon
-              class="h-5 w-5"
-              :class="[hasError ? 'text-red-600' : 'text-gray-600']"
+              :class="[
+                props.size === 'sm' ? 'h-4 w-4' : 'h-5 w-5',
+                hasError
+                  ? 'text-red-700 dark:text-red-400'
+                  : props.disabled
+                    ? 'text-neutral-500 dark:text-neutral-600'
+                    : 'text-neutral-400 dark:text-neutral-400',
+              ]"
               aria-hidden="true"
             />
           </span>
@@ -60,33 +90,35 @@
           leave-to-class="transform scale-95 opacity-0"
         >
           <ListboxOptions
-            class="z-20 absolute mt-1 w-full rounded-md bg-white dark:bg-neutral-900 dark:text-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:border dark:border-neutral-700"
+            class="absolute z-20 w-full mt-1 text-base bg-white rounded-md shadow-lg dark:bg-neutral-900 dark:text-white ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm dark:border dark:border-neutral-700"
           >
             <div class="relative">
               <div
                 v-if="props.searchable"
-                class="border-b dark:border-neutral-700 overflow-hidden w-full"
+                class="w-full overflow-hidden border-b dark:border-neutral-700"
               >
                 <span
                   class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-gray-500"
                 >
                   <MagnifyingGlassIcon
-                    class="h-5 w-5"
+                    :class="[props.size === 'sm' ? 'w-4 h-4' : 'w-5 h-5']"
                     aria-hidden="true"
                   />
                 </span>
                 <div class="pl-10">
                   <input
+                    @keydown="(e) => e.stopPropagation()"
                     v-model="searchTerm"
                     placeholder="Search..."
                     type="text"
-                    class="border-none focus:outline-none focus:ring-0 text-gray-900 text-sm rounded-lg block w-full py-2.5 px-0 dark:bg-neutral-900 dark:text-white"
+                    class="border-none focus:outline-none focus:ring-0 text-gray-900 rounded-lg block w-full py-2.5 px-0 dark:bg-neutral-900 dark:text-white"
+                    :class="[props.size === 'sm' ? 'text-xs' : 'text-sm']"
                   />
                 </div>
               </div>
             </div>
 
-            <div class="overflow-auto max-h-60 py-1 select-scroll">
+            <div class="py-1 overflow-auto max-h-48 select-scroll">
               <ListboxOption
                 v-slot="{ active, selected }"
                 v-for="item in itemsRef"
@@ -103,9 +135,10 @@
                   ]"
                 >
                   <span
+                    class="block truncate"
                     :class="[
                       selected ? 'font-medium' : 'font-normal',
-                      'block truncate',
+                      props.size === 'sm' ? 'text-xs' : 'text-sm',
                     ]"
                     >{{ item.label }}</span
                   >
@@ -114,17 +147,18 @@
                     class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-600 dark:text-white"
                   >
                     <CheckIcon
-                      class="h-5 w-5"
+                      class="w-5 h-5"
                       aria-hidden="true"
                     />
                   </span>
                 </li>
               </ListboxOption>
               <div
-                class="px-2 py-5 flex justify-center items-center"
-                v-show="itemsRef.length === 0"
+                class="flex items-center justify-center px-2 py-5"
+                v-if="itemsRef.length === 0 || props.loading"
               >
-                <span>
+                <span v-show="props.loading === true"> Loading data... </span>
+                <span v-show="itemsRef.length === 0 && !props.loading">
                   {{ searchTerm === "" ? "No data" : "Nothing found." }}
                 </span>
               </div>
@@ -135,7 +169,7 @@
     </Listbox>
     <p
       v-show="hasError"
-      class="mt-1 text-xs text-red-600 dark:text-red-500 font-semibold"
+      class="mt-1 text-xs font-semibold text-red-500 dark:text-red-600"
     >
       {{ props.error[0] }}
     </p>
@@ -161,6 +195,11 @@ import { api } from "@/api/api.js";
 import { onMounted } from "vue";
 
 const props = defineProps({
+  size: {
+    type: String,
+    default: "default",
+    required: false,
+  },
   items: {
     type: Array,
     default: [],
@@ -173,6 +212,10 @@ const props = defineProps({
   error: {
     type: Array,
     default: [],
+  },
+  loading: {
+    type: Boolean,
+    default: false,
   },
   label: {
     type: String,
@@ -201,6 +244,11 @@ const props = defineProps({
   sourceUrl: {
     type: String,
     default: "",
+    required: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
     required: false,
   },
 });
@@ -233,7 +281,7 @@ watchDebounced(
 
     const searchTermLowerCase = searchTerm.value.toLowerCase();
     itemsRef.value = props.items.filter((item) =>
-      item.value.toLowerCase().includes(searchTermLowerCase),
+      item.label.toLowerCase().includes(searchTermLowerCase),
     );
   },
   { debounce: props.serverSide === true ? 500 : 0 },

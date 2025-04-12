@@ -1,10 +1,10 @@
 <template>
-  <div class="my-5">
+  <div>
     <label
       :for="props.id"
       :class="[
         props.error.length > 0
-          ? 'block mb-2 text-sm font-medium text-red-900 dark:text-red-400'
+          ? 'block mb-2 text-sm font-medium text-red-500 dark:text-red-600'
           : 'block mb-2 text-sm font-medium text-gray-900 dark:text-white',
       ]"
     >
@@ -19,19 +19,30 @@
         <ListboxButton
           :class="[
             props.error.length > 0
-              ? 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-2 ring-inset ring-red-500 focus:outline-none focus:ring-2 dark:ring-red-700 focus:ring-red-500 sm:text-sm sm:leading-6'
-              : 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-neutral-700 focus:outline-none focus:ring-2 focus:ring-gray-500 sm:text-sm sm:leading-6',
+              ? 'relative w-full cursor-pointer rounded-md bg-neutral-100 dark:bg-neutral-800 dark:text-white py-2.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-2 ring-red-500 focus:outline-none focus:ring-2 dark:ring-red-700 focus:ring-red-500 sm:text-sm sm:leading-6'
+              : 'relative w-full cursor-pointer rounded-md bg-neutral-100 dark:bg-neutral-800 dark:text-white py-2.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-gray-300 dark:ring-neutral-700 dark:focus:ring-neutral-100 focus:outline-none focus:ring-2 focus:ring-gray-500 sm:text-sm sm:leading-6',
           ]"
         >
-          <span class="block truncate" v-if="props.modelValue">
-            {{ label }}
+          <span
+            class="block truncate"
+            :class="[
+              props.error.length > 0
+                ? 'text-red-500'
+                : 'text-neutral-700 dark:text-neutral-300',
+            ]"
+          >
+            {{ label ? label : props.placeholder }}
           </span>
-          <span class="block truncate" v-else>{{ props.placeholder }}</span>
           <span
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
           >
             <ChevronUpDownIcon
-              class="h-5 w-5 text-gray-400"
+              class="h-5 w-5"
+              :class="[
+                props.error.length > 0
+                  ? 'text-red-600'
+                  : 'text-neutral-700 dark:text-neutral-300',
+              ]"
               aria-hidden="true"
             />
           </span>
@@ -101,7 +112,10 @@
                   v-if="selected"
                   class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-600 dark:text-white"
                 >
-                  <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                  <CheckIcon
+                    class="h-5 w-5"
+                    aria-hidden="true"
+                  />
                 </span>
               </li>
             </ListboxOption>
@@ -111,7 +125,7 @@
     </Listbox>
     <p
       v-show="props.error"
-      class="mt-1 text-xs text-red-600 dark:text-red-500 font-semibold"
+      class="mt-1 text-xs text-red-500 dark:text-red-600 font-semibold"
     >
       {{ props.error[0] }}
     </p>
@@ -163,7 +177,7 @@ const props = defineProps({
 
 const label = computed(() => {
   let label = items.value.find(
-    (item) => item.value === props.modelValue
+    (item) => item.value === props.modelValue,
   )?.label;
   return label ?? props.modelValue;
 });
@@ -182,7 +196,7 @@ watchDebounced(
   () => {
     fetchData();
   },
-  { debounce: 500, maxWait: 1000 }
+  { debounce: 500, maxWait: 1000 },
 );
 
 function fetchData() {

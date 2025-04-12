@@ -1,5 +1,8 @@
 <template>
-  <Menu as="div" class="relative inline-block text-left z-10">
+  <Menu
+    as="div"
+    class="relative inline-block text-left z-10"
+  >
     <div>
       <MenuButton
         class="overflow-hidden border dark:border-dark-100 flex rounded-full focus:outline-none focus:ring-2 focus:ring-brand-400 dark:focus:ring-gray-700"
