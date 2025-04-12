@@ -41,7 +41,7 @@
         <div class="flex items-center">
           <div class="max-w-sm animate-pulse">
             <div
-              class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-48"
+              class="h-2 bg-neutral-200 rounded-full dark:bg-neutral-800 w-48"
             ></div>
           </div>
         </div>
