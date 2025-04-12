@@ -75,11 +75,12 @@ api.interceptors.response.use(
       const toastNotification = useToastNotificationStore();
       toastNotification.addToast({
         type: "warning",
-        title: "Something went wrong",
-        message: "Server failed to respond. Please try again.",
+        title: "Request Timeout",
+        message:
+          "The request took too long to process and was aborted. Please check your network connection and try again.",
       });
     }
 
     return Promise.reject(error);
-  }
+  },
 );
