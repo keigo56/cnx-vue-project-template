@@ -4,6 +4,7 @@ import { Primitive } from "reka-ui";
 import { buttonVariants } from ".";
 
 const props = defineProps({
+  loading: { type: Boolean, required: false, default: false },
   variant: { type: null, required: false },
   size: { type: null, required: false },
   class: { type: null, required: false },
@@ -19,6 +20,15 @@ const props = defineProps({
     :as-child="asChild"
     :class="cn(buttonVariants({ variant, size }), props.class)"
   >
-    <slot />
+    <div
+      v-if="loading"
+      class="flex items-center space-x-4"
+      :class="[variant === 'default' || (variant === undefined && 'reverse')]"
+    >
+      <div class="w-4 h-4 mr-2 loader"></div>
+      <slot />
+    </div>
+
+    <slot v-if="!loading" />
   </Primitive>
 </template>
