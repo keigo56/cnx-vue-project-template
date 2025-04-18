@@ -17,6 +17,7 @@ export const adminRoutes = [
         component: IndexPage,
         meta: {
           middleware: ["auth"],
+          breadcrumb: ["Home"],
         },
       },
       {
@@ -24,6 +25,7 @@ export const adminRoutes = [
         component: UsersIndexPage,
         meta: {
           middleware: ["auth", "can:view_users"],
+          breadcrumb: ["User Management", "Users"],
         },
       },
       {
@@ -31,6 +33,7 @@ export const adminRoutes = [
         component: RolesIndexPage,
         meta: {
           middleware: ["auth", "can:view_roles"],
+          breadcrumb: ["User Management", "Roles"],
         },
       },
       {
@@ -38,6 +41,7 @@ export const adminRoutes = [
         component: PermissionsIndexPage,
         meta: {
           middleware: ["auth", "can:view_permissions"],
+          breadcrumb: ["User Management", "Permissions"],
         },
       },
       {
@@ -45,6 +49,7 @@ export const adminRoutes = [
         component: LogsIndexPage,
         meta: {
           middleware: ["auth", "can:view_logs"],
+          breadcrumb: ["Audit Trail", "Logs"],
         },
       },
     ],
