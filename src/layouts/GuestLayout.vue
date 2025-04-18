@@ -1,9 +1,9 @@
 <template>
   <div class="w-full font-inter">
     <div class="w-full flex-grow bg-white dark:bg-dark-900">
-      <NavbarGuest/>
+      <NavbarGuest />
       <main>
-        <slot></slot>
+        <router-view />
       </main>
     </div>
   </div>

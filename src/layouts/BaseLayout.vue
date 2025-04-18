@@ -8,7 +8,7 @@
     >
       <Navbar />
       <main class="overflow-auto max-h-screen pb-20">
-        <slot></slot>
+        <router-view />
       </main>
     </div>
   </div>
