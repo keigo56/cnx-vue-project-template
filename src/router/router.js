@@ -1,11 +1,10 @@
-import routes from "@/routes/routes.js";
+import routes from "@/router/routes/routes.js";
 import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "@/store/auth/userStore.js";
 import { useAuthStore } from "@/store/auth/authStore.js";
 
 export const router = createRouter({
-  // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-  history: createWebHistory(),
+  history: createWebHistory(), // use html5 history mode
   routes, // short for `routes: routes`
 });
 
@@ -57,7 +56,7 @@ router.beforeEach(async (to, from, next) => {
         break;
       case "auth":
         if (!(await middlewaresMapping["auth"]())) {
-          return next({ path: "/login" });
+          return next({ path: "/admin/login" });
         }
         break;
       case "can":
