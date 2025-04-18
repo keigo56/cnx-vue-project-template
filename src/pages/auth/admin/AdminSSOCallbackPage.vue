@@ -19,11 +19,9 @@ import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import { api } from "@/api/api.js";
 import logo from "@/assets/logo.svg";
-import useCookie from "@/composable/useCookie.js";
+import { getCookie } from "@/utils/cookies.js";
 
 const router = useRouter();
-
-const { getCookie } = useCookie();
 
 onMounted(async () => {
   /*
