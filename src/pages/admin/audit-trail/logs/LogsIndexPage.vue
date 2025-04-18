@@ -1,12 +1,12 @@
 <template>
   <BaseLayout>
     <div class="p-5">
-      <UsersDatatable />
+      <LogsDatatable />
     </div>
   </BaseLayout>
 </template>
 
 <script setup>
 import BaseLayout from "@/layouts/BaseLayout.vue";
-import UsersDatatable from "@/pages/user-management/users/UsersDatatable.vue";
+import LogsDatatable from "@/pages/admin/audit-trail/logs/LogsDatatable.vue";
 </script>

@@ -14,7 +14,6 @@
 
 <script setup>
 import DataTable from "@/modules/datatable/DataTable.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline/index.js";
 import { onMounted, ref } from "vue";
 import { hasPermission } from "@/composable/checkPermission.js";
 

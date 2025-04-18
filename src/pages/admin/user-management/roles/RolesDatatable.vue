@@ -39,8 +39,14 @@
       </a>
     </template>
   </DataTable>
-  <AddRoleModal @success="rolesDatatable.fetchData()" ref="addRoleModal" />
-  <EditRoleModal @success="rolesDatatable.fetchData()" ref="editRoleModal" />
+  <AddRoleModal
+    @success="rolesDatatable.fetchData()"
+    ref="addRoleModal"
+  />
+  <EditRoleModal
+    @success="rolesDatatable.fetchData()"
+    ref="editRoleModal"
+  />
   <DeleteRoleModal
     @success="rolesDatatable.fetchData()"
     ref="deleteRoleModal"
@@ -50,10 +56,10 @@
 <script setup>
 import DataTable from "@/modules/datatable/DataTable.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline/index.js";
-import AddRoleModal from "@/pages/user-management/roles/AddRoleModal.vue";
+import AddRoleModal from "@/pages/admin/user-management/roles/AddRoleModal.vue";
 import { ref } from "vue";
-import EditRoleModal from "@/pages/user-management/roles/EditRoleModal.vue";
-import DeleteRoleModal from "@/pages/user-management/roles/DeleteRoleModal.vue";
+import EditRoleModal from "@/pages/admin/user-management/roles/EditRoleModal.vue";
+import DeleteRoleModal from "@/pages/admin/user-management/roles/DeleteRoleModal.vue";
 import { hasPermission } from "@/composable/checkPermission.js";
 
 const addRoleModal = ref(null);
