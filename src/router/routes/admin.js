@@ -7,7 +7,7 @@ import LogsIndexPage from "@/pages/admin/audit-trail/logs/LogsIndexPage.vue";
 export const adminRoutes = [
   {
     path: "/admin",
-    component: () => import("@/layouts/AdminLayout.vue"),
+    component: () => import("@/layouts/AppLayout.vue"),
     meta: {
       middleware: ["auth"],
     },
