@@ -1,17 +1,17 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { api } from "@/api/api.js";
-import router from "@/routes/router.js";
+import router from "@/router/router.js";
 
 export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = ref(false);
 
   const logout = () => {
     return api
-      .delete("/api/auth/logout")
+      .delete("/admin/auth/logout")
       .then(async () => {
         await router.push({
-          path: "/login",
+          path: "/admin/login",
         });
       })
       .catch((error) => {
