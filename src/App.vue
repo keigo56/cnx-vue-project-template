@@ -7,11 +7,14 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { useThemeStore } from "@/store/global/themeStore.js";
 import ToastList from "@/components/overlays/ToastList.vue";
 import LogoutConfirmationModal from "@/components/overlays/LogoutConfirmationModal.vue";
-import { useUserStore } from "@/store/auth/userStore.js";
 
 const themeStore = useThemeStore();
-themeStore.getThemeFromLocalStorage();
+
+onMounted(() => {
+  themeStore.getThemeFromLocalStorage();
+});
 </script>
