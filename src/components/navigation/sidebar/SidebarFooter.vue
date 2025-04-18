@@ -55,7 +55,10 @@
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem
+            variant="destructive"
+            @click="logoutDialogStore.show()"
+          >
             <LogOut />
             Log out
           </DropdownMenuItem>
@@ -86,6 +89,7 @@ import { Switch } from "@/components/ui/switch";
 import { useUserStore } from "@/store/auth/userStore";
 import { useThemeStore } from "@/store/global/themeStore";
 import { ChevronsUpDown, LogOut } from "lucide-vue-next";
+import { useLogoutDialogStore } from "@/store/auth/logoutDialogStore";
 
 const { isMobile } = useSidebar();
 
@@ -103,4 +107,6 @@ watch(isDarkMode, () => {
 onMounted(() => {
   isDarkMode.value = themeStore.theme === "dark";
 });
+
+const logoutDialogStore = useLogoutDialogStore();
 </script>

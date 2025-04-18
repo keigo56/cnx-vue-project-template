@@ -2,6 +2,7 @@
   <div>
     <router-view :key="$route.fullPath" />
     <ToastList />
+    <GlobalDialogs />
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { onMounted } from "vue";
 import { useThemeStore } from "@/store/global/themeStore.js";
 import ToastList from "@/components/overlays/ToastList.vue";
+import GlobalDialogs from "@/components/overlays/GlobalDialogs.vue";
 
 const themeStore = useThemeStore();
 
