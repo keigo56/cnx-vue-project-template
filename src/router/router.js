@@ -1,72 +1,25 @@
 import routes from "@/router/routes/routes.js";
 import { createRouter, createWebHistory } from "vue-router";
-import { useUserStore } from "@/store/auth/userStore.js";
-import { useAuthStore } from "@/store/auth/authStore.js";
+import MiddlewareResolver from "@/router/MiddlewareResolver";
 
-export const router = createRouter({
+const router = createRouter({
   history: createWebHistory(), // use html5 history mode
   routes, // short for `routes: routes`
 });
-
-const middlewaresMapping = {
-  guest: async () => {
-    const userStore = useUserStore();
-    await userStore.getUser();
-
-    let authStore = useAuthStore();
-    return authStore.isAuthenticated === false;
-  },
-  auth: async () => {
-    const userStore = useUserStore();
-    await userStore.getUser();
-
-    let authStore = useAuthStore();
-    return authStore.isAuthenticated;
-  },
-  can: async (permission) => {
-    const userStore = useUserStore();
-    return userStore.permissions.includes(permission);
-  },
-};
 
 /*
  * This function runs on every before route traversal
  * */
 router.beforeEach(async (to, from, next) => {
-  let middlewares = to.meta.middleware;
+  let middlewareEntries = to.meta.middleware || [];
 
-  if (middlewares === undefined) {
-    return next();
-  }
+  // prettier-ignore
+  let nextPath = await MiddlewareResolver
+      .withContext(to, from)
+      .withEntries(middlewareEntries)
+      .resolve();
 
-  for (let i = 0; i < middlewares.length; i++) {
-    let middleware = middlewares[i];
-
-    let isPermission = middleware.includes("can:");
-    let permission = isPermission ? middleware.replace("can:", "") : "";
-
-    middleware = isPermission ? "can" : middleware;
-
-    switch (middleware) {
-      case "guest":
-        let isGuest = await middlewaresMapping["guest"]();
-        if (isGuest === false) {
-          return next({ path: "/" });
-        }
-        break;
-      case "auth":
-        if (!(await middlewaresMapping["auth"]())) {
-          return next({ path: "/admin/login" });
-        }
-        break;
-      case "can":
-        if (!(await middlewaresMapping["can"](permission))) {
-          return next({ path: "/" });
-        }
-        break;
-    }
-  }
-  return next();
+  return next(nextPath);
 });
 
 export default router;
