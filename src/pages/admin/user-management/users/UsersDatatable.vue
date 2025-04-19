@@ -60,7 +60,7 @@ import AddUserModal from "@/pages/admin/user-management/users/AddUserModal.vue";
 import { ref } from "vue";
 import EditUserModal from "@/pages/admin/user-management/users/EditUserModal.vue";
 import DeleteUserModal from "@/pages/admin/user-management/users/DeleteUserModal.vue";
-import { hasPermission } from "@/composable/checkPermission.js";
+import { hasPermission } from "@/utils/permission";
 
 const addUserModal = ref(null);
 const editUserModal = ref(null);

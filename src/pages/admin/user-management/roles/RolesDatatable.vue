@@ -60,7 +60,7 @@ import AddRoleModal from "@/pages/admin/user-management/roles/AddRoleModal.vue";
 import { ref } from "vue";
 import EditRoleModal from "@/pages/admin/user-management/roles/EditRoleModal.vue";
 import DeleteRoleModal from "@/pages/admin/user-management/roles/DeleteRoleModal.vue";
-import { hasPermission } from "@/composable/checkPermission.js";
+import { hasPermission } from "@/utils/permission";
 
 const addRoleModal = ref(null);
 const editRoleModal = ref(null);
