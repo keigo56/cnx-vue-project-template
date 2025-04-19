@@ -10,7 +10,7 @@
       <AlertDialogFooter>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
         <AlertDialogAction
-          @click="authStore.logout()"
+          @click="logoutHandler"
           variant="destructive"
         >
           Confirm
@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,11 +31,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useAuthStore } from "@/store/auth/authStore.js";
+import { logout } from "@/services/authService";
 import { useLogoutDialogStore } from "@/store/auth/logoutDialogStore";
 
-const authStore = useAuthStore();
+const router = useRouter();
+
 const logoutDialogStore = useLogoutDialogStore();
+
+async function logoutHandler() {
+  await logout();
+  router.push({ path: "/admin/login" });
+}
 </script>

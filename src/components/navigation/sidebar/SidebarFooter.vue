@@ -86,15 +86,15 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Switch } from "@/components/ui/switch";
-import { useUserStore } from "@/store/auth/userStore";
 import { useThemeStore } from "@/store/global/themeStore";
 import { ChevronsUpDown, LogOut } from "lucide-vue-next";
 import { useLogoutDialogStore } from "@/store/auth/logoutDialogStore";
+import { useAuthStore } from "@/store/auth/authStore";
 
 const { isMobile } = useSidebar();
 
-const userStore = useUserStore();
-const user = userStore.user;
+const authStore = useAuthStore();
+const user = authStore.user;
 const userAvatar = `https://ui-avatars.com/api/?name=${user.name}&background=003d5b&color=FFFFFF`;
 
 const themeStore = useThemeStore();

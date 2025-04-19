@@ -17,9 +17,9 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import { api } from "@/api/api.js";
 import logo from "@/assets/logo.svg";
 import { getCookie } from "@/utils/cookies.js";
+import { validateToken } from "@/services/authService";
 
 const router = useRouter();
 
@@ -29,17 +29,13 @@ onMounted(async () => {
    * */
   const API_TOKEN = getCookie("azure_authorization");
 
-  await api.get("sanctum/csrf-cookie");
-  await api.post(
-    "/admin/auth/token/validate",
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
-        Accept: "application/json",
-      },
-    },
-  );
+  if (!API_TOKEN) {
+    router.push({ path: "/admin/login" });
+    return;
+  }
+
+  await validateToken(API_TOKEN);
+
   router.push({
     path: "/admin",
   });
