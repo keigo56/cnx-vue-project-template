@@ -86,10 +86,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Switch } from "@/components/ui/switch";
-import { useThemeStore } from "@/store/global/themeStore";
+import { useThemeStore } from "@/store/themeStore";
 import { ChevronsUpDown, LogOut } from "lucide-vue-next";
-import { useLogoutDialogStore } from "@/store/auth/logoutDialogStore";
-import { useAuthStore } from "@/store/auth/authStore";
+import { useLogoutDialogStore } from "@/store/logoutDialogStore";
+import { useAuthStore } from "@/store/authStore";
 
 const { isMobile } = useSidebar();
 

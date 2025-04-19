@@ -33,7 +33,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { logout } from "@/services/authService";
-import { useLogoutDialogStore } from "@/store/auth/logoutDialogStore";
+import { useLogoutDialogStore } from "@/store/logoutDialogStore";
 
 const router = useRouter();
 

@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import {
   CheckIcon,
   InformationCircleIcon,

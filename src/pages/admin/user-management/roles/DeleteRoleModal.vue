@@ -1,5 +1,8 @@
 <template>
-  <BaseModal title="Delete Role" :is-open="isOpen">
+  <BaseModal
+    title="Delete Role"
+    :is-open="isOpen"
+  >
     <div class="my-5">
       <Form
         :data="formData"
@@ -37,7 +40,7 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { ref } from "vue";
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import Form from "@/components/forms/Form.vue";
 import InputField from "@/components/forms/InputField.vue";
 

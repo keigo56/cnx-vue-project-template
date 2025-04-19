@@ -114,7 +114,7 @@ import TableImageDark from "@/assets/svgs/TableImageDark.vue";
 import TableImageLight from "@/assets/svgs/TableImageLight.vue";
 import ImportFileCard from "@/components/forms/csv-import/ImportFileCard.vue";
 import CSVImportErrorMessage from "@/components/forms/csv-import/CSVImportErrorMessage.vue";
-import { useThemeStore } from "@/store/global/themeStore";
+import { useThemeStore } from "@/store/themeStore";
 
 const props = defineProps({
   error: { type: String },

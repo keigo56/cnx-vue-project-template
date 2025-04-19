@@ -20,7 +20,7 @@
 
 <script setup>
 import Toast from "@/components/overlays/Toast.vue";
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 
 const toastsNotificationStore = useToastNotificationStore();
 </script>

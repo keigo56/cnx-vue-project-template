@@ -1,5 +1,5 @@
 import { api } from "@/api/api";
-import { useAuthStore } from "@/store/auth/authStore";
+import { useAuthStore } from "@/store/authStore";
 import router from "@/router/router.js";
 
 async function initializeAuth() {

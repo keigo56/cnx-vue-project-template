@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/store/auth/authStore";
+import { useAuthStore } from "@/store/authStore";
 
 export default async function ({ to, from }) {
   const authStore = useAuthStore();

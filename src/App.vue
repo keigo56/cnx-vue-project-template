@@ -8,7 +8,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { useThemeStore } from "@/store/global/themeStore.js";
+import { useThemeStore } from "@/store/themeStore.js";
 import ToastList from "@/components/overlays/ToastList.vue";
 import GlobalDialogs from "@/components/overlays/GlobalDialogs.vue";
 

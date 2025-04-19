@@ -1,5 +1,9 @@
 <template>
-  <BaseModal title="Add Role" :is-open="isOpen" width="40rem">
+  <BaseModal
+    title="Add Role"
+    :is-open="isOpen"
+    width="40rem"
+  >
     <div class="my-5">
       <Form
         :data="formData"
@@ -38,7 +42,10 @@
           </div>
 
           <div class="grid grid-cols-3 gap-y-2">
-            <div v-for="permission in permissions" :key="permission.id">
+            <div
+              v-for="permission in permissions"
+              :key="permission.id"
+            >
               <input
                 v-model="formData.permissions"
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -91,7 +98,7 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { onMounted, ref } from "vue";
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import Form from "@/components/forms/Form.vue";
 import InputField from "@/components/forms/InputField.vue";
 import CheckboxField from "@/components/forms/CheckboxField.vue";

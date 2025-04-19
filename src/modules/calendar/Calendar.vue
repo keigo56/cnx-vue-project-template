@@ -280,7 +280,7 @@ import ScheduleCard from "@/modules/calendar/components/ScheduleCard.vue";
 import { useCalendarStore } from "@/modules/calendar/store/calendarStore";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { useThemeStore } from "@/store/global/themeStore";
+import { useThemeStore } from "@/store/themeStore";
 import SelectField from "@/components/forms/SelectField.vue";
 
 interface Day {
@@ -489,12 +489,12 @@ const setDefaultDate = () => {
   const sundayDate = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
-    currentDate.getDate() + daysUntilSunday
+    currentDate.getDate() + daysUntilSunday,
   );
   const saturdayDate = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
-    currentDate.getDate() + daysUntilSaturday
+    currentDate.getDate() + daysUntilSaturday,
   );
   searchParams.date = [sundayDate, saturdayDate];
 };
@@ -539,7 +539,7 @@ watch(
     roomNames.value = [];
     searchParams.roomName = "";
     getRooms();
-  }
+  },
 );
 
 watch(searchParams, () => {

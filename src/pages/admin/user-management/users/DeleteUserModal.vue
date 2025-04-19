@@ -1,5 +1,8 @@
 <template>
-  <BaseModal title="Remove User" :is-open="isOpen">
+  <BaseModal
+    title="Remove User"
+    :is-open="isOpen"
+  >
     <div class="my-5">
       <Form
         :data="formData"
@@ -38,7 +41,7 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { onMounted, ref } from "vue";
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import Form from "@/components/forms/Form.vue";
 import { api } from "@/api/api.js";
 import SelectField from "@/components/forms/SelectField.vue";

@@ -47,7 +47,11 @@
   <div class="dark:bg-dark-900 h-screen flex items-center justify-center">
     <div class="flex flex-col items-center">
       <div class="mb-10 flex flex-col items-center">
-        <img class="w-24 h-24 mb-3" :src="logo" alt="" />
+        <img
+          class="w-24 h-24 mb-3"
+          :src="logo"
+          alt=""
+        />
       </div>
       <div
         class="block w-96 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
@@ -91,7 +95,7 @@
 </template>
 
 <script setup>
-import { useThemeStore } from "@/store/global/themeStore.js";
+import { useThemeStore } from "@/store/themeStore.js";
 import logo from "@/assets/logo.svg";
 import { onMounted, ref, watch } from "vue";
 

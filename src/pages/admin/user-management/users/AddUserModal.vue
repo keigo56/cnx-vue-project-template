@@ -1,5 +1,9 @@
 <template>
-  <BaseModal title="Add User" :is-open="isOpen" width="40rem">
+  <BaseModal
+    title="Add User"
+    :is-open="isOpen"
+    width="40rem"
+  >
     <div class="my-8">
       <Form
         :data="formData"
@@ -52,7 +56,7 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { onMounted, ref } from "vue";
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import Form from "@/components/forms/Form.vue";
 import { api } from "@/api/api.js";
 import SelectField from "@/components/forms/SelectField.vue";

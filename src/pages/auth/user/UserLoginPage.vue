@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { useThemeStore } from "@/store/global/themeStore.js";
+import { useThemeStore } from "@/store/themeStore.js";
 import logo from "@/assets/logo.svg";
 import { onMounted, ref, watch } from "vue";
 

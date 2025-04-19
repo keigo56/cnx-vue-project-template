@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
+import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import { frontendLogout } from "@/services/authService.js";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
