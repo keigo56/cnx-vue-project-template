@@ -30,7 +30,7 @@
 
             <!-- If navLink has sub-items -->
             <Collapsible
-              v-else
+              v-if="item.isVisible"
               as-child
               :default-open="item.isActive"
               class="group/collapsible"
@@ -55,6 +55,7 @@
                       :key="subItem.title"
                     >
                       <SidebarMenuSubButton
+                        v-if="subItem.isVisible"
                         as-child
                         :isActive="subItem.isActive"
                       >

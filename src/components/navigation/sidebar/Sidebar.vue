@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import { UserPen, Shield, Home, Package } from "lucide-vue-next";
 import { useRoute } from "vue-router";
+import { hasPermission } from "@/utils/permission";
 
 const route = useRoute();
 
@@ -77,16 +78,22 @@ const data = {
           url: "#",
           icon: UserPen,
           isActive: route.path.includes("/admin/user-management"),
+          isVisible:
+            hasPermission("view_users") ||
+            hasPermission("view_roles") ||
+            hasPermission("view_permissions"),
           items: [
             {
               title: "Users",
               url: "/admin/user-management/users",
               isActive: route.path.includes("/admin/user-management/users"),
+              isVisible: hasPermission("view_users"),
             },
             {
               title: "Roles",
               url: "/admin/user-management/roles",
               isActive: route.path.includes("/admin/user-management/roles"),
+              isVisible: hasPermission("view_roles"),
             },
             {
               title: "Permissions",
@@ -94,6 +101,7 @@ const data = {
               isActive: route.path.includes(
                 "/admin/user-management/permissions",
               ),
+              isVisible: hasPermission("view_permissions"),
             },
           ],
         },
@@ -102,11 +110,13 @@ const data = {
           url: "#",
           icon: Shield,
           isActive: route.path.includes("/admin/audit-trail"),
+          isVisible: hasPermission("view_logs"),
           items: [
             {
               title: "Logs",
               url: "/admin/audit-trail/logs",
               isActive: route.path.includes("/admin/audit-trail/logs"),
+              isVisible: hasPermission("view_logs"),
             },
           ],
         },
