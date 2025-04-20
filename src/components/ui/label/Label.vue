@@ -1,18 +1,19 @@
 <script setup>
-import { cn } from '@/lib/utils';
-import { Label } from 'reka-ui';
-import { computed } from 'vue';
+import { cn } from "@/lib/utils";
+import { Label } from "reka-ui";
+import { computed } from "vue";
+import { labelVariants } from ".";
 
 const props = defineProps({
   for: { type: String, required: false },
   asChild: { type: Boolean, required: false },
   as: { type: null, required: false },
   class: { type: null, required: false },
+  variant: { type: String, required: false },
 });
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props;
-
+  const { class: _, variant: __, ...delegated } = props;
   return delegated;
 });
 </script>
@@ -21,12 +22,7 @@ const delegatedProps = computed(() => {
   <Label
     data-slot="label"
     v-bind="delegatedProps"
-    :class="
-      cn(
-        'flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
-        props.class,
-      )
-    "
+    :class="cn(labelVariants({ variant: props.variant }), props.class)"
   >
     <slot />
   </Label>
