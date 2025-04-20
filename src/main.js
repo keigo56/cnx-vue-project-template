@@ -3,16 +3,13 @@ import "./style.css";
 import router from "./router/router.js";
 import pinia from "./store/pinia.js";
 import App from "./App.vue";
-import { initializeAuth } from "./services/authService";
-import { removeInterceptors, setupInterceptors } from "./api/api";
+import { authService } from "./services/authService";
 
 (async () => {
   const app = createApp(App);
   app.use(pinia);
 
-  removeInterceptors();
-  await initializeAuth();
-  setupInterceptors();
+  await authService.initialize();
 
   app.use(router);
   app.mount("#app");

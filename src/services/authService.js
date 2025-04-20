@@ -1,56 +1,83 @@
-import { api } from "@/api/api";
+import { api, removeInterceptors, setupInterceptors } from "@/api/api";
+import { toast } from "vue-sonner";
 import { useAuthStore } from "@/store/authStore";
 import router from "@/router/router.js";
 
-async function initializeAuth() {
-  await fetchUser();
-}
-
-async function fetchUser() {
-  try {
-    const { data } = await api.get("/api/user");
-    const authStore = useAuthStore();
-    authStore.setData(data);
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return null;
+class AuthService {
+  constructor() {
+    this.ENDPOINTS = {
+      VALIDATE_TOKEN: "/admin/auth/token/validate",
+      LOGOUT: "/admin/auth/logout",
+      USER: "/api/user",
+      CSRF: "sanctum/csrf-cookie",
+    };
   }
-}
 
-async function validateToken(token) {
-  try {
-    await api.get("sanctum/csrf-cookie");
-    await api.post(
-      "/admin/auth/token/validate",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
+  async initialize() {
+    try {
+      await this.fetchUser();
+    } catch (error) {
+      console.error("Authentication initialization error:", error);
+    }
+  }
+
+  async fetchUser() {
+    try {
+      removeInterceptors();
+      const { data } = await api.get(this.ENDPOINTS.USER);
+      const authStore = useAuthStore();
+      authStore.setData(data);
+      return data;
+    } catch (error) {
+      if (!(error.response?.status === 401)) {
+        console.error("User fetch error:", error);
+        const authStore = useAuthStore();
+        authStore.error = error;
+      }
+    } finally {
+      setupInterceptors();
+    }
+  }
+
+  async validateToken(token) {
+    if (!token || typeof token !== "string") {
+      console.error("Invalid token provided");
+      return;
+    }
+
+    try {
+      await api.get(this.ENDPOINTS.CSRF);
+      await api.post(
+        this.ENDPOINTS.VALIDATE_TOKEN,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
         },
-      },
-    );
-    await fetchUser();
-  } catch (error) {
-    console.error("Error validating token:", error);
+      );
+      return await this.fetchUser();
+    } catch (error) {
+      console.error("Token validation error:", error);
+    }
   }
-}
 
-async function logout() {
-  try {
-    await api.delete("/admin/auth/logout");
+  async logout() {
+    try {
+      await api.delete(this.ENDPOINTS.LOGOUT);
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      await this.clearAuthState();
+    }
+  }
+
+  async clearAuthState() {
     const authStore = useAuthStore();
     authStore.reset();
-  } catch (error) {
-    console.error("Error during logout:", error);
+    router.push({ path: "/admin/login" });
   }
 }
 
-async function frontendLogout() {
-  const authStore = useAuthStore();
-  authStore.reset();
-
-  router.push({ path: "/admin/login" });
-}
-
-export { initializeAuth, fetchUser, validateToken, logout, frontendLogout };
+export const authService = new AuthService();

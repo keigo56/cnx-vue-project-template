@@ -19,7 +19,7 @@ import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import logo from "@/assets/logo.svg";
 import { getCookie } from "@/utils/cookies.js";
-import { validateToken } from "@/services/authService";
+import { authService } from "@/services/authService";
 
 const router = useRouter();
 
@@ -34,7 +34,7 @@ onMounted(async () => {
     return;
   }
 
-  await validateToken(API_TOKEN);
+  await authService.validateToken(API_TOKEN);
 
   router.push({
     path: "/admin",

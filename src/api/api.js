@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "vue-sonner";
-import { frontendLogout } from "@/services/authService.js";
+import { authService } from "@/services/authService";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -34,13 +34,11 @@ export const setupInterceptors = () => {
          * If received an unauthenticated response, redirect to login page
          */
         if (error.response.status === 401) {
-          toastNotification.addToast({
-            type: "error",
-            title: "You are not authenticated",
-            message: "Please try to login again",
+          toast.error("You are not authenticated", {
+            description: "Please try to login again",
           });
 
-          frontendLogout();
+          authService.clearAuthState();
         }
 
         /*
@@ -51,7 +49,7 @@ export const setupInterceptors = () => {
             description: "Please try to login again",
           });
 
-          frontendLogout();
+          authService.clearAuthState();
         }
 
         /*
