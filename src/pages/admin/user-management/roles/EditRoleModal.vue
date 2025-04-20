@@ -98,7 +98,7 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { onMounted, ref } from "vue";
-import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
+import { toast } from "vue-sonner";
 import Form from "@/components/forms/Form.vue";
 import InputField from "@/components/forms/InputField.vue";
 import { api } from "@/api/api.js";
@@ -166,11 +166,8 @@ function resetForm() {
 }
 
 function successHandler() {
-  const toastNotification = useToastNotificationStore();
-  toastNotification.addToast({
-    type: "success",
-    title: "Success",
-    message: "Updated Role successfully",
+  toast.success("Success", {
+    description: "Updated Role successfully",
   });
 
   closeModal();

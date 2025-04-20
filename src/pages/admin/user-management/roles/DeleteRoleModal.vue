@@ -40,9 +40,8 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { ref } from "vue";
-import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import Form from "@/components/forms/Form.vue";
-import InputField from "@/components/forms/InputField.vue";
+import { toast } from "vue-sonner";
 
 const isOpen = ref(false);
 
@@ -83,11 +82,8 @@ function resetForm() {
 }
 
 function successHandler() {
-  const toastNotification = useToastNotificationStore();
-  toastNotification.addToast({
-    type: "success",
-    title: "Success",
-    message: "Deleted Role successfully",
+  toast.success("Success", {
+    description: "Deleted Role successfully",
   });
 
   closeModal();

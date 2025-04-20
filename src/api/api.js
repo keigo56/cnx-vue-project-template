@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
+import { toast } from "vue-sonner";
 import { frontendLogout } from "@/services/authService.js";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -30,8 +30,6 @@ export const setupInterceptors = () => {
     },
     async function (error) {
       if (error.code === "ERR_BAD_REQUEST") {
-        let toastNotification = useToastNotificationStore();
-
         /*
          * If received an unauthenticated response, redirect to login page
          */
@@ -49,10 +47,8 @@ export const setupInterceptors = () => {
          * If received an unauthenticated response, redirect to login page
          */
         if (error.response.status === 419) {
-          toastNotification.addToast({
-            type: "error",
-            title: "Session Expired",
-            message: "Please try to login again",
+          toast.error("Session Expired", {
+            description: "Please try to login again",
           });
 
           frontendLogout();
@@ -62,29 +58,21 @@ export const setupInterceptors = () => {
          * If received forbidden response, redirect to login page
          */
         if (error.response.status === 403) {
-          toastNotification.addToast({
-            type: "error",
-            title: "Forbidden",
-            message: "You do not have rights to perform this action",
+          toast.error("Forbidden", {
+            description: "You do not have rights to perform this action",
           });
         }
       }
 
       if (error.code === "ERR_NETWORK") {
-        let toastNotification = useToastNotificationStore();
-        toastNotification.addToast({
-          type: "error",
-          title: "Server Unavailable",
-          message: "Unable to connect to the server. Please try again.",
+        toast.error("Server Unavailable", {
+          description: "Unable to connect to the server. Please try again.",
         });
       }
 
       if (error.code === "ECONNABORTED") {
-        const toastNotification = useToastNotificationStore();
-        toastNotification.addToast({
-          type: "warning",
-          title: "Request Timeout",
-          message:
+        toast.warning("Request Timeout", {
+          description:
             "The request took too long to process and was aborted. Please check your network connection and try again.",
         });
       }

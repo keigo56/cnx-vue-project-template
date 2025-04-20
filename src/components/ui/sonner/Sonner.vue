@@ -1,17 +1,17 @@
 <script setup>
-import { Toaster as Sonner } from 'vue-sonner';
+import { Toaster as Sonner } from "vue-sonner";
 
 const props = defineProps({
   invert: { type: Boolean, required: false },
   theme: { type: String, required: false },
   position: { type: String, required: false },
   hotkey: { type: Array, required: false },
-  richColors: { type: Boolean, required: false },
+  richColors: { type: Boolean, required: false, default: true },
   expand: { type: Boolean, required: false },
-  duration: { type: Number, required: false },
+  duration: { type: Number, required: false, default: 10000 },
   gap: { type: Number, required: false },
   visibleToasts: { type: Number, required: false },
-  closeButton: { type: Boolean, required: false },
+  closeButton: { type: Boolean, required: false, default: true },
   toastOptions: { type: Object, required: false },
   class: { type: String, required: false },
   style: { type: Object, required: false },

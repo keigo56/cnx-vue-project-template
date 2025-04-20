@@ -98,10 +98,9 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { onMounted, ref } from "vue";
-import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
+import { toast } from "vue-sonner";
 import Form from "@/components/forms/Form.vue";
 import InputField from "@/components/forms/InputField.vue";
-import CheckboxField from "@/components/forms/CheckboxField.vue";
 import { api } from "@/api/api.js";
 
 const isOpen = ref(false);
@@ -154,11 +153,8 @@ function resetForm() {
 }
 
 function successHandler() {
-  const toastNotification = useToastNotificationStore();
-  toastNotification.addToast({
-    type: "success",
-    title: "Success",
-    message: "Added Role successfully",
+  toast.success("Success", {
+    description: "Added Role successfully",
   });
 
   closeModal();

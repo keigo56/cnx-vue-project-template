@@ -57,12 +57,11 @@
 <script setup>
 import BaseModal from "@/components/overlays/BaseModal.vue";
 import { onMounted, ref } from "vue";
-import { useToastNotificationStore } from "@/store/toastNotificationStore.js";
 import Form from "@/components/forms/Form.vue";
 import { api } from "@/api/api.js";
 import SelectField from "@/components/forms/SelectField.vue";
 import ComboBoxField from "@/components/forms/ComboBoxField.vue";
-
+import { toast } from "vue-sonner";
 const isOpen = ref(false);
 
 const formData = ref({});
@@ -107,11 +106,8 @@ function resetForm() {
 }
 
 function successHandler() {
-  const toastNotification = useToastNotificationStore();
-  toastNotification.addToast({
-    type: "success",
-    title: "Success",
-    message: "Updated User successfully",
+  toast.success("Success", {
+    description: "Updated User successfully",
   });
 
   closeModal();
