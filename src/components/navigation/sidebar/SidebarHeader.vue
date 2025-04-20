@@ -17,7 +17,7 @@
           </div>
           <div class="flex flex-col gap-0.5 leading-none">
             <span class="font-semibold">Application Name</span>
-            <span class="text-xs">v1.0.0</span>
+            <span class="text-xs">Admin</span>
           </div>
         </a>
       </SidebarMenuButton>
