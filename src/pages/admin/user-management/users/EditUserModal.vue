@@ -1,10 +1,12 @@
 <template>
-  <BaseModal
-    title="Edit User"
-    :is-open="isOpen"
-    width="40rem"
-  >
-    <div class="my-8">
+  <Dialog :open="isOpen">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Edit User</DialogTitle>
+        <DialogDescription
+          >Edit an existing user in the system.</DialogDescription
+        >
+      </DialogHeader>
       <Form
         :data="formData"
         url="/api/users/update"
@@ -12,56 +14,65 @@
         id="edit_user_form"
         @on-success="successHandler"
         @on-form-validation-error="formValidationErrorHandler"
+        class="space-y-4 mb-2"
       >
-        <ComboBoxField
-          source-url="/api/users/employee/search"
-          placeholder="Select Email"
-          id="user_email"
-          v-model="formData.email"
-          label="Email"
-          :error="formValidationErrors.email"
-          disabled
-        />
+        <div class="space-y-4">
+          <ComboBoxField
+            source-url="/api/users/employee/search"
+            placeholder="Select Email"
+            id="user_email"
+            v-model="formData.email"
+            label="Email"
+            :error="formValidationErrors.email"
+            disabled
+          />
 
-        <SelectField
-          placeholder="Select Role"
-          :items="roles"
-          id="role_id"
-          v-model="formData.role_id"
-          label="Role"
-          :error="formValidationErrors.role_id"
-        />
+          <SelectField
+            placeholder="Select Role"
+            :items="roles"
+            id="role_id"
+            v-model="formData.role_id"
+            label="Role"
+            :error="formValidationErrors.role_id"
+          />
+        </div>
       </Form>
-    </div>
 
-    <div class="mt-4 flex space-x-2">
-      <button
-        form="edit_user_form"
-        type="submit"
-        class="inline-flex justify-center rounded-md border border-transparent bg-brand-800 text-gray-100 dark:text-white px-4 py-2 text-sm font-medium dark:hover:bg-brand-700 hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-      >
-        Submit
-      </button>
-
-      <button
-        @click="closeModal()"
-        type="button"
-        class="inline-flex justify-center rounded-md border border-transparent dark:text-white px-4 py-2 text-sm font-medium dark:hover:bg-brand-700 hover:bg-brand-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-      >
-        Cancel
-      </button>
-    </div>
-  </BaseModal>
+      <DialogFooter>
+        <Button
+          variant="outline"
+          @click="closeModal()"
+        >
+          Cancel
+        </Button>
+        <Button
+          form="edit_user_form"
+          type="submit"
+        >
+          Submit
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>
 
 <script setup>
-import BaseModal from "@/components/overlays/BaseModal.vue";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { onMounted, ref } from "vue";
 import Form from "@/components/forms/Form.vue";
 import { api } from "@/api/api.js";
 import SelectField from "@/components/forms/SelectField.vue";
 import ComboBoxField from "@/components/forms/ComboBoxField.vue";
 import { toast } from "vue-sonner";
+import Button from "@/components/ui/button/Button.vue";
+
 const isOpen = ref(false);
 
 const formData = ref({});
@@ -101,7 +112,6 @@ function closeModal() {
 
 function resetForm() {
   formData.value = {};
-
   formValidationErrors.value = {};
 }
 

@@ -1,17 +1,18 @@
 <script setup>
-import { cn } from '@/lib/utils';
-import { X } from 'lucide-vue-next';
+import { cn } from "@/lib/utils";
+import { X } from "lucide-vue-next";
 import {
   DialogClose,
   DialogContent,
   DialogPortal,
   useForwardPropsEmits,
-} from 'reka-ui';
-import { computed } from 'vue';
-import DialogOverlay from './DialogOverlay.vue';
+} from "reka-ui";
+import { computed } from "vue";
+import DialogOverlay from "./DialogOverlay.vue";
 
 const props = defineProps({
   forceMount: { type: Boolean, required: false },
+  withCloseButton: { type: Boolean, required: false, default: false },
   trapFocus: { type: Boolean, required: false },
   disableOutsidePointerEvents: { type: Boolean, required: false },
   asChild: { type: Boolean, required: false },
@@ -19,12 +20,12 @@ const props = defineProps({
   class: { type: null, required: false },
 });
 const emits = defineEmits([
-  'escapeKeyDown',
-  'pointerDownOutside',
-  'focusOutside',
-  'interactOutside',
-  'openAutoFocus',
-  'closeAutoFocus',
+  "escapeKeyDown",
+  "pointerDownOutside",
+  "focusOutside",
+  "interactOutside",
+  "openAutoFocus",
+  "closeAutoFocus",
 ]);
 
 const delegatedProps = computed(() => {
@@ -52,6 +53,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
       <slot />
 
       <DialogClose
+        v-if="withCloseButton"
         class="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
       >
         <X />
