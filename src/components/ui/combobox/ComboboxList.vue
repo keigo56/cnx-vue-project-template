@@ -1,15 +1,15 @@
 <script setup>
-import { cn } from '@/lib/utils';
-import { reactiveOmit } from '@vueuse/core';
-import { ComboboxContent, ComboboxPortal, useForwardPropsEmits } from 'reka-ui';
+import { cn } from "@/lib/utils";
+import { reactiveOmit } from "@vueuse/core";
+import { ComboboxContent, useForwardPropsEmits } from "reka-ui";
 
 const props = defineProps({
   forceMount: { type: Boolean, required: false },
-  position: { type: String, required: false, default: 'popper' },
+  position: { type: String, required: false, default: "popper" },
   bodyLock: { type: Boolean, required: false },
   side: { type: null, required: false },
   sideOffset: { type: Number, required: false, default: 4 },
-  align: { type: null, required: false, default: 'center' },
+  align: { type: null, required: false, default: "center" },
   alignOffset: { type: Number, required: false },
   avoidCollisions: { type: Boolean, required: false },
   collisionBoundary: { type: null, required: false },
@@ -29,29 +29,27 @@ const props = defineProps({
   viewportClass: { type: null, required: false },
 });
 const emits = defineEmits([
-  'escapeKeyDown',
-  'pointerDownOutside',
-  'focusOutside',
-  'interactOutside',
+  "escapeKeyDown",
+  "pointerDownOutside",
+  "focusOutside",
+  "interactOutside",
 ]);
 
-const delegatedProps = reactiveOmit(props, 'class', 'viewportClass');
+const delegatedProps = reactiveOmit(props, "class", "viewportClass");
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-  <ComboboxPortal>
-    <ComboboxContent
-      data-slot="combobox-list"
-      v-bind="forwarded"
-      :class="
-        cn(
-          'z-50 w-[200px] rounded-md border bg-popover text-popover-foreground origin-(--reka-combobox-content-transform-origin) overflow-hidden shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-          props.class,
-        )
-      "
-    >
-      <slot />
-    </ComboboxContent>
-  </ComboboxPortal>
+  <ComboboxContent
+    data-slot="combobox-list"
+    v-bind="forwarded"
+    :class="
+      cn(
+        'z-50 w-[200px] rounded-md border bg-popover text-popover-foreground origin-(--reka-combobox-content-transform-origin) overflow-hidden shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+        props.class,
+      )
+    "
+  >
+    <slot />
+  </ComboboxContent>
 </template>

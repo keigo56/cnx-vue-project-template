@@ -16,12 +16,14 @@
       >
         <div class="space-y-4">
           <ComboBoxField
-            source-url="/api/users/employee/search"
             placeholder="Select Email"
             id="user_email"
-            v-model="formData.email"
+            v-model="selectedEmployee"
             label="Email"
             :error="formValidationErrors.email"
+            :items="employees"
+            :loading="isSearching"
+            @search="searchEmployees"
           />
 
           <SelectField
@@ -62,23 +64,29 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import Form from "@/components/forms/Form.vue";
 import { api } from "@/api/api.js";
 import SelectField from "@/components/forms/SelectField.vue";
 import ComboBoxField from "@/components/forms/ComboBoxField.vue";
 import { toast } from "vue-sonner";
 import Button from "@/components/ui/button/Button.vue";
+
 const isOpen = ref(false);
-
 const formData = ref({});
-
+const employees = ref([]);
 const roles = ref([]);
-
 const formValidationErrors = ref({});
+const isSearching = ref(false);
+const selectedEmployee = ref(null);
+
+watch(selectedEmployee, (newValue) => {
+  formData.value.email = newValue?.value;
+});
 
 onMounted(() => {
   getAllRoles();
+  searchEmployees("");
 });
 
 defineExpose({
@@ -96,6 +104,18 @@ function getAllRoles() {
   });
 }
 
+async function searchEmployees(query) {
+  isSearching.value = true;
+  try {
+    const response = await api.get("/api/users/employee/search", {
+      params: { query },
+    });
+    employees.value = response.data.result;
+  } finally {
+    isSearching.value = false;
+  }
+}
+
 function openModal() {
   isOpen.value = true;
 }
@@ -107,8 +127,8 @@ function closeModal() {
 
 function resetForm() {
   formData.value = {};
-
   formValidationErrors.value = {};
+  selectedEmployee.value = null;
 }
 
 function successHandler() {

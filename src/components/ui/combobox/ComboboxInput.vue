@@ -1,8 +1,8 @@
 <script setup>
-import { cn } from '@/lib/utils';
-import { SearchIcon } from 'lucide-vue-next';
-import { ComboboxInput, useForwardPropsEmits } from 'reka-ui';
-import { computed } from 'vue';
+import { cn } from "@/lib/utils";
+import { SearchIcon } from "lucide-vue-next";
+import { ComboboxInput, useForwardPropsEmits } from "reka-ui";
+import { computed } from "vue";
 
 defineOptions({
   inheritAttrs: false,
@@ -16,9 +16,10 @@ const props = defineProps({
   asChild: { type: Boolean, required: false },
   as: { type: null, required: false },
   class: { type: null, required: false },
+  loading: { type: Boolean, required: false, default: false },
 });
 
-const emits = defineEmits(['update:modelValue']);
+const emits = defineEmits(["update:modelValue"]);
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props;
@@ -34,7 +35,16 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     data-slot="command-input-wrapper"
     class="flex h-9 items-center gap-2 border-b px-3"
   >
-    <SearchIcon class="size-4 shrink-0 opacity-50" />
+    <SearchIcon
+      v-if="!loading"
+      class="size-4 shrink-0 opacity-50"
+    />
+    <div
+      v-if="loading"
+      class="size-4 shrink-0 opacity-50"
+    >
+      <div class="w-4 h-4 loader"></div>
+    </div>
     <ComboboxInput
       data-slot="command-input"
       :class="
