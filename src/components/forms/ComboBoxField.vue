@@ -2,8 +2,7 @@
   <div>
     <div class="flex flex-col-reverse gap-y-2">
       <Combobox
-        :model-value="modelValue"
-        @update:model-value="$emit('update:modelValue', $event)"
+        v-model="selectedItem"
         by="label"
         :disabled="disabled"
       >
@@ -20,9 +19,9 @@
             <Button
               variant="outline"
               class="justify-between data-[placeholder=true]:text-muted-foreground font-normal"
-              :data-placeholder="!modelValue"
+              :data-placeholder="!selectedItem"
             >
-              {{ modelValue?.label ?? placeholder }}
+              {{ selectedItem?.label ?? placeholder }}
               <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </ComboboxTrigger>
@@ -74,6 +73,7 @@
   </div>
 </template>
 <script setup>
+import { ref, watch, onMounted } from "vue";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -88,7 +88,7 @@ import {
   ComboboxTrigger,
 } from "@/components/ui/combobox";
 import { Check, ChevronsUpDown, Search } from "lucide-vue-next";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { Label } from "@/components/ui/label";
 
 const props = defineProps({
@@ -135,6 +135,42 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue", "search"]);
+
+const selectedItem = ref();
+
+onMounted(() => {
+  selectedItem.value =
+    props.items.find((item) => item.value === props.modelValue) || undefined;
+});
+
+watch(
+  () => props.modelValue,
+  (newVal, oldVal) => {
+    if (!newVal) {
+      return;
+    }
+    selectedItem.value =
+      props.items.find((item) => item.value === newVal) || undefined;
+  },
+);
+
+watch(
+  () => props.items,
+  (newVal, oldVal) => {
+    if (!newVal) {
+      return;
+    }
+    selectedItem.value =
+      props.items.find((item) => item.value === newVal) || undefined;
+  },
+);
+
+watch(selectedItem, (newVal) => {
+  if (!newVal) {
+    return;
+  }
+  emit("update:modelValue", newVal.value);
+});
 
 const hasError = computed(() => {
   if (Array.isArray(props.error)) {
