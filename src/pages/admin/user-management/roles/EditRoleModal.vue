@@ -41,6 +41,7 @@
                 @click="changeSelection()"
                 type="button"
                 class="text-xs"
+                size="sm"
               >
                 {{ allPermissionSelected ? "Unselect All" : "Select All" }}
               </Button>
@@ -51,19 +52,19 @@
                 v-for="permission in permissions"
                 :key="permission.id"
               >
-                <input
-                  v-model="formData.permissions"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  type="checkbox"
-                  :value="permission.id"
-                  :id="`permission-${permission.id}`"
-                />
-                <label
-                  :for="`permission-${permission.id}`"
-                  class="ml-2 text-sm text-gray-900 dark:text-gray-300"
-                >
-                  {{ permission.name }}
-                </label>
+                <CheckboxGroupRoot v-model="formData.permissions">
+                  <Checkbox
+                    :value="permission.id"
+                    :id="`permission-${permission.id}`"
+                  />
+
+                  <label
+                    :for="`permission-${permission.id}`"
+                    class="ml-2 text-sm text-gray-900 dark:text-gray-300"
+                  >
+                    {{ permission.name }}
+                  </label>
+                </CheckboxGroupRoot>
               </div>
             </div>
             <p
@@ -113,6 +114,8 @@ import Form from "@/components/forms/Form.vue";
 import InputField from "@/components/forms/InputField.vue";
 import { api } from "@/api/api.js";
 import Button from "@/components/ui/button/Button.vue";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckboxGroupRoot } from "reka-ui";
 
 const isOpen = ref(false);
 
