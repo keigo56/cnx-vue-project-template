@@ -21,9 +21,10 @@
             source-url="/api/users/employee/search"
             placeholder="Select Email"
             id="user_email"
-            v-model="selectedEmployee"
+            v-model="formData.email"
             label="Email"
             :error="formValidationErrors.email"
+            :items="employees"
             disabled
           />
 
@@ -65,7 +66,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import Form from "@/components/forms/Form.vue";
 import { api } from "@/api/api.js";
 import SelectField from "@/components/forms/SelectField.vue";
@@ -77,11 +78,7 @@ const isOpen = ref(false);
 const formData = ref({});
 const roles = ref([]);
 const formValidationErrors = ref({});
-const selectedEmployee = ref(null);
-
-watch(selectedEmployee, (newValue) => {
-  formData.value.email = newValue?.value;
-});
+const employees = ref([]);
 
 onMounted(() => {
   getAllRoles();
@@ -115,7 +112,7 @@ function closeModal() {
 function resetForm() {
   formData.value = {};
   formValidationErrors.value = {};
-  selectedEmployee.value = null;
+  employees.value = [];
 }
 
 function successHandler() {
@@ -134,9 +131,12 @@ function formValidationErrorHandler(errorResponse) {
 
 function setData(row) {
   formData.value = { ...row };
-  selectedEmployee.value = {
-    value: row.email,
-    label: row.email,
-  };
+
+  employees.value = [
+    {
+      value: formData.value.email,
+      label: formData.value.email,
+    },
+  ];
 }
 </script>

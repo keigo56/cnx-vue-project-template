@@ -18,7 +18,7 @@
           <ComboBoxField
             placeholder="Select Email"
             id="user_email"
-            v-model="selectedEmployee"
+            v-model="formData.email"
             label="Email"
             :error="formValidationErrors.email"
             :items="employees"
@@ -64,7 +64,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import Form from "@/components/forms/Form.vue";
 import { api } from "@/api/api.js";
 import SelectField from "@/components/forms/SelectField.vue";
@@ -78,11 +78,6 @@ const employees = ref([]);
 const roles = ref([]);
 const formValidationErrors = ref({});
 const isSearching = ref(false);
-const selectedEmployee = ref(null);
-
-watch(selectedEmployee, (newValue) => {
-  formData.value.email = newValue?.value;
-});
 
 onMounted(() => {
   getAllRoles();
@@ -128,7 +123,6 @@ function closeModal() {
 function resetForm() {
   formData.value = {};
   formValidationErrors.value = {};
-  selectedEmployee.value = null;
 }
 
 function successHandler() {
