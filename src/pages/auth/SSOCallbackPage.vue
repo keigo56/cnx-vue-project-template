@@ -1,15 +1,13 @@
 <template>
-  <div
-    class="flex items-center justify-center h-screen text-black dark:bg-dark-900 dark:text-white"
-  >
+  <div class="flex items-center justify-center h-screen bg-background">
     <div class="flex flex-col items-center mb-10">
       <img
         class="w-24 h-24 mb-3"
-        :src="logo"
+        src="/vite.svg"
         alt=""
       />
-      <p class="mb-3 text-xl dark:text-white">Please wait for a moment</p>
-      <p class="text-sm dark:text-gray-400">Logging you in...</p>
+      <p class="mb-1 text-xl font-semibold">Please wait for a moment</p>
+      <p class="text-foreground/70">Logging you in...</p>
     </div>
   </div>
 </template>
@@ -17,7 +15,6 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import logo from "@/assets/logo.svg";
 import { getCookie } from "@/utils/cookies.js";
 import { authService } from "@/services/authService";
 
