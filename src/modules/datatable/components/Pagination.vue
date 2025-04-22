@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-3 px-3 dark:bg-dark-900"
+    class="py-3 px-3 dark:bg-neutral-900"
     v-show="hasRows"
   >
     <div class="flex justify-between items-center">
@@ -16,44 +16,43 @@
             v-for="(link, index) in props.rows.links"
             :key="link.label"
           >
-            <button
+            <Button
+              size="sm"
+              variant="outline"
+              :disabled="link.url === null"
               @click="changePageNumber(link.url !== null, link.url)"
               v-if="index === 0"
               :class="[
-                'h-8 px-2 py-1.5 text-sm ml-0 leading-tight text-gray-500 bg-gray-100 dark:bg-dark-100 border border-gray-300 rounded-l-md dark:border-dark-100 dark:text-gray-400',
-                link.url === null
-                  ? ' cursor-not-allowed dark:bg-dark-900'
-                  : ' cursor-pointer bg-white dark:bg-dark-900 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-neutral-900 dark:hover:text-white',
+                'rounded-l-md rounded-r-none w-8',
+                link.url === null ? 'cursor-not-allowed' : '',
               ]"
             >
               <ChevronLeftIcon class="h-4" />
-            </button>
+            </Button>
 
-            <button
+            <Button
+              size="sm"
+              :variant="link.active ? 'default' : 'outline'"
               v-else-if="index !== props.rows.links.length - 1 && index !== 0"
               @click="changePageNumber(link.url !== null, link.url)"
-              :class="[
-                'h-8 px-3 py-1.5 text-sm leading-tight border border-gray-300 dark:border-dark-100  dark:bg-dark-100 dark:text-gray-400 dark:hover:bg-neutral-900 dark:hover:text-white',
-                link.active
-                  ? 'bg-gray-200 text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:bg-neutral-800'
-                  : 'bg-white text-gray-500 dark:bg-dark-900 hover:bg-gray-100 hover:text-gray-700 ',
-              ]"
+              class="rounded-none w-8"
             >
-              {{ link.label }}
-            </button>
+              <span class="text-xs">{{ link.label }}</span>
+            </Button>
 
-            <button
+            <Button
+              size="sm"
+              variant="outline"
+              :disabled="link.url === null"
               v-else-if="index === props.rows.links.length - 1"
               @click="changePageNumber(link.url !== null, link.url)"
               :class="[
-                'h-8 px-2 py-1.5 text-sm ml-0 leading-tight text-gray-500 bg-gray-100 border dark:bg-dark-100 border-gray-300 rounded-r-md dark:border-dark-100 dark:text-gray-400',
-                link.url === null
-                  ? ' cursor-not-allowed dark:bg-dark-900'
-                  : ' cursor-pointer bg-white dark:bg-dark-900 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-neutral-900 dark:hover:text-white ',
+                'rounded-l-none rounded-r-md w-8',
+                link.url === null ? 'cursor-not-allowed' : '',
               ]"
             >
               <ChevronRightIcon class="h-4" />
-            </button>
+            </Button>
           </li>
         </ul>
       </nav>
@@ -64,6 +63,7 @@
 <script setup>
 import { computed } from "vue";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
+import Button from "@/components/ui/button/Button.vue";
 const props = defineProps({
   rows: {
     type: Object,

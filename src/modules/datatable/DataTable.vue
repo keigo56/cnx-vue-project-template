@@ -120,7 +120,7 @@
           />
           <tbody>
             <TableRow
-              class="bg-gray-100 dark:bg-dark-100"
+              class="bg-gray-100 dark:bg-neutral-900"
               v-if="
                 !!datatableData.rows.data &&
                 datatableData.rows.data.length === 0
@@ -144,7 +144,7 @@
                 showLoading === true
               "
               v-for="row in 10"
-              class="bg-white border-b dark:bg-dark-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
+              class="bg-white border-b dark:bg-neutral-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
             >
               <TableData
                 v-for="column in 5"
@@ -174,7 +174,7 @@
             <TableRow
               v-for="(row, index) in datatableData.rows.data"
               :key="row['id']"
-              class="bg-white border-b dark:bg-dark-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
+              class="bg-white border-b dark:bg-neutral-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800/10"
             >
               <TableData
                 class="w-4 px-4 py-3"

@@ -51,7 +51,7 @@
         v-for="column in props.columns"
         :key="column.key"
         :class="[
-          'px-6 py-3 cursor-pointer hover:bg-gray-100 hover:dark:bg-neutral-900',
+          'px-6 py-3 cursor-pointer hover:bg-gray-100 hover:dark:bg-neutral-800/20',
           selectedColumn.key === column.key
             ? 'bg-gray-100 dark:bg-neutral-900'
             : '',
