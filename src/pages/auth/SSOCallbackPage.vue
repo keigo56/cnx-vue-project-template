@@ -1,59 +1,40 @@
 <template>
-  <div
-    class="dark:bg-dark-900 text-black dark:text-white h-screen flex items-center justify-center"
-  >
-    <div class="mb-10 flex flex-col items-center">
-      <img class="w-24 h-24 mb-3" :src="logo" alt="" />
-      <p class="dark:text-white mb-3 text-xl">Please wait for a moment</p>
-      <p class="dark:text-gray-400 text-sm">Logging you in...</p>
+  <div class="flex items-center justify-center h-screen bg-background">
+    <div class="flex flex-col items-center mb-10">
+      <img
+        class="w-24 h-24 mb-3"
+        src="/vite.svg"
+        alt=""
+      />
+      <p class="mb-1 text-xl font-semibold">Please wait for a moment</p>
+      <p class="text-foreground/70">Logging you in...</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute, useRouter } from "vue-router";
-import { useUserStore } from "@/store/auth/userStore.js";
+import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import { api } from "@/api/api.js";
-import logo from "@/assets/logo.svg";
+import { getCookie } from "@/utils/cookies.js";
+import { authService } from "@/services/authService";
 
 const router = useRouter();
-const route = useRoute();
 
-const userStore = useUserStore();
-
-onMounted(() => {
+onMounted(async () => {
   /*
-   * Get the API Token from the query, coming from the server
+   * Get the API Token from cookie, coming from the server
    * */
-  const API_TOKEN = route.query.token.toString();
+  const API_TOKEN = getCookie("azure_authorization");
 
-  /*
-   * If the token does not exist, clear the session storage and redirect to index page
-   * */
   if (!API_TOKEN) {
-    router.push({
-      path: "/login",
-    });
+    router.push({ path: "/login" });
+    return;
   }
 
-  api.get("sanctum/csrf-cookie").then((response) => {
-    api
-      .post(
-        "auth/token/validate",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-            Accept: "application/json",
-          },
-        }
-      )
-      .then(() => {
-        router.push({
-          path: "/",
-        });
-      });
+  await authService.validateToken(API_TOKEN);
+
+  router.push({
+    path: "/",
   });
 });
 </script>

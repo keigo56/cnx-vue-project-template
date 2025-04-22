@@ -1,40 +1,37 @@
 <template>
-  <div class="my-5">
-    <label
-      v-show="showLabel"
-      :for="props.id"
-      :class="[
-        props.error.length > 0
-          ? 'block mb-2 text-sm font-medium text-red-900 dark:text-red-400'
-          : 'block mb-2 text-sm font-medium text-gray-900 dark:text-white',
-      ]"
+  <div>
+    <div class="flex flex-col-reverse gap-y-2">
+      <Input
+        :type="props.type"
+        :model-value="props.modelValue"
+        @update:model-value="($event) => emit('update:modelValue', $event)"
+        :disabled="props.disabled"
+        :placeholder="props.placeholder"
+        :id="props.id"
+        :variant="hasError ? 'error' : 'default'"
+      />
+      <Label
+        v-show="showLabel"
+        :for="props.id"
+        :variant="hasError ? 'error' : 'default'"
+      >
+        {{ props.label }}
+      </Label>
+    </div>
+    <span
+      v-show="hasError"
+      class="text-xs font-semibold text-red-500 dark:text-red-500"
     >
-      {{ props.label }}
-    </label>
-    <input
-      :type="props.type"
-      :value="props.modelValue"
-      @input="($event) => emit('update:modelValue', $event.target.value)"
-      type="text"
-      :disabled="props.disabled"
-      :placeholder="props.placeholder"
-      :id="props.id"
-      :class="[
-        props.error.length > 0
-          ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-dark-100 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
-          : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-dark-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
-      ]"
-    />
-    <p
-      v-show="props.error"
-      class="mt-1 text-xs text-red-600 dark:text-red-500 font-semibold"
-    >
-      {{ props.error[0] }}
-    </p>
+      {{ errorMessage }}
+    </span>
   </div>
 </template>
 
 <script setup>
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { computed } from "vue";
+
 const props = defineProps({
   type: {
     type: String,
@@ -46,8 +43,8 @@ const props = defineProps({
     required: true,
   },
   error: {
-    type: Array,
-    default: [],
+    type: [Array, String],
+    default: () => [],
   },
   label: {
     type: String,
@@ -72,4 +69,18 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue"]);
+
+const hasError = computed(() => {
+  if (Array.isArray(props.error)) {
+    return props.error.length > 0;
+  }
+  return !!props.error;
+});
+
+const errorMessage = computed(() => {
+  if (Array.isArray(props.error)) {
+    return props.error[0] || "";
+  }
+  return props.error || "";
+});
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5">
+  <div>
     <label
       v-show="showLabel"
       :for="props.id"
@@ -87,7 +87,7 @@
 <script setup>
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import { useThemeStore } from "@/store/global/themeStore";
+import { useThemeStore } from "@/store/themeStore";
 import { watch, ref, computed } from "vue";
 const props = defineProps({
   error: {
@@ -146,14 +146,14 @@ watch(
   () => props.error,
   (newValue, oldValue) => {
     errors.value = newValue;
-  }
+  },
 );
 
 watch(
   () => props.modelValue,
   (newValue, oldValue) => {
     errors.value = [];
-  }
+  },
 );
 </script>
 

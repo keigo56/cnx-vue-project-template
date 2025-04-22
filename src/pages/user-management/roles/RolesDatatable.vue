@@ -9,15 +9,13 @@
     ref="rolesDatatable"
   >
     <template #actionItems>
-      <button
+      <Button
         v-if="hasPermission('add_roles')"
         @click="addRoleModal.openModal()"
-        type="button"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
       >
-        <PlusIcon class="w-4 h-4 mr-2 inline" />
+        <Plus class="w-5 h-5" />
         <span>Add Role</span>
-      </button>
+      </Button>
     </template>
 
     <template v-slot:rowActionItems="props">
@@ -39,8 +37,14 @@
       </a>
     </template>
   </DataTable>
-  <AddRoleModal @success="rolesDatatable.fetchData()" ref="addRoleModal" />
-  <EditRoleModal @success="rolesDatatable.fetchData()" ref="editRoleModal" />
+  <AddRoleModal
+    @success="rolesDatatable.fetchData()"
+    ref="addRoleModal"
+  />
+  <EditRoleModal
+    @success="rolesDatatable.fetchData()"
+    ref="editRoleModal"
+  />
   <DeleteRoleModal
     @success="rolesDatatable.fetchData()"
     ref="deleteRoleModal"
@@ -49,13 +53,13 @@
 
 <script setup>
 import DataTable from "@/modules/datatable/DataTable.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline/index.js";
+import { Plus } from "lucide-vue-next";
 import AddRoleModal from "@/pages/user-management/roles/AddRoleModal.vue";
 import { ref } from "vue";
 import EditRoleModal from "@/pages/user-management/roles/EditRoleModal.vue";
 import DeleteRoleModal from "@/pages/user-management/roles/DeleteRoleModal.vue";
-import { hasPermission } from "@/composable/checkPermission.js";
-
+import { hasPermission } from "@/utils/permission";
+import Button from "@/components/ui/button/Button.vue";
 const addRoleModal = ref(null);
 const editRoleModal = ref(null);
 const deleteRoleModal = ref(null);

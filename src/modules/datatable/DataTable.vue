@@ -1,14 +1,27 @@
 <template>
-  <div class="w-full px-1 py-1">
-    <div class="mb-3 flex items-center justify-between">
-      <div class="flex items-center space-x-2">
+  <div class="w-full font-inter">
+    <div class="flex items-center justify-between mb-3">
+      <div
+        class="relative flex items-center"
+        v-show="withSearch"
+      >
+        <div class="absolute left-2.5 pointer-events-none">
+          <div
+            class="w-4 h-4 mr-2 loader"
+            v-show="isSearching"
+          ></div>
+          <MagnifyingGlassIcon
+            v-show="!isSearching"
+            class="w-4 h-4 text-neutral-700 dark:text-neutral-400"
+          />
+        </div>
+
         <input
           :disabled="isInitialLoad"
-          v-show="withSearch"
           v-model="searchTerm"
           type="text"
           id="search_term"
-          class="w-96 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-dark-100 autofill:text-gray-100 dark:border-neutral-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="pl-8 text-sm rounded-lg h-11 border-1 w-96 bg-neutral-50 dark:bg-background border-input placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           :class="[isInitialLoad && 'cursor-not-allowed']"
           placeholder="Search..."
         />
@@ -17,51 +30,54 @@
           type="button"
           class="py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-800 dark:hover:text-white dark:hover:bg-neutral-700"
         >
-          <FunnelIcon class="w-4 h-4 mr-2 inline" />
+          <FunnelIcon class="inline w-4 h-4 mr-2" />
           <span>Filter</span>
         </button> -->
       </div>
       <!--
           Action Items
       -->
-      <div class="flex items-center justify-evenly space-x-2">
+      <div class="flex items-center space-x-2 justify-evenly">
         <slot name="actionItems"></slot>
-        <button
+        <Button
           :disabled="isInitialLoad || exportLoading"
           v-if="props.canExport"
           @click="exportItems()"
           type="button"
-          class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-800 dark:hover:text-white dark:hover:bg-neutral-700 disabled:bg-gray-100 disabled:text-gray-500 disabled:dark:text-gray-500 disabled:hover:text-gray-500 dark:disabled:bg-gray-800 disabled:dark:hover:text-gray-500 disabled:cursor-not-allowed"
+          variant="secondary"
         >
-          <ArrowDownTrayIcon
-            v-show="!exportLoading"
-            class="w-4 h-4 mr-2 inline"
-          />
-          <ArrowPathIcon
-            v-show="exportLoading"
-            class="w-4 h-4 mr-2 inline animate-spin"
-          />
-          <span>Export</span>
-        </button>
+          <div class="flex items-center justify-center">
+            <ArrowDownTrayIcon
+              v-show="!exportLoading"
+              class="inline w-4 h-4 mr-2"
+            />
+            <div
+              class="w-4 h-4 mr-2 loader"
+              v-show="exportLoading"
+            ></div>
+            <!-- <ArrowPathIcon class="inline w-4 h-4 mr-2 animate-spin" /> -->
+            <span>Export</span>
+          </div>
+        </Button>
       </div>
     </div>
     <Card>
       <div
-        class="relative overflow-x-auto datatable min-h-[700px] dark:bg-zinc-900"
+        class="relative overflow-x-auto datatable min-h-[600px] bg-background"
       >
         <div
           v-if="hasError"
-          class="absolute top-0 left-0 w-full flex items-center justify-center pt-4 px-4 pointer-events-none"
+          class="absolute top-0 left-0 flex items-center justify-center w-full px-4 pt-4 pointer-events-none"
         >
           <div class="bg-white dark:bg-dark-900">
             <div
-              class="border border-red-700 dark:border-red-900 bg-red-100 dark:bg-red-900 dark:bg-opacity-50 px-2 py-2 rounded animation-shake"
+              class="px-2 py-2 bg-red-100 border border-red-700 rounded dark:border-red-900 dark:bg-red-900 dark:bg-opacity-50 animation-shake"
             >
               <div class="flex items-center">
                 <InformationCircleIcon
-                  class="text-red-900 dark:text-red-400 w-4 h-4 mr-2"
+                  class="w-4 h-4 mr-2 text-red-900 dark:text-red-400"
                 />
-                <p class="text-red-900 dark:text-red-400 text-xs">
+                <p class="text-xs text-red-900 dark:text-red-400">
                   {{ errorMessage }}
                 </p>
               </div>
@@ -81,10 +97,10 @@
           <div class="text-center">
             <div class="flex justify-center">
               <TableCellsIcon
-                class="text-gray-400 w-16 h-16 mb-4 block dark:text-gray-700"
+                class="block w-16 h-16 mb-4 text-gray-400 dark:text-gray-700"
               />
             </div>
-            <p class="text-gray-400 dark:text-gray-600 font-semibold">
+            <p class="font-semibold text-gray-400 dark:text-gray-600">
               No data
             </p>
           </div>
@@ -104,14 +120,14 @@
           />
           <tbody>
             <TableRow
-              class="bg-gray-100 dark:bg-dark-100"
+              class="bg-gray-100 dark:bg-neutral-900"
               v-if="
                 !!datatableData.rows.data &&
                 datatableData.rows.data.length === 0
               "
             >
               <TableData
-                class="text-center py-5"
+                class="py-5 text-center"
                 :colspan="
                   datatableData.columns.length +
                   (props.multiSelect ? 1 : 0) +
@@ -128,11 +144,11 @@
                 showLoading === true
               "
               v-for="row in 10"
-              class="bg-white border-b dark:bg-dark-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
+              class="bg-white border-b dark:bg-neutral-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
             >
               <TableData
                 v-for="column in 5"
-                class="px-6 py-3 whitespace-nowrap"
+                class="px-6 py-2.5 whitespace-nowrap"
               >
                 <div class="relative w-full h-full">
                   <span>
@@ -145,9 +161,9 @@
                           : 'opacity-0',
                       ]"
                     >
-                      <div class="animate-pulse w-full">
+                      <div class="w-full animate-pulse">
                         <div
-                          class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"
+                          class="w-full h-2 rounded-full bg-neutral-200 dark:bg-neutral-800"
                         ></div>
                       </div>
                     </div>
@@ -158,7 +174,7 @@
             <TableRow
               v-for="(row, index) in datatableData.rows.data"
               :key="row['id']"
-              class="bg-white border-b dark:bg-dark-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
+              class="bg-white border-b dark:bg-background dark:border-neutral-800 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50"
             >
               <TableData
                 class="w-4 px-4 py-3"
@@ -175,7 +191,7 @@
               </TableData>
               <TableData
                 v-show="props.actionItemPosition === 'start'"
-                class="px-6 py-3 flex items-center space-x-3"
+                class="px-6 py-2.5 flex items-center space-x-3"
                 v-if="props.withActionItems"
               >
                 <div class="relative w-full h-full">
@@ -201,9 +217,9 @@
                     v-if="showLoading === true && isLoading === true"
                     class="absolute top-0 left-0 flex items-center w-full py-1.5"
                   >
-                    <div class="animate-pulse w-full">
+                    <div class="w-full animate-pulse">
                       <div
-                        class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"
+                        class="w-full h-2 rounded-full bg-neutral-200 dark:bg-neutral-800"
                       ></div>
                     </div>
                   </div>
@@ -213,7 +229,7 @@
               <TableData
                 v-for="column in visibleColumns"
                 :key="column.key"
-                class="px-6 py-3 whitespace-nowrap"
+                class="px-6 py-2.5 whitespace-nowrap"
               >
                 <div class="relative w-full h-full">
                   <span
@@ -246,9 +262,9 @@
                       <div
                         class="absolute top-0 left-0 flex items-center w-full py-1.5"
                       >
-                        <div class="animate-pulse w-full">
+                        <div class="w-full animate-pulse">
                           <div
-                            class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"
+                            class="w-full h-2 rounded-full bg-neutral-200 dark:bg-neutral-800"
                           ></div>
                         </div>
                       </div>
@@ -259,7 +275,7 @@
 
               <TableData
                 v-show="props.actionItemPosition === 'end'"
-                class="px-6 py-3 flex items-center space-x-3"
+                class="px-6 py-2.5 flex items-center space-x-3"
                 v-if="props.withActionItems"
               >
                 <div class="relative w-full h-full">
@@ -281,9 +297,9 @@
                     v-if="showLoading === true && isLoading === true"
                     class="absolute top-0 left-0 flex items-center w-full py-1.5"
                   >
-                    <div class="animate-pulse w-full">
+                    <div class="w-full animate-pulse">
                       <div
-                        class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"
+                        class="w-full h-2 rounded-full bg-neutral-200 dark:bg-neutral-800"
                       ></div>
                     </div>
                   </div>
@@ -307,12 +323,14 @@ import {
   TableCellsIcon,
   InformationCircleIcon,
   ArrowDownTrayIcon,
-  ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
+import Button from "@/components/ui/button/Button.vue";
+import { MagnifyingGlassIcon } from "@heroicons/vue/24/solid";
 import Card from "@/modules/datatable/components/Card.vue";
 import Pagination from "@/modules/datatable/components/Pagination.vue";
 import { computed, onMounted, ref, watch, provide } from "vue";
 import { api } from "@/api/api.js";
+import { useFilter } from "./composables/useFilter.js";
 import TableHead from "@/modules/datatable/components/TableHead.vue";
 import TableRow from "@/modules/datatable/components/TableRow.vue";
 import TableData from "@/modules/datatable/components/TableData.vue";
@@ -357,7 +375,13 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  size: {
+    type: String,
+    default: "default",
+  },
 });
+
+const emit = defineEmits(["exportError"]);
 
 const provideAllProps = () => {
   let propsConvertedToArray = Object.entries(props);
@@ -398,11 +422,6 @@ const isInitialLoad = computed(() => {
   return datatableData.value.columns.length === 0;
 });
 
-defineExpose({
-  fetchData,
-  setDefaultSort,
-});
-
 onMounted(() => {
   if (props.autoFetch === true) {
     fetchData();
@@ -418,13 +437,13 @@ watch(
   () => {
     fetchData();
   },
-  { deep: true }
+  { deep: true },
 );
 
 watch(selectedItems, () => {
   for (let i = 0; i < datatableData.value.rows.data.length; i++) {
     let isInArray = selectedItems.value.includes(
-      datatableData.value.rows.data[i]["id"]
+      datatableData.value.rows.data[i]["id"],
     );
     if (!isInArray) {
       tableHeading.value.unselectAll();
@@ -438,10 +457,11 @@ watch(selectedItems, () => {
 watchDebounced(
   searchTerm,
   () => {
+    isSearching.value = true;
     currentPage.value = 1;
     fetchData();
   },
-  { debounce: 500, maxWait: 5000 }
+  { debounce: 500, maxWait: 5000 },
 );
 
 function fetchData() {
@@ -457,19 +477,20 @@ function fetchData() {
           sort_direction: columnForSorting.value.direction,
         }),
         ...(searchTerm.value !== "" && { search: searchTerm.value }),
+        ...(filters.value.length !== 0 && { filters: filters.value }),
       },
       {
         params: {
           page: currentPage.value,
         },
-      }
+      },
     )
     .then((response) => {
       if (response.data.hasOwnProperty("datatable")) {
         datatableData.value = response.data.datatable;
       } else {
         console.log(
-          "The response object does not contain a 'datatable' property."
+          "The response object does not contain a 'datatable' property.",
         );
       }
     })
@@ -479,6 +500,7 @@ function fetchData() {
     })
     .then(() => {
       isLoading.value = false;
+      isSearching.value = false;
     });
 }
 
@@ -504,10 +526,6 @@ function sortColumn(column) {
   columnForSorting.value = column;
 }
 
-function openFilterModal() {
-  filterModal.value.openModal();
-}
-
 const exportLoading = ref(false);
 
 function exportItems() {
@@ -522,10 +540,12 @@ function exportItems() {
           sort_direction: columnForSorting.value.direction,
         }),
         ...(searchTerm.value !== "" && { search: searchTerm.value }),
+        ...(filters.value.length !== 0 && { filters: filters.value }),
       },
       {
         responseType: "blob",
-      }
+        timeout: 60000,
+      },
     )
     .then((response) => {
       console.log(response);
@@ -539,10 +559,32 @@ function exportItems() {
       fileLink.click();
       document.body.removeChild(fileLink);
     })
-    .catch((error) => {
+    .catch(async (error) => {
       console.error(error);
       errorMessage.value = "Unable to export data. Something went wrong.";
       hasError.value = true;
+
+      // Check if the error response is a blob
+      if (error.response && error.response.data instanceof Blob) {
+        const errorText = await error.response.data.text(); // Parse the blob into text
+        try {
+          // Attempt to parse JSON error message
+          const errorJson = JSON.parse(errorText);
+          errorMessage.value =
+            errorJson.message || "Unable to export data. Something went wrong.";
+
+          emit("exportError", errorJson);
+          return;
+        } catch {
+          // Fallback if JSON parsing fails
+          errorMessage.value =
+            errorText || "Unable to export data. Something went wrong.";
+        }
+      } else {
+        errorMessage.value = "Unable to export data. Something went wrong.";
+      }
+
+      emit("exportError", error);
     })
     .then(() => {
       exportLoading.value = false;
@@ -554,9 +596,30 @@ function setDefaultSort(sortData) {
   tableHeading.value.setDefaultSort(sortData);
 }
 
+function getDatatableColumns() {
+  return datatableData.value.columns;
+}
+
 const isLoading = ref(false);
+const isSearching = ref(false);
 provide("is-loading", isLoading);
+provide("is-searching", isSearching);
 provideAllProps();
+
+const { filters, addFilter, setFilters } = useFilter();
+
+function resetPage() {
+  currentPage.value = 1;
+}
+
+defineExpose({
+  fetchData,
+  setDefaultSort,
+  addFilter,
+  setFilters,
+  resetPage,
+  getDatatableColumns,
+});
 </script>
 
 <style>

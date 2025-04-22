@@ -12,5 +12,5 @@
 
 <script setup>
 import DataTable from "@/modules/datatable/DataTable.vue";
-import { hasPermission } from "@/composable/checkPermission.js";
+import { hasPermission } from "@/utils/permission";
 </script>

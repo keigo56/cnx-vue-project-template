@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useToastNotificationStore } from "@/store/global/toastNotificationStore.js";
-import { useAuthStore } from "@/store/auth/authStore.js";
+import { toast } from "vue-sonner";
+import { authService } from "@/services/authService";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,71 +15,74 @@ export const api = axios.create({
   withXSRFToken: true,
 });
 
-/*
- * Response Interceptors
- * */
-api.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response;
-  },
-  async function (error) {
-    if (error.code === "ERR_BAD_REQUEST") {
-      /*
-       * If received an unauthenticated response, redirect to login page
-       */
-      if (error.response.status === 401) {
-        let authStore = useAuthStore();
-        authStore.setIsAuthenticated(false);
-      }
+let responseInterceptor = null;
 
-      /*
-       * If received an unauthenticated response, redirect to login page
-       */
-      if (error.response.status === 419) {
-        let toastNotification = useToastNotificationStore();
-        toastNotification.addToast({
-          type: "error",
-          title: "Session Expired",
-          message: "Please try to login again",
-        });
-
-        let authStore = useAuthStore();
-        authStore.setIsAuthenticated(false);
-      }
-
-      /*
-       * If received forbidden response, redirect to login page
-       */
-      if (error.response.status === 403) {
-        let toastNotification = useToastNotificationStore();
-        toastNotification.addToast({
-          type: "error",
-          title: "Forbidden",
-          message: "You do not have rights to perform this action",
-        });
-      }
-    }
-
-    if (error.code === "ERR_NETWORK") {
-      let toastNotification = useToastNotificationStore();
-      toastNotification.addToast({
-        type: "error",
-        title: "Server Unavailable",
-        message: "Unable to connect to the server. Please try again.",
-      });
-    }
-
-    if (error.code === "ECONNABORTED") {
-      const toastNotification = useToastNotificationStore();
-      toastNotification.addToast({
-        type: "warning",
-        title: "Something went wrong",
-        message: "Server failed to respond. Please try again.",
-      });
-    }
-
-    return Promise.reject(error);
+export const setupInterceptors = () => {
+  if (responseInterceptor) {
+    api.interceptors.response.eject(responseInterceptor);
   }
-);
+
+  responseInterceptor = api.interceptors.response.use(
+    function (response) {
+      // Any status code that lie within the range of 2xx cause this function to trigger
+      // Do something with response data
+      return response;
+    },
+    async function (error) {
+      if (error.code === "ERR_BAD_REQUEST") {
+        /*
+         * If received an unauthenticated response, redirect to login page
+         */
+        if (error.response.status === 401) {
+          toast.error("You are not authenticated", {
+            description: "Please try to login again",
+          });
+
+          authService.clearAuthState();
+        }
+
+        /*
+         * If received an unauthenticated response, redirect to login page
+         */
+        if (error.response.status === 419) {
+          toast.error("Session Expired", {
+            description: "Please try to login again",
+          });
+
+          authService.clearAuthState();
+        }
+
+        /*
+         * If received forbidden response, redirect to login page
+         */
+        if (error.response.status === 403) {
+          toast.error("Forbidden", {
+            description: "You do not have rights to perform this action",
+          });
+        }
+      }
+
+      if (error.code === "ERR_NETWORK") {
+        toast.error("Server Unavailable", {
+          description: "Unable to connect to the server. Please try again.",
+        });
+      }
+
+      if (error.code === "ECONNABORTED") {
+        toast.warning("Request Timeout", {
+          description:
+            "The request took too long to process and was aborted. Please check your network connection and try again.",
+        });
+      }
+
+      return Promise.reject(error);
+    },
+  );
+};
+
+export const removeInterceptors = () => {
+  if (responseInterceptor) {
+    api.interceptors.response.eject(responseInterceptor);
+    responseInterceptor = null;
+  }
+};

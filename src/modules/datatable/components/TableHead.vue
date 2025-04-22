@@ -1,6 +1,6 @@
 <template>
   <thead
-    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-neutral-950 dark:text-gray-400"
+    class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-neutral-800/50 dark:text-gray-400 border-b"
   >
     <TableRow>
       <!-- MULTI SELECT -->
@@ -41,7 +41,7 @@
         <div class="flex items-center">
           <div class="max-w-sm animate-pulse">
             <div
-              class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-48"
+              class="h-2 bg-neutral-200 rounded-full dark:bg-neutral-800 w-48"
             ></div>
           </div>
         </div>
@@ -51,7 +51,7 @@
         v-for="column in props.columns"
         :key="column.key"
         :class="[
-          'px-6 py-3 cursor-pointer hover:bg-gray-100 hover:dark:bg-neutral-900',
+          'px-6 py-3 cursor-pointer hover:bg-gray-100 hover:dark:bg-neutral-800/50',
           selectedColumn.key === column.key
             ? 'bg-gray-100 dark:bg-neutral-900'
             : '',

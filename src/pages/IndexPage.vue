@@ -1,63 +1,14 @@
 <template>
-  <BaseLayout v-if="authStore.isAuthenticated">
-    <div class="p-4">
-      <button
-          @click="confirmationModalStore.openModal()"
-          type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-        Open Modal
-      </button>
-      <button
-          @click="paymentModalStore.openModal()"
-          type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-        Open Another Modal
-      </button>
-
-      <button
-          @click="albumsStore.getAlbums()"
-          type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-        Get Data
-      </button>
-
-      <button
-          @click="albumsStore.addAlbum()"
-          type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-        Add Album
-      </button>
+  <div class="p-5 h-full">
+    <h1 class="mb-5 text-2xl font-semibold dark:text-white">Homepage</h1>
+    <div class="grid grid-cols-3 gap-5 mb-5">
+      <Card class="h-52 bg-secondary/40 dark:border-none"> </Card>
+      <Card class="h-52 bg-secondary/40 dark:border-none"> </Card>
+      <Card class="h-52 bg-secondary/40 dark:border-none"> </Card>
     </div>
-
-    <div>
-      <div>
-        <BaseTable
-            :columns="albumsStore.columns"
-            :data="albumsStore.albums"
-            :actions="albumsStore.actions"
-            :has-action-item="true"
-            @delete-item="paymentModalStore.openModal()"
-            @edit-item="albumsStore.editAlbum"
-        />
-      </div>
-    </div>
-    <PaymentModal/>
-    <ConfirmationModal />
-  </BaseLayout>
-  <GuestLayout v-if="!authStore.isAuthenticated"/>
+    <Card class="h-100 bg-secondary/40 dark:border-none"> </Card>
+  </div>
 </template>
-
 <script setup>
-import BaseLayout from "@/layouts/BaseLayout.vue";
-import {useAuthStore} from "@/store/auth/authStore.js";
-import GuestLayout from "@/layouts/GuestLayout.vue";
-import ConfirmationModal from "@/components/overlays/ConfirmationModal.vue";
-import {useConfirmationModalStore} from "@/store/modals/confirmationModalStore.js";
-import {usePaymentModalStore} from "@/store/modals/paymentModalStore.js";
-import PaymentModal from "@/components/overlays/PaymentModal.vue";
-import {useAlbumsStore} from "@/store/queries/albumStore.js";
-import BaseTable from "@/components/lists/BaseTable.vue";
-
-const confirmationModalStore = useConfirmationModalStore()
-const paymentModalStore = usePaymentModalStore()
-
-const authStore = useAuthStore()
-const albumsStore = useAlbumsStore()
-
+import Card from "@/components/ui/card/Card.vue";
 </script>

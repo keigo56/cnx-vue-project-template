@@ -1,17 +1,23 @@
 <template>
   <div>
     <router-view :key="$route.fullPath" />
-    <ToastList />
-    <LogoutConfirmationModal />
+    <Toaster :theme="themeStore.theme" />
+    <GlobalDialogs />
   </div>
 </template>
 
 <script setup>
-import { useThemeStore } from "@/store/global/themeStore.js";
-import ToastList from "@/components/overlays/ToastList.vue";
-import LogoutConfirmationModal from "@/components/overlays/LogoutConfirmationModal.vue";
-import { useUserStore } from "@/store/auth/userStore.js";
+import { onMounted } from "vue";
+import { useThemeStore } from "@/store/themeStore.js";
+import { Toaster } from "@/components/ui/sonner";
+import GlobalDialogs from "@/components/overlays/GlobalDialogs.vue";
+import { useAuthStore } from "@/store/authStore.js";
 
 const themeStore = useThemeStore();
-themeStore.getThemeFromLocalStorage();
+const authStore = useAuthStore();
+
+onMounted(() => {
+  themeStore.getThemeFromLocalStorage();
+  authStore.showToastIfError();
+});
 </script>
