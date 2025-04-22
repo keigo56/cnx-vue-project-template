@@ -63,7 +63,7 @@
     </div>
     <Card>
       <div
-        class="relative overflow-x-auto datatable min-h-[600px] dark:bg-[#191919]"
+        class="relative overflow-x-auto datatable min-h-[600px] bg-background"
       >
         <div
           v-if="hasError"
@@ -174,7 +174,7 @@
             <TableRow
               v-for="(row, index) in datatableData.rows.data"
               :key="row['id']"
-              class="bg-white border-b dark:bg-neutral-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800/10"
+              class="bg-white border-b dark:bg-background dark:border-neutral-800 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50"
             >
               <TableData
                 class="w-4 px-4 py-3"

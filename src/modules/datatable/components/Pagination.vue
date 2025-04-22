@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-3 px-3 dark:bg-neutral-900"
+    class="py-3 px-3 dark:bg-background"
     v-show="hasRows"
   >
     <div class="flex justify-between items-center">
