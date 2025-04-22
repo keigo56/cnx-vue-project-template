@@ -1,25 +1,25 @@
 export const authRoutes = [
-  // Admin Authentication
+  // SSO Authentication
   {
-    path: "/admin/login",
-    component: () => import("@/pages/auth/admin/AdminLoginPage.vue"),
+    path: "/login",
+    component: () => import("@/pages/auth/SSOLoginPage.vue"),
     meta: {
       middleware: ["guest"],
     },
   },
   {
-    path: "/admin/auth/validate",
-    component: () => import("@/pages/auth/admin/AdminSSOCallbackPage.vue"),
+    path: "/auth/validate",
+    component: () => import("@/pages/auth/SSOCallbackPage.vue"),
     meta: {
       middleware: ["guest"],
     },
   },
-  //User Authentication (placeholder for future implementation)
-  {
-    path: "/user/login",
-    component: () => import("@/pages/auth/user/UserLoginPage.vue"),
-    meta: {
-      middleware: ["guest"],
-    },
-  },
+  //User Basic Authentication with OTP (placeholder for future implementation)
+  // {
+  //   path: "/user/login",
+  //   component: () => import("@/pages/auth/user/UserLoginPage.vue"),
+  //   meta: {
+  //     middleware: ["guest"],
+  //   },
+  // },
 ];

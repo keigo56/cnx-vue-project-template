@@ -54,10 +54,10 @@
 <script setup>
 import DataTable from "@/modules/datatable/DataTable.vue";
 import { Plus } from "lucide-vue-next";
-import AddUserModal from "@/pages/admin/user-management/users/AddUserModal.vue";
+import AddUserModal from "@/pages/user-management/users/AddUserModal.vue";
 import { ref } from "vue";
-import EditUserModal from "@/pages/admin/user-management/users/EditUserModal.vue";
-import DeleteUserModal from "@/pages/admin/user-management/users/DeleteUserModal.vue";
+import EditUserModal from "@/pages/user-management/users/EditUserModal.vue";
+import DeleteUserModal from "@/pages/user-management/users/DeleteUserModal.vue";
 import { hasPermission } from "@/utils/permission";
 import Button from "@/components/ui/button/Button.vue";
 const addUserModal = ref(null);

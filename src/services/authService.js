@@ -6,8 +6,8 @@ import router from "@/router/router.js";
 class AuthService {
   constructor() {
     this.ENDPOINTS = {
-      VALIDATE_TOKEN: "/admin/auth/token/validate",
-      LOGOUT: "/admin/auth/logout",
+      VALIDATE_TOKEN: "/auth/token/validate",
+      LOGOUT: "/auth/logout",
       USER: "/api/user",
       CSRF: "sanctum/csrf-cookie",
     };
@@ -76,7 +76,7 @@ class AuthService {
   async clearAuthState() {
     const authStore = useAuthStore();
     authStore.reset();
-    router.push({ path: "/admin/login" });
+    router.push({ path: "/login" });
   }
 }
 

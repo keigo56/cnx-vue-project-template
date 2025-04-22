@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import UsersDatatable from "@/pages/admin/user-management/users/UsersDatatable.vue";
+import UsersDatatable from "@/pages/user-management/users/UsersDatatable.vue";
 </script>

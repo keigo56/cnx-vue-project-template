@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import PermissionsDatatable from "@/pages/admin/user-management/permissions/PermissionsDatatable.vue";
+import PermissionsDatatable from "@/pages/user-management/permissions/PermissionsDatatable.vue";
 </script>

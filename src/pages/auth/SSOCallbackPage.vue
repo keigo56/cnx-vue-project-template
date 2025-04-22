@@ -30,14 +30,14 @@ onMounted(async () => {
   const API_TOKEN = getCookie("azure_authorization");
 
   if (!API_TOKEN) {
-    router.push({ path: "/admin/login" });
+    router.push({ path: "/login" });
     return;
   }
 
   await authService.validateToken(API_TOKEN);
 
   router.push({
-    path: "/admin",
+    path: "/",
   });
 });
 </script>

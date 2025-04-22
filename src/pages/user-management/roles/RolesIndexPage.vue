@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import RolesDatatable from "@/pages/admin/user-management/roles/RolesDatatable.vue";
+import RolesDatatable from "@/pages/user-management/roles/RolesDatatable.vue";
 </script>

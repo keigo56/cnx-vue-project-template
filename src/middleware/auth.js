@@ -4,7 +4,7 @@ export default async function ({ to, from }, role) {
   const authStore = useAuthStore();
 
   if (!authStore.isAuthenticated()) {
-    return { path: "/admin/login" };
+    return { path: "/" };
   }
 
   return true;

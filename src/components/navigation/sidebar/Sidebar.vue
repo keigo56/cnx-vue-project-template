@@ -44,27 +44,27 @@ const data = {
       navLinks: [
         {
           title: "Home",
-          url: "/admin/",
+          url: "/",
           icon: Home,
-          isActive: route.path === "/admin/",
+          isActive: route.path === "/",
         },
         {
           title: "Sample Module",
           url: "#",
           icon: Package,
-          isActive: route.path.includes("/admin/module"),
+          isActive: route.path.includes("/module"),
           items: [
             {
               title: "Feature 1",
-              url: "/admin/module/feature1",
+              url: "/module/feature1",
             },
             {
               title: "Feature 2",
-              url: "/admin/module/feature2",
+              url: "/module/feature2",
             },
             {
               title: "Feature 3",
-              url: "/admin/module/feature3",
+              url: "/module/feature3",
             },
           ],
         },
@@ -77,7 +77,7 @@ const data = {
           title: "User Management",
           url: "#",
           icon: UserPen,
-          isActive: route.path.includes("/admin/user-management"),
+          isActive: route.path.includes("/user-management"),
           isVisible:
             hasPermission("view_users") ||
             hasPermission("view_roles") ||
@@ -85,22 +85,20 @@ const data = {
           items: [
             {
               title: "Users",
-              url: "/admin/user-management/users",
-              isActive: route.path.includes("/admin/user-management/users"),
+              url: "/user-management/users",
+              isActive: route.path.includes("/user-management/users"),
               isVisible: hasPermission("view_users"),
             },
             {
               title: "Roles",
-              url: "/admin/user-management/roles",
-              isActive: route.path.includes("/admin/user-management/roles"),
+              url: "/user-management/roles",
+              isActive: route.path.includes("/user-management/roles"),
               isVisible: hasPermission("view_roles"),
             },
             {
               title: "Permissions",
-              url: "/admin/user-management/permissions",
-              isActive: route.path.includes(
-                "/admin/user-management/permissions",
-              ),
+              url: "/user-management/permissions",
+              isActive: route.path.includes("/user-management/permissions"),
               isVisible: hasPermission("view_permissions"),
             },
           ],
@@ -109,13 +107,13 @@ const data = {
           title: "Audit Trail",
           url: "#",
           icon: Shield,
-          isActive: route.path.includes("/admin/audit-trail"),
+          isActive: route.path.includes("/audit-trail"),
           isVisible: hasPermission("view_logs"),
           items: [
             {
               title: "Logs",
-              url: "/admin/audit-trail/logs",
-              isActive: route.path.includes("/admin/audit-trail/logs"),
+              url: "/audit-trail/logs",
+              isActive: route.path.includes("/audit-trail/logs"),
               isVisible: hasPermission("view_logs"),
             },
           ],

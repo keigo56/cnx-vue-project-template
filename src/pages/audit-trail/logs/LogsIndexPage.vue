@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import LogsDatatable from "@/pages/admin/audit-trail/logs/LogsDatatable.vue";
+import LogsDatatable from "@/pages/audit-trail/logs/LogsDatatable.vue";
 </script>

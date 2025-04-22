@@ -1,19 +1,16 @@
-import UsersIndexPage from "@/pages/admin/user-management/users/UsersIndexPage.vue";
-import RolesIndexPage from "@/pages/admin/user-management/roles/RolesIndexPage.vue";
-import PermissionsIndexPage from "@/pages/admin/user-management/permissions/PermissionsIndexPage.vue";
-import IndexPage from "@/pages/admin/IndexPage.vue";
-import LogsIndexPage from "@/pages/admin/audit-trail/logs/LogsIndexPage.vue";
+import UsersIndexPage from "@/pages/user-management/users/UsersIndexPage.vue";
+import RolesIndexPage from "@/pages/user-management/roles/RolesIndexPage.vue";
+import PermissionsIndexPage from "@/pages/user-management/permissions/PermissionsIndexPage.vue";
+import LogsIndexPage from "@/pages/audit-trail/logs/LogsIndexPage.vue";
+import IndexPage from "@/pages/IndexPage.vue";
 
-export const adminRoutes = [
+export const appRoutes = [
   {
-    path: "/admin",
+    path: "/",
     component: () => import("@/layouts/AppLayout.vue"),
-    meta: {
-      middleware: ["auth"],
-    },
     children: [
       {
-        path: "",
+        path: "home",
         component: IndexPage,
         meta: {
           middleware: ["auth"],

@@ -1,12 +1,12 @@
 import { publicRoutes } from "./public";
 import { authRoutes } from "./auth";
-import { adminRoutes } from "./admin";
+import { appRoutes } from "./app";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 
 const routes = [
   ...publicRoutes,
   ...authRoutes,
-  ...adminRoutes,
+  ...appRoutes,
   {
     path: "/:catchAll(.*)",
     component: NotFoundPage,
