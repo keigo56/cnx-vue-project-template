@@ -8,15 +8,16 @@
         </AlertDialogDescription>
       </AlertDialogHeader>
       <Form
+        id="delete_role_form"
         :data="formData"
         url="/api/datatable/roles/delete"
         method="DELETE"
-        id="delete_role_form"
         @on-success="successHandler"
-      >
-      </Form>
+      />
       <AlertDialogFooter>
-        <AlertDialogCancel @click="closeModal()">Cancel</AlertDialogCancel>
+        <AlertDialogCancel @click="closeModal()">
+          Cancel
+        </AlertDialogCancel>
         <AlertDialogAction
           form="delete_role_form"
           type="submit"
@@ -39,16 +40,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { ref } from "vue";
-import Form from "@/components/forms/Form.vue";
-import { toast } from "vue-sonner";
+} from '@/components/ui/alert-dialog';
+import { ref } from 'vue';
+import Form from '@/components/forms/Form.vue';
+import { toast } from 'vue-sonner';
 
 const isOpen = ref(false);
 
 const formData = ref({
   id: 0,
-  name: "",
+  name: '',
 });
 
 const formValidationErrors = ref({});
@@ -59,7 +60,7 @@ defineExpose({
   closeModal,
 });
 
-const emit = defineEmits(["success"]);
+const emit = defineEmits(['success']);
 
 function setData(row) {
   formData.value = { ...row };
@@ -76,19 +77,19 @@ function closeModal() {
 
 function resetForm() {
   formData.value = {
-    name: "",
+    name: '',
   };
 
   formValidationErrors.value = {};
 }
 
 function successHandler() {
-  toast.success("Success", {
-    description: "Deleted Role successfully",
+  toast.success('Success', {
+    description: 'Deleted Role successfully',
   });
 
   closeModal();
-  emit("success");
+  emit('success');
   resetForm();
 }
 </script>

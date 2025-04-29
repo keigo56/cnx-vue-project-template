@@ -13,11 +13,6 @@
     </label>
     <VueDatePicker
       :model-value="props.modelValue"
-      @update:model-value="
-        (value) => {
-          emit('update:modelValue', value);
-        }
-      "
       week-start="0"
       model-type="yyyy-MM-dd"
       :enable-time-picker="false"
@@ -26,11 +21,16 @@
       :dark="themeStore.isDarkMode"
       :format="format"
       :min-date="props.minDate"
+      @update:model-value="
+        (value) => {
+          emit('update:modelValue', value);
+        }
+      "
     >
       <template #dp-input="{ value }">
         <button
-          type="button"
           id="week-range-input"
+          type="button"
           :class="[
             hasError
               ? 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 px-3 text-left text-gray-900 shadow-sm ring-2 ring-inset ring-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 sm:text-sm sm:leading-6'
@@ -85,26 +85,27 @@
 </template>
 
 <script setup>
-import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-import { useThemeStore } from "@/store/themeStore";
-import { watch, ref, computed } from "vue";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import { useThemeStore } from '@/store/themeStore';
+import { watch, ref, computed } from 'vue';
 const props = defineProps({
   error: {
     type: Array,
-    default: [],
+    default: () => [],
   },
   label: {
     type: String,
-    default: "Form Label",
-    required: true,
+    default: 'Form Label',
+    required: false,
   },
   placeholder: {
     type: String,
-    default: "",
+    default: '',
   },
   modelValue: {
     type: [String, Number],
+    required: true,
   },
   disabled: {
     type: Boolean,
@@ -122,7 +123,7 @@ const props = defineProps({
 
 const themeStore = useThemeStore();
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const hasError = computed({
   get() {
@@ -132,12 +133,12 @@ const hasError = computed({
 
 const format = (dt) => {
   const options = {
-    month: "long", // Full month name
-    year: "numeric", // Full numeric year
-    day: "numeric",
+    month: 'long', // Full month name
+    year: 'numeric', // Full numeric year
+    day: 'numeric',
   };
 
-  return dt.toLocaleString("en-US", options);
+  return dt.toLocaleString('en-US', options);
 };
 
 const errors = ref([]);

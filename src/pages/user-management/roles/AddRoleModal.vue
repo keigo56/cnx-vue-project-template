@@ -6,19 +6,19 @@
         <DialogDescription>Add a new role to the system.</DialogDescription>
       </DialogHeader>
       <Form
+        id="add_role_form"
         :data="formData"
         url="/api/datatable/roles/add"
         method="POST"
-        id="add_role_form"
+        class="space-y-4 mb-2"
         @on-success="successHandler"
         @on-form-validation-error="formValidationErrorHandler"
-        class="space-y-4 mb-2"
       >
         <div class="space-y-4">
           <InputField
             id="role_name"
-            type="text"
             v-model="formData.name"
+            type="text"
             label="Role Name"
             :error="formValidationErrors.name"
           />
@@ -36,10 +36,10 @@
               </label>
               <Button
                 variant="outline"
-                @click="changeSelection()"
                 type="button"
                 size="sm"
                 class="text-xs"
+                @click="changeSelection()"
               >
                 {{ allPermissionSelected ? "Unselect All" : "Select All" }}
               </Button>
@@ -52,8 +52,8 @@
               >
                 <CheckboxGroupRoot v-model="formData.permissions">
                   <Checkbox
-                    :value="permission.id"
                     :id="`permission-${permission.id}`"
+                    :value="permission.id"
                   />
 
                   <label
@@ -105,20 +105,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { onMounted, ref } from "vue";
-import { toast } from "vue-sonner";
-import Form from "@/components/forms/Form.vue";
-import InputField from "@/components/forms/InputField.vue";
-import { api } from "@/api/api.js";
-import Button from "@/components/ui/button/Button.vue";
-import { Checkbox } from "@/components/ui/checkbox";
-import { CheckboxGroupRoot } from "reka-ui";
+} from '@/components/ui/dialog';
+import { onMounted, ref } from 'vue';
+import { toast } from 'vue-sonner';
+import Form from '@/components/forms/Form.vue';
+import InputField from '@/components/forms/InputField.vue';
+import { api } from '@/api/api.js';
+import Button from '@/components/ui/button/Button.vue';
+import { Checkbox } from '@/components/ui/checkbox';
+import { CheckboxGroupRoot } from 'reka-ui';
 
 const isOpen = ref(false);
 
 const formData = ref({
-  name: "",
+  name: '',
   permissions: [],
 });
 
@@ -137,10 +137,10 @@ defineExpose({
   closeModal,
 });
 
-const emit = defineEmits(["success"]);
+const emit = defineEmits(['success']);
 
 function getAllPermissions() {
-  api.get("/api/datatable/roles/get-permissions").then((response) => {
+  api.get('/api/datatable/roles/get-permissions').then((response) => {
     permissions.value = response.data.permissions;
   });
 }
@@ -156,7 +156,7 @@ function closeModal() {
 
 function resetForm() {
   formData.value = {
-    name: "",
+    name: '',
     permissions: [],
   };
 
@@ -165,12 +165,12 @@ function resetForm() {
 }
 
 function successHandler() {
-  toast.success("Success", {
-    description: "Added Role successfully",
+  toast.success('Success', {
+    description: 'Added Role successfully',
   });
 
   closeModal();
-  emit("success");
+  emit('success');
   resetForm();
 }
 

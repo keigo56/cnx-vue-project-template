@@ -7,11 +7,11 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import { useThemeStore } from "@/store/themeStore.js";
-import { Toaster } from "@/components/ui/sonner";
-import GlobalDialogs from "@/components/overlays/GlobalDialogs.vue";
-import { useAuthStore } from "@/store/authStore.js";
+import { onMounted } from 'vue';
+import { useThemeStore } from '@/store/themeStore.js';
+import { Toaster } from '@/components/ui/sonner';
+import GlobalDialogs from '@/components/overlays/GlobalDialogs.vue';
+import { useAuthStore } from '@/store/authStore.js';
 
 const themeStore = useThemeStore();
 const authStore = useAuthStore();

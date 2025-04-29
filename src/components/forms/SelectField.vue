@@ -3,8 +3,8 @@
     <div class="flex flex-col-reverse gap-y-2">
       <Select
         :model-value="modelValue"
-        @update:modelValue="$emit('update:modelValue', $event)"
         :disabled="disabled"
+        @update:model-value="$emit('update:modelValue', $event)"
       >
         <SelectTrigger
           :class="[
@@ -64,9 +64,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { computed } from "vue";
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { computed } from 'vue';
 
 const props = defineProps({
   id: {
@@ -79,15 +79,15 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "Form Label",
-    required: true,
+    default: 'Form Label',
   },
   modelValue: {
     type: [String, Number],
+    required: true,
   },
   placeholder: {
     type: String,
-    default: "Select item...",
+    default: 'Select item...',
   },
   showLabel: {
     type: Boolean,
@@ -103,7 +103,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const hasError = computed(() => {
   if (Array.isArray(props.error)) {
@@ -114,8 +114,8 @@ const hasError = computed(() => {
 
 const errorMessage = computed(() => {
   if (Array.isArray(props.error)) {
-    return props.error[0] || "";
+    return props.error[0] || '';
   }
-  return props.error || "";
+  return props.error || '';
 });
 </script>

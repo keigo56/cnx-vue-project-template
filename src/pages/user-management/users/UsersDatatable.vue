@@ -1,5 +1,7 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Users</h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
+    Users
+  </h1>
 
   <DataTable
     ref="usersDatatable"
@@ -18,48 +20,48 @@
       </Button>
     </template>
 
-    <template v-slot:rowActionItems="props">
+    <template #rowActionItems="props">
       <a
         v-if="hasPermission('edit_users')"
-        @click="editRow(props.row)"
         href="#"
         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+        @click="editRow(props.row)"
       >
         Edit
       </a>
       <a
         v-if="hasPermission('delete_users')"
-        @click="deleteRow(props.row)"
         href="#"
         class="font-medium text-red-600 dark:text-red-500 hover:underline"
+        @click="deleteRow(props.row)"
       >
         Remove
       </a>
     </template>
   </DataTable>
   <AddUserModal
-    @success="usersDatatable.fetchData()"
     ref="addUserModal"
+    @success="usersDatatable.fetchData()"
   />
   <EditUserModal
-    @success="usersDatatable.fetchData()"
     ref="editUserModal"
+    @success="usersDatatable.fetchData()"
   />
   <DeleteUserModal
-    @success="usersDatatable.fetchData()"
     ref="deleteUserModal"
+    @success="usersDatatable.fetchData()"
   />
 </template>
 
 <script setup>
-import DataTable from "@/modules/datatable/DataTable.vue";
-import { Plus } from "lucide-vue-next";
-import AddUserModal from "@/pages/user-management/users/AddUserModal.vue";
-import { ref } from "vue";
-import EditUserModal from "@/pages/user-management/users/EditUserModal.vue";
-import DeleteUserModal from "@/pages/user-management/users/DeleteUserModal.vue";
-import { hasPermission } from "@/utils/permission";
-import Button from "@/components/ui/button/Button.vue";
+import DataTable from '@/modules/datatable/DataTable.vue';
+import { Plus } from 'lucide-vue-next';
+import AddUserModal from '@/pages/user-management/users/AddUserModal.vue';
+import { ref } from 'vue';
+import EditUserModal from '@/pages/user-management/users/EditUserModal.vue';
+import DeleteUserModal from '@/pages/user-management/users/DeleteUserModal.vue';
+import { hasPermission } from '@/utils/permission';
+import Button from '@/components/ui/button/Button.vue';
 const addUserModal = ref(null);
 const editUserModal = ref(null);
 const deleteUserModal = ref(null);

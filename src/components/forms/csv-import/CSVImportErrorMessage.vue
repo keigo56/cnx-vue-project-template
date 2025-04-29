@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ExclamationTriangleIcon } from "@heroicons/vue/20/solid";
+import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 
 defineProps({
   message: {

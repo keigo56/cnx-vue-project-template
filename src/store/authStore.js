@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import { toast } from "vue-sonner";
-import { ref } from "vue";
+import { defineStore } from 'pinia';
+import { toast } from 'vue-sonner';
+import { ref } from 'vue';
 
-export const useAuthStore = defineStore("authStore", () => {
+export const useAuthStore = defineStore('authStore', () => {
   const error = ref(null);
 
   const user = ref(null);
@@ -36,20 +36,20 @@ export const useAuthStore = defineStore("authStore", () => {
 
     const errorMessages = {
       ERR_BAD_REQUEST: {
-        type: "error",
-        title: "Request Error",
-        description: "Something went wrong. Please try again.",
+        type: 'error',
+        title: 'Request Error',
+        description: 'Something went wrong. Please try again.',
       },
       ERR_NETWORK: {
-        type: "error",
-        title: "Server Unavailable",
-        description: "Unable to connect to the server. Please try again.",
+        type: 'error',
+        title: 'Server Unavailable',
+        description: 'Unable to connect to the server. Please try again.',
       },
       ECONNABORTED: {
-        type: "warning",
-        title: "Request Timeout",
+        type: 'warning',
+        title: 'Request Timeout',
         description:
-          "The request took too long to process and was aborted. Please check your network connection and try again.",
+          'The request took too long to process and was aborted. Please check your network connection and try again.',
       },
     };
 

@@ -14,7 +14,7 @@
         <p
           class="text-sm font-semibold dark:font-normal dark:text-neutral-300 mt-4"
         >
-          {{ rows }} {{ rows === 1 ? "row" : "rows" }} has been successfully
+          {{ rows }} {{ rows === 1 ? 'row' : 'rows' }} has been successfully
           imported.
         </p>
 
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { CheckCircleIcon } from "@heroicons/vue/24/outline";
+import { CheckCircleIcon } from '@heroicons/vue/24/outline';
 defineProps({
   rows: { type: Number, default: 0 },
 });

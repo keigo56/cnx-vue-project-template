@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-export const useLogoutDialogStore = defineStore("logoutDialogStore", () => {
+export const useLogoutDialogStore = defineStore('logoutDialogStore', () => {
   const visible = ref(false);
 
   function show() {

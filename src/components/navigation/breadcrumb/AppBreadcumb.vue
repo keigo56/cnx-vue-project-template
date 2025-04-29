@@ -21,9 +21,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { useRoute } from "vue-router";
-import { computed } from "vue";
+} from '@/components/ui/breadcrumb';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 
 const route = useRoute();
 

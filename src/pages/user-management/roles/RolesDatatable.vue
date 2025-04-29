@@ -1,12 +1,14 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Roles</h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
+    Roles
+  </h1>
 
   <DataTable
+    ref="rolesDatatable"
     source-url="/api/datatable/roles"
     :can-export="hasPermission('export_roles')"
     export-url="/api/datatable/roles/export"
     export-file-name="roles.csv"
-    ref="rolesDatatable"
   >
     <template #actionItems>
       <Button
@@ -18,48 +20,48 @@
       </Button>
     </template>
 
-    <template v-slot:rowActionItems="props">
+    <template #rowActionItems="props">
       <a
         v-if="hasPermission('edit_roles')"
-        @click="editRow(props.row)"
         href="#"
         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+        @click="editRow(props.row)"
       >
         Edit
       </a>
       <a
         v-if="hasPermission('delete_roles')"
-        @click="deleteRow(props.row)"
         href="#"
         class="font-medium text-red-600 dark:text-red-500 hover:underline"
+        @click="deleteRow(props.row)"
       >
         Delete
       </a>
     </template>
   </DataTable>
   <AddRoleModal
-    @success="rolesDatatable.fetchData()"
     ref="addRoleModal"
+    @success="rolesDatatable.fetchData()"
   />
   <EditRoleModal
-    @success="rolesDatatable.fetchData()"
     ref="editRoleModal"
+    @success="rolesDatatable.fetchData()"
   />
   <DeleteRoleModal
-    @success="rolesDatatable.fetchData()"
     ref="deleteRoleModal"
+    @success="rolesDatatable.fetchData()"
   />
 </template>
 
 <script setup>
-import DataTable from "@/modules/datatable/DataTable.vue";
-import { Plus } from "lucide-vue-next";
-import AddRoleModal from "@/pages/user-management/roles/AddRoleModal.vue";
-import { ref } from "vue";
-import EditRoleModal from "@/pages/user-management/roles/EditRoleModal.vue";
-import DeleteRoleModal from "@/pages/user-management/roles/DeleteRoleModal.vue";
-import { hasPermission } from "@/utils/permission";
-import Button from "@/components/ui/button/Button.vue";
+import DataTable from '@/modules/datatable/DataTable.vue';
+import { Plus } from 'lucide-vue-next';
+import AddRoleModal from '@/pages/user-management/roles/AddRoleModal.vue';
+import { ref } from 'vue';
+import EditRoleModal from '@/pages/user-management/roles/EditRoleModal.vue';
+import DeleteRoleModal from '@/pages/user-management/roles/DeleteRoleModal.vue';
+import { hasPermission } from '@/utils/permission';
+import Button from '@/components/ui/button/Button.vue';
 const addRoleModal = ref(null);
 const editRoleModal = ref(null);
 const deleteRoleModal = ref(null);

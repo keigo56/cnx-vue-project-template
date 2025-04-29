@@ -28,17 +28,16 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import type { PropType } from "vue";
-import { ScheduleData } from "@/modules/calendar/types/ScheduleData";
-import { useCalendarStore } from "@/modules/calendar/store/calendarStore";
-import { computed } from "vue";
+<script setup>
+import { ScheduleData } from '@/modules/calendar/types/ScheduleData';
+import { useCalendarStore } from '@/modules/calendar/store/calendarStore';
+import { computed } from 'vue';
 
 const calendarStore = useCalendarStore();
 
 const props = defineProps({
   schedule: {
-    type: Object as PropType<ScheduleData>,
+    type: Object,
     required: true,
   },
 });
@@ -46,7 +45,7 @@ const props = defineProps({
 const rowHeight = computed(() => {
   return (
     (calendarStore.rowHeightInRems * props.schedule.time.duration).toString() +
-    "rem"
+    'rem'
   );
 });
 </script>

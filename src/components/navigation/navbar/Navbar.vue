@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import AppBreadcumb from "@/components/navigation/breadcrumb/AppBreadcumb.vue";
+import { Separator } from '@/components/ui/separator';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import AppBreadcumb from '@/components/navigation/breadcrumb/AppBreadcumb.vue';
 </script>

@@ -1,6 +1,6 @@
 export const publicRoutes = [
   {
-    path: "/",
-    redirect: "/login",
+    path: '/',
+    redirect: '/login',
   },
 ];

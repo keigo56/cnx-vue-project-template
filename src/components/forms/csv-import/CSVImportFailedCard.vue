@@ -31,7 +31,10 @@
             </th>
           </thead>
           <tbody>
-            <tr v-for="error in errors">
+            <tr
+              v-for="error in errors"
+              :key="error"
+            >
               <td class="px-2 py-2 border text-xs dark:text-neutral-400">
                 {{ error.row }}
               </td>
@@ -55,7 +58,7 @@
 defineProps({
   errors: {
     type: Array,
-    default: [],
+    default: () => [],
   },
 });
 </script>

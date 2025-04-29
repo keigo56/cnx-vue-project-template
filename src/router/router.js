@@ -1,6 +1,6 @@
-import routes from "@/router/routes/routes.js";
-import { createRouter, createWebHistory } from "vue-router";
-import MiddlewareResolver from "@/router/MiddlewareResolver";
+import routes from '@/router/routes/routes.js';
+import { createRouter, createWebHistory } from 'vue-router';
+import MiddlewareResolver from '@/router/MiddlewareResolver';
 
 const router = createRouter({
   history: createWebHistory(), // use html5 history mode

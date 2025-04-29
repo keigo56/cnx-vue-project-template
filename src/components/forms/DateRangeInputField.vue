@@ -13,11 +13,6 @@
     </label>
     <VueDatePicker
       :model-value="props.modelValue"
-      @update:model-value="
-        (value) => {
-          emit('update:modelValue', value);
-        }
-      "
       week-start="0"
       :model-type="props.modelType"
       :enable-time-picker="props.enableTimePicker"
@@ -32,11 +27,16 @@
       :format="format"
       :min-date="props.minDate"
       range
+      @update:model-value="
+        (value) => {
+          emit('update:modelValue', value);
+        }
+      "
     >
       <template #dp-input="{ value }">
         <button
-          type="button"
           id="week-range-input"
+          type="button"
           class="w-full text-sm text-left border rounded-lg border-input text-neutral-900 focus:ring-ring focus:ring-2 focus:border-input focus:ring-offset-2 focus:ring-offset-background dark:placeholder-neutral-400 dark:text-white"
           :class="[
             props.size === 'md' ? 'h-11 px-2.5 py-2' : 'h-12 p-2.5',
@@ -111,25 +111,26 @@
 </template>
 
 <script setup>
-import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-import { useThemeStore } from "@/store/themeStore";
-import { watch, ref, computed } from "vue";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import { useThemeStore } from '@/store/themeStore';
+import { watch, ref, computed } from 'vue';
 const props = defineProps({
   error: {
     type: Array,
-    default: [],
+    default: () => [],
   },
   label: {
     type: String,
-    default: "Form Label",
+    default: 'Form Label',
   },
   placeholder: {
     type: String,
-    default: "",
+    default: '',
   },
   modelValue: {
     type: [String, Number, Array],
+    required: true,
   },
   disabled: {
     type: Boolean,
@@ -137,7 +138,7 @@ const props = defineProps({
   },
   size: {
     type: String,
-    default: "default",
+    default: 'default',
   },
   showLabel: {
     type: Boolean,
@@ -157,13 +158,13 @@ const props = defineProps({
   },
   modelType: {
     type: String,
-    default: "yyyy-MM-dd",
+    default: 'yyyy-MM-dd',
   },
 });
 
 const themeStore = useThemeStore();
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const hasError = computed({
   get() {
@@ -173,14 +174,14 @@ const hasError = computed({
 
 const format = (dt) => {
   const optionsDate = {
-    month: "short", // Short month name (e.g., "Oct")
-    year: "numeric", // Full year (e.g., "2024")
-    day: "2-digit", // Day with two digits (e.g., "05")
+    month: 'short', // Short month name (e.g., "Oct")
+    year: 'numeric', // Full year (e.g., "2024")
+    day: '2-digit', // Day with two digits (e.g., "05")
   };
 
   const optionsTime = {
-    hour: "2-digit", // Hour (e.g., "14")
-    minute: "2-digit", // Minutes (e.g., "30")
+    hour: '2-digit', // Hour (e.g., "14")
+    minute: '2-digit', // Minutes (e.g., "30")
     hour12: false, // Ensures 24-hour format
   };
 
@@ -205,23 +206,23 @@ const format = (dt) => {
     normalizedStartDate.getTime() === startOfToday.getTime() &&
     normalizedEndDate.getTime() === endOfToday.getTime();
 
-  const formattedStartDate = startDate.toLocaleString("en-US", optionsDate);
+  const formattedStartDate = startDate.toLocaleString('en-US', optionsDate);
   const formattedStartDateTime = startDate
-    .toLocaleTimeString("en-US", optionsTime)
-    .replace(":", ":");
+    .toLocaleTimeString('en-US', optionsTime)
+    .replace(':', ':');
 
-  const formattedEndDate = endDate.toLocaleString("en-US", optionsDate);
+  const formattedEndDate = endDate.toLocaleString('en-US', optionsDate);
   const formattedEndDateTime = endDate
-    .toLocaleTimeString("en-US", optionsTime)
-    .replace(":", ":");
+    .toLocaleTimeString('en-US', optionsTime)
+    .replace(':', ':');
 
   if (formattedStartDate === formattedEndDate) {
     return isToday
-      ? "Today"
-      : `${formattedStartDate}${props.enableTimePicker ? ` ${formattedStartDateTime} - ${formattedEndDateTime}` : ""}`;
+      ? 'Today'
+      : `${formattedStartDate}${props.enableTimePicker ? ` ${formattedStartDateTime} - ${formattedEndDateTime}` : ''}`;
   }
 
-  return `${formattedStartDate}${props.enableTimePicker ? ` ${formattedStartDateTime}` : ""} - ${formattedEndDate}${props.enableTimePicker ? ` ${formattedEndDateTime}` : ""}`;
+  return `${formattedStartDate}${props.enableTimePicker ? ` ${formattedStartDateTime}` : ''} - ${formattedEndDate}${props.enableTimePicker ? ` ${formattedEndDateTime}` : ''}`;
 };
 
 const errors = ref([]);

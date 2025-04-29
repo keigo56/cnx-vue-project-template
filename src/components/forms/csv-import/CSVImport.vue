@@ -1,11 +1,11 @@
 <template>
   <div class="h-72">
     <CSVImportFieldForm
-      :url="props.url"
-      :importTemplateUrl="props.importTemplateUrl"
-      :importTemplateName="props.importTemplateName"
       v-if="status === 'pending'"
       ref="csvImportFieldForm"
+      :url="props.url"
+      :import-template-url="props.importTemplateUrl"
+      :import-template-name="props.importTemplateName"
       @success="handleSuccess"
       @error="handleError"
     />
@@ -21,15 +21,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import CSVImportFieldForm from "@/components/forms/csv-import/CSVImportFieldForm.vue";
-import CSVImportFailedCard from "@/components/forms/csv-import/CSVImportFailedCard.vue";
-import CSVImportSuccessCard from "@/components/forms/csv-import/CSVImportSuccessCard.vue";
+import { ref, computed } from 'vue';
+import CSVImportFieldForm from '@/components/forms/csv-import/CSVImportFieldForm.vue';
+import CSVImportFailedCard from '@/components/forms/csv-import/CSVImportFailedCard.vue';
+import CSVImportSuccessCard from '@/components/forms/csv-import/CSVImportSuccessCard.vue';
 
 const props = defineProps({
-  url: { type: String },
-  importTemplateUrl: { type: String },
-  importTemplateName: { type: String, default: "Import Template.csv" },
+  url: { type: String, required: true },
+  importTemplateUrl: { type: String, required: true },
+  importTemplateName: { type: String, default: 'Import Template.csv' },
 });
 
 const csvImportFieldForm = ref(null);
@@ -38,27 +38,27 @@ const hasImportFile = computed(
   () => csvImportFieldForm.value?.hasImportFile || false,
 );
 
-const status = ref("pending");
+const status = ref('pending');
 const errors = ref(null);
 const numberOfRowsImported = ref(null);
 
-const emit = defineEmits(["success", "error"]);
+const emit = defineEmits(['success', 'error']);
 
 function handleSuccess(xNumberOfRowsImported) {
-  status.value = "success";
+  status.value = 'success';
   numberOfRowsImported.value = xNumberOfRowsImported;
-  emit("success");
+  emit('success');
 }
 
 function handleError(xerrors) {
-  status.value = "error";
+  status.value = 'error';
   errors.value = xerrors;
 
-  emit("error");
+  emit('error');
 }
 
 function resetForm() {
-  status.value = "pending";
+  status.value = 'pending';
 }
 
 function startImport() {

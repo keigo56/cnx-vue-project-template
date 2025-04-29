@@ -6,17 +6,21 @@
         src="/vite.svg"
         alt=""
       />
-      <p class="mb-1 text-xl font-semibold">Please wait for a moment</p>
-      <p class="text-foreground/70">Logging you in...</p>
+      <p class="mb-1 text-xl font-semibold">
+        Please wait for a moment
+      </p>
+      <p class="text-foreground/70">
+        Logging you in...
+      </p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import { onMounted } from "vue";
-import { getCookie } from "@/utils/cookies.js";
-import { authService } from "@/services/authService";
+import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
+import { getCookie } from '@/utils/cookies.js';
+import { authService } from '@/services/authService';
 
 const router = useRouter();
 
@@ -24,17 +28,17 @@ onMounted(async () => {
   /*
    * Get the API Token from cookie, coming from the server
    * */
-  const API_TOKEN = getCookie("azure_authorization");
+  const API_TOKEN = getCookie('azure_authorization');
 
   if (!API_TOKEN) {
-    router.push({ path: "/login" });
+    router.push({ path: '/login' });
     return;
   }
 
   await authService.validateToken(API_TOKEN);
 
   router.push({
-    path: "/",
+    path: '/',
   });
 });
 </script>

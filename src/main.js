@@ -1,9 +1,9 @@
-import { createApp } from "vue";
-import "./style.css";
-import router from "./router/router.js";
-import pinia from "./store/pinia.js";
-import App from "./App.vue";
-import { authService } from "./services/authService";
+import { createApp } from 'vue';
+import './style.css';
+import router from './router/router.js';
+import pinia from './store/pinia.js';
+import App from './App.vue';
+import { authService } from './services/authService';
 
 (async () => {
   const app = createApp(App);
@@ -12,5 +12,5 @@ import { authService } from "./services/authService";
   await authService.initialize();
 
   app.use(router);
-  app.mount("#app");
+  app.mount('#app');
 })();

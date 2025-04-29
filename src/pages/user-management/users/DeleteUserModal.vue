@@ -8,16 +8,17 @@
         </AlertDialogDescription>
       </AlertDialogHeader>
       <Form
+        id="delete_user_form"
         :data="formData"
         url="/api/users/delete"
         method="DELETE"
-        id="delete_user_form"
         @on-success="successHandler"
         @on-form-validation-error="formValidationErrorHandler"
-      >
-      </Form>
+      />
       <AlertDialogFooter>
-        <AlertDialogCancel @click="closeModal()">Cancel</AlertDialogCancel>
+        <AlertDialogCancel @click="closeModal()">
+          Cancel
+        </AlertDialogCancel>
         <AlertDialogAction
           form="delete_user_form"
           type="submit"
@@ -40,10 +41,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { ref } from "vue";
-import Form from "@/components/forms/Form.vue";
-import { toast } from "vue-sonner";
+} from '@/components/ui/alert-dialog';
+import { ref } from 'vue';
+import Form from '@/components/forms/Form.vue';
+import { toast } from 'vue-sonner';
 
 const isOpen = ref(false);
 
@@ -55,7 +56,7 @@ defineExpose({
   setData,
 });
 
-const emit = defineEmits(["success"]);
+const emit = defineEmits(['success']);
 
 function openModal() {
   isOpen.value = true;
@@ -71,19 +72,19 @@ function resetForm() {
 }
 
 function successHandler() {
-  toast.success("Success", {
-    description: "Removed User successfully",
+  toast.success('Success', {
+    description: 'Removed User successfully',
   });
 
   closeModal();
-  emit("success");
+  emit('success');
   resetForm();
 }
 
 function formValidationErrorHandler(errorResponse) {
   console.error(errorResponse);
 
-  toast.error("Something went wrong!", {
+  toast.error('Something went wrong!', {
     description: errorResponse.errors.email[0],
   });
 

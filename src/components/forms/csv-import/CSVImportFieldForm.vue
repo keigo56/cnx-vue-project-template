@@ -12,29 +12,29 @@
       ref="importField"
       v-model="formData.file"
       :error="validationError"
+      :import-template-url="props.importTemplateUrl"
+      :import-template-name="props.importTemplateName"
       @file-removed="validationError = null"
       @file-added="validationError = null"
-      :importTemplateUrl="props.importTemplateUrl"
-      :importTemplateName="props.importTemplateName"
     />
   </Form>
 </template>
 <script setup>
-import { ref, computed } from "vue";
-import CSVImportField from "@/components/forms/csv-import/CSVImportField.vue";
-import Form from "@/components/forms/Form.vue";
+import { ref, computed } from 'vue';
+import CSVImportField from '@/components/forms/csv-import/CSVImportField.vue';
+import Form from '@/components/forms/Form.vue';
 
 const props = defineProps({
-  url: { type: String },
-  importTemplateUrl: { type: String },
-  importTemplateName: { type: String, default: "Import Template.csv" },
+  url: { type: String, required: true },
+  importTemplateUrl: { type: String, required: true },
+  importTemplateName: { type: String, default: 'Import Template.csv' },
 });
 
 const formData = ref({
   file: null,
 });
 
-const emit = defineEmits(["success", "error"]);
+const emit = defineEmits(['success', 'error']);
 
 const form = ref(null);
 const loading = computed(() => form.value?.loading || false);
@@ -53,12 +53,12 @@ function resetForm() {
 }
 
 function successHandler(response) {
-  emit("success", response.data.metadata.no_rows_imported);
+  emit('success', response.data.metadata.no_rows_imported);
 }
 
 function formValidationErrorHandler(errorResponse) {
   if (errorResponse.errors.row_errors !== undefined) {
-    emit("error", errorResponse.errors);
+    emit('error', errorResponse.errors);
     return;
   }
 

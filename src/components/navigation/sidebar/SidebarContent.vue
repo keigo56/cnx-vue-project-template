@@ -16,7 +16,7 @@
               <SidebarMenuButton
                 as-child
                 :tooltip="item.title"
-                :isActive="item.isActive"
+                :is-active="item.isActive"
               >
                 <router-link :to="item.url">
                   <component
@@ -57,7 +57,7 @@
                       <SidebarMenuSubButton
                         v-if="subItem.isVisible"
                         as-child
-                        :isActive="subItem.isActive"
+                        :is-active="subItem.isActive"
                       >
                         <router-link :to="subItem.url">
                           <span>{{ subItem.title }}</span>
@@ -80,7 +80,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/ui/collapsible';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -91,8 +91,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
-} from "@/components/ui/sidebar";
-import { ChevronRight } from "lucide-vue-next";
+} from '@/components/ui/sidebar';
+import { ChevronRight } from 'lucide-vue-next';
 
 defineProps({
   content: {
