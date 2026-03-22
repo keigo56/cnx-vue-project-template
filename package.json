@@ -7,8 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --fix src",
-    "format": "prettier . --write"
+    "lint": "eslint src --ext .js,.vue --max-warnings=0",
+    "lint:fix": "eslint src --ext .js,.vue --fix",
+    "format": "prettier --write src/**/*.{js,vue}",
+    "format:check": "prettier --check src/**/*.{js,vue,css}",
+    "check": "npm run lint && npm run format:check",
+    "fix": "npm run lint:fix && npm run format"
   },
   "dependencies": {
     "@headlessui/tailwindcss": "^0.2.2",

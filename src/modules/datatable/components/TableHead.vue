@@ -32,8 +32,8 @@
       <template
         v-if="
           props.columns.length === 0 &&
-            isLoading === true &&
-            showLoading === true
+          isLoading === true &&
+          showLoading === true
         "
       >
         <TableHeading
@@ -66,7 +66,7 @@
           <ArrowUpIcon
             v-if="
               selectedColumn.key === column.key &&
-                selectedColumn.direction === 'asc'
+              selectedColumn.direction === 'asc'
             "
             :class="['w-4 h-4']"
           />
@@ -74,7 +74,7 @@
           <ArrowDownIcon
             v-if="
               selectedColumn.key === column.key &&
-                selectedColumn.direction === 'desc'
+              selectedColumn.direction === 'desc'
             "
             :class="['w-4 h-4']"
           />

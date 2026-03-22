@@ -10,6 +10,9 @@ export default [
   {
     rules: {
       'vue/multi-word-component-names': 'off', // Allow single-word component names
+      'vue/multiline-html-element-content-newline': 'off',
+      'vue/singleline-html-element-content-newline': 'off',
+      'vue/html-indent': 'off',
       quotes: ['error', 'single', { avoidEscape: true }],
       'vue/html-self-closing': [
         'error',

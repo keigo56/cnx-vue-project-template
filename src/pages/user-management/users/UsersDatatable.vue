@@ -1,7 +1,5 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
-    Users
-  </h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Users</h1>
 
   <DataTable
     ref="usersDatatable"
