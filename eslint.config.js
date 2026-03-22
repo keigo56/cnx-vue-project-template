@@ -4,7 +4,7 @@ import globals from 'globals';
 import { globalIgnores } from 'eslint/config';
 
 export default [
-  globalIgnores(['src/components/ui/**/*']), // Ignore all files in src/components/ui (shadcn-vue)
+  globalIgnores(['src/components/ui/**/*', 'src/modules/calendar/**/*']), // Ignore all files in src/components/ui (shadcn-vue)
   eslintConfigPrettier,
   ...pluginVue.configs['flat/recommended'],
   {

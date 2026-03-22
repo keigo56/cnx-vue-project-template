@@ -1,5 +1,7 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Logs</h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
+    Logs
+  </h1>
 
   <DataTable
     ref="logsDatatable"

@@ -41,7 +41,7 @@
                     :tooltip="item.title"
                     :is-active="
                       (item.isActive && open && item.title === 'Home') ||
-                      (item.isActive && !open)
+                        (item.isActive && !open)
                     "
                   >
                     <component

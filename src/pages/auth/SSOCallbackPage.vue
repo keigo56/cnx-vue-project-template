@@ -6,8 +6,12 @@
         src="/logo.png"
         alt=""
       />
-      <p class="mb-1 text-xl font-semibold">Please wait for a moment</p>
-      <p class="text-foreground/70">Logging you in...</p>
+      <p class="mb-1 text-xl font-semibold">
+        Please wait for a moment
+      </p>
+      <p class="text-foreground/70">
+        Logging you in...
+      </p>
     </div>
   </div>
 </template>

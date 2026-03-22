@@ -84,11 +84,15 @@
         </a>
       </div>
       <div class="mt-4 flex flex-col items-center">
-        <p class="dark:text-gray-500 text-sm">Version 1.0.0</p>
+        <p class="dark:text-gray-500 text-sm">
+          Version 1.0.0
+        </p>
         <p class="dark:text-gray-500 text-sm">
           Copyright 2023 Innovation PH Build Team
         </p>
-        <p class="dark:text-gray-500 text-sm">All Rights Reserved.</p>
+        <p class="dark:text-gray-500 text-sm">
+          All Rights Reserved.
+        </p>
       </div>
     </div>
   </div>

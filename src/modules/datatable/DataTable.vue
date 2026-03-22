@@ -90,9 +90,9 @@
         <div
           v-show="
             isInitialLoad === true &&
-            !props.autoFetch &&
-            props.showLoading === true &&
-            !isLoading
+              !props.autoFetch &&
+              props.showLoading === true &&
+              !isLoading
           "
           class="w-full h-[700px] flex justify-center items-center"
         >
@@ -124,7 +124,7 @@
             <TableRow
               v-if="
                 !!datatableData.rows.data &&
-                datatableData.rows.data.length === 0
+                  datatableData.rows.data.length === 0
               "
               class="bg-gray-100 dark:bg-neutral-900"
             >
@@ -132,8 +132,8 @@
                 class="py-5 text-center"
                 :colspan="
                   datatableData.columns.length +
-                  (props.multiSelect ? 1 : 0) +
-                  (props.withActionItems ? 1 : 0)
+                    (props.multiSelect ? 1 : 0) +
+                    (props.withActionItems ? 1 : 0)
                 "
               >
                 No record found
@@ -142,8 +142,8 @@
             <template
               v-if="
                 visibleColumns.length === 0 &&
-                isLoading === true &&
-                showLoading === true
+                  isLoading === true &&
+                  showLoading === true
               "
             >
               <TableRow
@@ -206,7 +206,7 @@
                   <div
                     v-if="
                       showLoading === false ||
-                      (showLoading === true && isLoading === false)
+                        (showLoading === true && isLoading === false)
                     "
                   >
                     <slot
@@ -244,7 +244,7 @@
                     class="text-gray-800 dark:text-gray-200"
                     :class="[
                       showLoading === false ||
-                      (showLoading === true && isLoading === false)
+                        (showLoading === true && isLoading === false)
                         ? 'opacity-100'
                         : 'opacity-0',
                     ]"
@@ -290,7 +290,7 @@
                   <div
                     :class="[
                       showLoading === false ||
-                      (showLoading === true && isLoading === false)
+                        (showLoading === true && isLoading === false)
                         ? 'opacity-100'
                         : 'opacity-0',
                     ]"
