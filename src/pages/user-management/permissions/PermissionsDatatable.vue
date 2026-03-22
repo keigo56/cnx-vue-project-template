@@ -3,7 +3,7 @@
 
   <DataTable
     source-url="/api/datatable/permissions"
-    :can-export="hasPermission('export_permissions')"
+    :can-export="hasPermission('permissions_export')"
     export-url="/api/datatable/permissions/export"
     export-file-name="permissions.csv"
     :with-action-items="false"
@@ -11,6 +11,6 @@
 </template>
 
 <script setup>
-import DataTable from "@/modules/datatable/DataTable.vue";
-import { hasPermission } from "@/utils/permission";
+import DataTable from '@/modules/datatable/DataTable.vue';
+import { hasPermission } from '@/utils/permission';
 </script>

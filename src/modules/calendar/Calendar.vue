@@ -273,15 +273,15 @@
 </template>
 
 <script setup lang="ts">
-import { api } from "@/api/api";
-import { ref, watch, onMounted, reactive } from "vue";
-import { ScheduleData } from "@/modules/calendar/types/ScheduleData";
-import ScheduleCard from "@/modules/calendar/components/ScheduleCard.vue";
-import { useCalendarStore } from "@/modules/calendar/store/calendarStore";
-import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-import { useThemeStore } from "@/store/themeStore";
-import SelectField from "@/components/forms/SelectField.vue";
+import { api } from '@/api/api';
+import { ref, watch, onMounted, reactive } from 'vue';
+import { ScheduleData } from '@/modules/calendar/types/ScheduleData';
+import ScheduleCard from '@/modules/calendar/components/ScheduleCard.vue';
+import { useCalendarStore } from '@/modules/calendar/store/calendarStore';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import { useThemeStore } from '@/store/themeStore';
+import SelectField from '@/components/forms/SelectField.vue';
 
 interface Day {
   day: string;
@@ -297,8 +297,8 @@ onMounted(() => {
 
 const searchParams = reactive({
   date: null,
-  site: "",
-  roomName: "",
+  site: '',
+  roomName: '',
 });
 
 const date = ref();
@@ -309,100 +309,100 @@ const loading = ref(true);
 
 const timeSlots = ref([
   {
-    label: "12 AM",
-    timeValue: "12:00 AM",
+    label: '12 AM',
+    timeValue: '12:00 AM',
   },
   {
-    label: "1 AM",
-    timeValue: "01:00 AM",
+    label: '1 AM',
+    timeValue: '01:00 AM',
   },
   {
-    label: "2 AM",
-    timeValue: "02:00 AM",
+    label: '2 AM',
+    timeValue: '02:00 AM',
   },
   {
-    label: "3 AM",
-    timeValue: "03:00 AM",
+    label: '3 AM',
+    timeValue: '03:00 AM',
   },
   {
-    label: "4 AM",
-    timeValue: "04:00 AM",
+    label: '4 AM',
+    timeValue: '04:00 AM',
   },
   {
-    label: "5 AM",
-    timeValue: "05:00 AM",
+    label: '5 AM',
+    timeValue: '05:00 AM',
   },
   {
-    label: "6 AM",
-    timeValue: "06:00 AM",
+    label: '6 AM',
+    timeValue: '06:00 AM',
   },
   {
-    label: "7 AM",
-    timeValue: "07:00 AM",
+    label: '7 AM',
+    timeValue: '07:00 AM',
   },
   {
-    label: "8 AM",
-    timeValue: "08:00 AM",
+    label: '8 AM',
+    timeValue: '08:00 AM',
   },
   {
-    label: "9 AM",
-    timeValue: "09:00 AM",
+    label: '9 AM',
+    timeValue: '09:00 AM',
   },
   {
-    label: "10 AM",
-    timeValue: "10:00 AM",
+    label: '10 AM',
+    timeValue: '10:00 AM',
   },
   {
-    label: "11 AM",
-    timeValue: "11:00 AM",
+    label: '11 AM',
+    timeValue: '11:00 AM',
   },
   {
-    label: "12 PM",
-    timeValue: "12:00 PM",
+    label: '12 PM',
+    timeValue: '12:00 PM',
   },
   {
-    label: "1 PM",
-    timeValue: "01:00 PM",
+    label: '1 PM',
+    timeValue: '01:00 PM',
   },
   {
-    label: "2 PM",
-    timeValue: "02:00 PM",
+    label: '2 PM',
+    timeValue: '02:00 PM',
   },
   {
-    label: "3 PM",
-    timeValue: "03:00 PM",
+    label: '3 PM',
+    timeValue: '03:00 PM',
   },
   {
-    label: "4 PM",
-    timeValue: "04:00 PM",
+    label: '4 PM',
+    timeValue: '04:00 PM',
   },
   {
-    label: "5 PM",
-    timeValue: "05:00 PM",
+    label: '5 PM',
+    timeValue: '05:00 PM',
   },
   {
-    label: "6 PM",
-    timeValue: "06:00 PM",
+    label: '6 PM',
+    timeValue: '06:00 PM',
   },
   {
-    label: "7 PM",
-    timeValue: "07:00 PM",
+    label: '7 PM',
+    timeValue: '07:00 PM',
   },
   {
-    label: "8 PM",
-    timeValue: "08:00 PM",
+    label: '8 PM',
+    timeValue: '08:00 PM',
   },
   {
-    label: "9 PM",
-    timeValue: "09:00 PM",
+    label: '9 PM',
+    timeValue: '09:00 PM',
   },
   {
-    label: "10 PM",
-    timeValue: "10:00 PM",
+    label: '10 PM',
+    timeValue: '10:00 PM',
   },
   {
-    label: "11 PM",
-    timeValue: "11:00 PM",
+    label: '11 PM',
+    timeValue: '11:00 PM',
   },
 ]);
 
@@ -410,55 +410,55 @@ const days = ref<Day[]>([]);
 
 const schedules = ref<ScheduleData[]>([
   {
-    date: "2024-03-08",
+    date: '2024-03-08',
     time: {
-      start: "10:00 PM",
-      end: "2:00 AM",
+      start: '10:00 PM',
+      end: '2:00 AM',
       duration: 1,
     },
     meta: {
-      title: "Samsung",
-      timeSchedule: "01:00 AM - 03:00 AM",
-      requestorName: "Keigo Victor Fujita",
-      description: "AdHoc - Workshop",
+      title: 'Samsung',
+      timeSchedule: '01:00 AM - 03:00 AM',
+      requestorName: 'Keigo Victor Fujita',
+      description: 'AdHoc - Workshop',
     },
   },
   {
-    date: "2024-03-09",
+    date: '2024-03-09',
     time: {
-      start: "01:00 PM",
-      end: "03:00 PM",
+      start: '01:00 PM',
+      end: '03:00 PM',
       duration: 2,
     },
     meta: {
-      title: "Samsung Electronics Australia",
-      timeSchedule: "01:00 PM - 03:00 PM",
-      requestorName: "Keigo Victor Fujita",
-      description: "AdHoc - Workshop",
+      title: 'Samsung Electronics Australia',
+      timeSchedule: '01:00 PM - 03:00 PM',
+      requestorName: 'Keigo Victor Fujita',
+      description: 'AdHoc - Workshop',
     },
   },
 ]);
 
 const format = (dt) => {
   const options = {
-    month: "long", // Full month name
-    year: "numeric", // Full numeric year
+    month: 'long', // Full month name
+    year: 'numeric', // Full numeric year
   };
 
   const startDate = searchParams.date[0];
   const endDate = searchParams.date[1];
 
   if (
-    startDate.toLocaleString("en-US", options) ===
-    endDate.toLocaleString("en-US", options)
+    startDate.toLocaleString('en-US', options) ===
+    endDate.toLocaleString('en-US', options)
   ) {
-    return endDate.toLocaleString("en-US", options);
+    return endDate.toLocaleString('en-US', options);
   }
 
   return (
-    startDate.toLocaleString("en-US", options) +
-    " - " +
-    endDate.toLocaleString("en-US", options)
+    startDate.toLocaleString('en-US', options) +
+    ' - ' +
+    endDate.toLocaleString('en-US', options)
   );
 };
 
@@ -466,8 +466,8 @@ const formattedDate = (date) => {
   const year = date.getFullYear();
   let month = (date.getMonth() + 1).toString();
   let day = date.getDate().toString();
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
   const formattedDateTime = `${year}-${month}-${day}`;
   return formattedDateTime;
 };
@@ -500,15 +500,15 @@ const setDefaultDate = () => {
 };
 
 // filter models
-const site = ref("");
-const roomName = ref("");
+const site = ref('');
+const roomName = ref('');
 
 // dropdown Items
 const sites = ref([]);
 const roomNames = ref([]);
 
 const getSites = () => {
-  api.get("/api/calendar/dropdown/sites").then((response) => {
+  api.get('/api/calendar/dropdown/sites').then((response) => {
     sites.value = response.data.sites.map((item) => {
       return { value: item.site, label: item.site };
     });
@@ -517,7 +517,7 @@ const getSites = () => {
 
 const getRooms = () => {
   api
-    .get("/api/calendar/dropdown/rooms", {
+    .get('/api/calendar/dropdown/rooms', {
       params: {
         site: searchParams.site,
       },
@@ -532,20 +532,20 @@ const getRooms = () => {
 watch(
   () => searchParams.site,
   (site) => {
-    if (searchParams.site === "") {
+    if (searchParams.site === '') {
       return;
     }
 
     roomNames.value = [];
-    searchParams.roomName = "";
+    searchParams.roomName = '';
     getRooms();
   },
 );
 
 watch(searchParams, () => {
   if (
-    searchParams.site === "" ||
-    searchParams.roomName === "" ||
+    searchParams.site === '' ||
+    searchParams.roomName === '' ||
     searchParams.date.length !== 2
   ) {
     return;
@@ -556,7 +556,7 @@ watch(searchParams, () => {
   schedules.value = null;
 
   api
-    .get("/api/calendar/schedules", {
+    .get('/api/calendar/schedules', {
       params: {
         start_date: formattedDate(searchParams.date[0]),
         end_date: formattedDate(searchParams.date[1]),

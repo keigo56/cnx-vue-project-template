@@ -6,8 +6,8 @@
   >
     <Dialog
       as="div"
-      @close="props.dismissible && emit('closedModal')"
       class="relative z-10"
+      @close="props.dismissible && emit('closedModal')"
     >
       <TransitionChild
         as="template"
@@ -20,7 +20,7 @@
       >
         <div
           class="fixed inset-0 bg-black bg-opacity-25 dark:bg-white/30 dark:backdrop-blur-sm"
-        />
+        ></div>
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-auto">
@@ -64,7 +64,7 @@ import {
   DialogTitle,
   TransitionChild,
   TransitionRoot,
-} from "@headlessui/vue";
+} from '@headlessui/vue';
 
 const props = defineProps({
   isOpen: {
@@ -73,7 +73,7 @@ const props = defineProps({
   },
   title: {
     type: String,
-    default: "Modal Title",
+    default: 'Modal Title',
   },
   dismissible: {
     type: Boolean,
@@ -81,9 +81,9 @@ const props = defineProps({
   },
   width: {
     type: String,
-    default: "30rem",
+    default: '30rem',
   },
 });
 
-const emit = defineEmits(["closedModal"]);
+const emit = defineEmits(['closedModal']);
 </script>

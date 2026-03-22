@@ -27,45 +27,51 @@
             <a
               href="#"
               class="hover:underline me-4 md:me-6"
-              >About</a
             >
+              About
+            </a>
           </li>
           <li>
             <a
               href="#"
               class="hover:underline me-4 md:me-6"
-              >Privacy Policy</a
             >
+              Privacy Policy
+            </a>
           </li>
           <li>
             <a
               href="#"
               class="hover:underline me-4 md:me-6"
-              >Licensing</a
             >
+              Licensing
+            </a>
           </li>
           <li>
             <a
               href="#"
               class="hover:underline"
-              >Contact</a
             >
+              Contact
+            </a>
           </li>
         </ul>
       </div>
       <hr class="my-6 border-gray-700 sm:mx-auto lg:my-8" />
-      <span class="block text-sm text-gray-500 sm:text-center"
-        >© 2024
+      <span class="block text-sm text-gray-500 sm:text-center">
+        © 2024
         <a
           href="/"
           class="hover:underline"
-          >Business Analytics™</a
-        >. All Rights Reserved.</span
-      >
+        >
+          Business Analytics™
+        </a>
+        . All Rights Reserved.
+      </span>
     </div>
   </footer>
 </template>
 
 <script setup>
-import cnxlogo from "@/assets/cnxlogo.png";
+import cnxlogo from '@/assets/cnxlogo.png';
 </script>

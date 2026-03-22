@@ -1,110 +1,109 @@
 <template>
   <div>
-    <label
-      v-show="showLabel"
-      :for="props.id"
-      :class="[
-        hasError
-          ? 'block mb-2 text-sm font-medium text-red-900 dark:text-red-400'
-          : 'block mb-2 text-sm font-medium text-gray-900 dark:text-white',
-      ]"
-    >
-      {{ props.label }}
-    </label>
-    <VueDatePicker
-      :model-value="props.modelValue"
-      @update:model-value="
-        (value) => {
-          emit('update:modelValue', value);
-        }
-      "
-      week-start="0"
-      model-type="yyyy-MM-dd"
-      :enable-time-picker="false"
-      auto-apply
-      :clearable="false"
-      :dark="themeStore.isDarkMode"
-      :format="format"
-      :min-date="props.minDate"
-    >
-      <template #dp-input="{ value }">
-        <button
-          type="button"
-          id="week-range-input"
-          :class="[
-            hasError
-              ? 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 px-3 text-left text-gray-900 shadow-sm ring-2 ring-inset ring-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 sm:text-sm sm:leading-6'
-              : 'relative w-full cursor-pointer rounded-md bg-white dark:bg-dark-100 dark:text-white py-2.5 px-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-neutral-700 focus:outline-none focus:ring-2 focus:ring-gray-500 sm:text-sm sm:leading-6',
-          ]"
-          class=""
-        >
-          <div class="flex items-center justify-between font-inter">
-            <div>
-              <span
-                v-show="!value"
-                class="font-semibold"
-                :class="[hasError ? 'text-red-500' : 'text-gray-500']"
-              >
-                {{ props.placeholder }}
-              </span>
-              <span
-                class="text-sm"
-                :class="[hasError ? 'text-red-500' : 'dark:text-white']"
-              >
-                {{ value }}
-              </span>
+    <div class="flex flex-col-reverse gap-y-2">
+      <VueDatePicker
+        :model-value="props.modelValue"
+        week-start="0"
+        model-type="yyyy-MM-dd"
+        :enable-time-picker="false"
+        auto-apply
+        :clearable="false"
+        :dark="themeStore.isDarkMode"
+        :format="format"
+        :min-date="props.minDate"
+        :disabled="props.disabled"
+        :teleport="true"
+        @update:model-value="
+          (value) => {
+            emit('update:modelValue', value);
+          }
+        "
+      >
+        <template #dp-input="{ value }">
+          <Button
+            id="week-range-input"
+            variant="ghost"
+            type="button"
+            :disabled="props.disabled"
+            class="w-full border text-right dark:bg-input/30 dark:hover:bg-input/50 disabled:opacity-50"
+          >
+            <div class="w-full flex items-center justify-between font-inter">
+              <div>
+                <span
+                  v-show="!value"
+                  class="font-semibold"
+                  :class="[hasError ? 'text-red-500' : 'text-gray-500']"
+                >
+                  {{ props.placeholder }}
+                </span>
+                <span
+                  class="text-sm"
+                  :class="[hasError ? 'text-red-500' : 'dark:text-white']"
+                >
+                  {{ value }}
+                </span>
+              </div>
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                  :class="[hasError ? 'text-red-600' : 'text-gray-600']"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+                  />
+                </svg>
+              </div>
             </div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-5 h-5"
-                :class="[hasError ? 'text-red-600' : 'text-gray-600']"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
-                />
-              </svg>
-            </div>
-          </div>
-        </button>
-      </template>
-    </VueDatePicker>
-    <p
+          </Button>
+        </template>
+      </VueDatePicker>
+      <Label
+        v-show="showLabel"
+        :for="props.id"
+        :variant="hasError ? 'error' : 'default'"
+      >
+        {{ props.label }}
+      </Label>
+    </div>
+    <span
       v-show="hasError"
-      class="mt-1 text-xs text-red-600 dark:text-red-500 font-semibold"
+      class="text-xs font-semibold text-red-500 dark:text-red-500"
     >
-      {{ props.error[0] }}
-    </p>
+      {{ errorMessage }}
+    </span>
   </div>
 </template>
 
 <script setup>
-import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-import { useThemeStore } from "@/store/themeStore";
-import { watch, ref, computed } from "vue";
+import { Label } from '@/components/ui/label';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import { useThemeStore } from '@/store/themeStore';
+import { watch, ref, computed } from 'vue';
+import Button from '@/components/ui/button/Button.vue';
 const props = defineProps({
   error: {
     type: Array,
-    default: [],
+    default: () => [],
   },
   label: {
     type: String,
-    default: "Form Label",
-    required: true,
+    default: 'Form Label',
   },
   placeholder: {
     type: String,
-    default: "",
+    default: '',
   },
   modelValue: {
     type: [String, Number],
+    required: true,
   },
   disabled: {
     type: Boolean,
@@ -122,22 +121,30 @@ const props = defineProps({
 
 const themeStore = useThemeStore();
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
-const hasError = computed({
-  get() {
-    return errors.value.length > 0;
-  },
+const hasError = computed(() => {
+  if (Array.isArray(props.error)) {
+    return props.error.length > 0;
+  }
+  return !!props.error;
+});
+
+const errorMessage = computed(() => {
+  if (Array.isArray(props.error)) {
+    return props.error[0] || '';
+  }
+  return props.error || '';
 });
 
 const format = (dt) => {
   const options = {
-    month: "long", // Full month name
-    year: "numeric", // Full numeric year
-    day: "numeric",
+    month: 'long', // Full month name
+    year: 'numeric', // Full numeric year
+    day: 'numeric',
   };
 
-  return dt.toLocaleString("en-US", options);
+  return dt.toLocaleString('en-US', options);
 };
 
 const errors = ref([]);
@@ -156,7 +163,6 @@ watch(
   },
 );
 </script>
-
 <style>
 .dp__theme_dark {
   --dp-background-color: #212121;
@@ -164,9 +170,9 @@ watch(
   --dp-hover-color: #484848;
   --dp-hover-text-color: #fff;
   --dp-hover-icon-color: #959595;
-  --dp-primary-color: #312e81;
+  --dp-primary-color: #24e4cc;
   --dp-primary-disabled-color: #61a8ea;
-  --dp-primary-text-color: #fff;
+  --dp-primary-text-color: #161616;
   --dp-secondary-color: #a9a9a9;
   --dp-border-color: #2d2d2d;
   --dp-menu-border-color: #2d2d2d;
@@ -193,7 +199,7 @@ watch(
   --dp-hover-color: #f3f3f3;
   --dp-hover-text-color: #212121;
   --dp-hover-icon-color: #959595;
-  --dp-primary-color: #4f46e5;
+  --dp-primary-color: #003d5b;
   --dp-primary-disabled-color: #6bacea;
   --dp-primary-text-color: #f8f5f5;
   --dp-secondary-color: #c0c4cc;

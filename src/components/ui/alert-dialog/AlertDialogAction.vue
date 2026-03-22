@@ -1,8 +1,8 @@
 <script setup>
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { AlertDialogAction } from "reka-ui";
-import { computed } from "vue";
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
+import { AlertDialogAction } from 'reka-ui';
+import { computed } from 'vue';
 
 const props = defineProps({
   asChild: { type: Boolean, required: false },

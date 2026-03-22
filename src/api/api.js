@@ -1,6 +1,6 @@
-import axios from "axios";
-import { toast } from "vue-sonner";
-import { authService } from "@/services/authService";
+import axios from 'axios';
+import { toast } from 'vue-sonner';
+import { authService } from '@/services/authService';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -8,8 +8,8 @@ export const api = axios.create({
   baseURL: BACKEND_URL,
   timeout: 5000,
   headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
   },
   withCredentials: true,
   withXSRFToken: true,
@@ -29,13 +29,13 @@ export const setupInterceptors = () => {
       return response;
     },
     async function (error) {
-      if (error.code === "ERR_BAD_REQUEST") {
+      if (error.code === 'ERR_BAD_REQUEST') {
         /*
          * If received an unauthenticated response, redirect to login page
          */
         if (error.response.status === 401) {
-          toast.error("You are not authenticated", {
-            description: "Please try to login again",
+          toast.error('You are not authenticated', {
+            description: 'Please try to login again',
           });
 
           authService.clearAuthState();
@@ -45,8 +45,8 @@ export const setupInterceptors = () => {
          * If received an unauthenticated response, redirect to login page
          */
         if (error.response.status === 419) {
-          toast.error("Session Expired", {
-            description: "Please try to login again",
+          toast.error('Session Expired', {
+            description: 'Please try to login again',
           });
 
           authService.clearAuthState();
@@ -56,22 +56,22 @@ export const setupInterceptors = () => {
          * If received forbidden response, redirect to login page
          */
         if (error.response.status === 403) {
-          toast.error("Forbidden", {
-            description: "You do not have rights to perform this action",
+          toast.error('Forbidden', {
+            description: 'You do not have rights to perform this action',
           });
         }
       }
 
-      if (error.code === "ERR_NETWORK") {
-        toast.error("Server Unavailable", {
-          description: "Unable to connect to the server. Please try again.",
+      if (error.code === 'ERR_NETWORK') {
+        toast.error('Server Unavailable', {
+          description: 'Unable to connect to the server. Please try again.',
         });
       }
 
-      if (error.code === "ECONNABORTED") {
-        toast.warning("Request Timeout", {
+      if (error.code === 'ECONNABORTED') {
+        toast.warning('Request Timeout', {
           description:
-            "The request took too long to process and was aborted. Please check your network connection and try again.",
+            'The request took too long to process and was aborted. Please check your network connection and try again.',
         });
       }
 

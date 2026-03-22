@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
 
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -75,7 +75,7 @@
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent: oklch(0.9219 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
@@ -219,7 +219,7 @@
 
 .loader::before,
 .loader::after {
-  content: "";
+  content: '';
   grid-area: 1/1;
   border-radius: 50%;
   background: inherit;
@@ -234,4 +234,63 @@
   100% {
     transform: rotate(1turn);
   }
+}
+
+/* datepicker */
+.dp__theme_dark {
+  --dp-background-color: var(--background);
+  --dp-text-color: var(--foreground);
+  --dp-hover-color: var(--muted);
+  --dp-hover-text-color: var(--foreground);
+  --dp-hover-icon-color: var(--muted-foreground);
+  --dp-primary-color: var(--primary);
+  --dp-primary-disabled-color: var(--muted);
+  --dp-primary-text-color: var(--primary-foreground);
+  --dp-secondary-color: var(--secondary);
+  --dp-border-color: var(--border);
+  --dp-menu-border-color: var(--border);
+  --dp-border-color-hover: var(--ring);
+  --dp-disabled-color: var(--muted);
+  --dp-disabled-color-text: var(--muted-foreground);
+  --dp-scroll-bar-background: var(--background);
+  --dp-scroll-bar-color: var(--muted);
+  --dp-success-color: var(--accent);
+  --dp-success-color-disabled: var(--muted);
+  --dp-icon-color: var(--muted-foreground);
+  --dp-danger-color: var(--destructive);
+  --dp-marker-color: var(--destructive);
+  --dp-tooltip-color: var(--popover);
+  --dp-highlight-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  --dp-range-between-dates-background-color: var(--muted);
+  --dp-range-between-dates-text-color: var(--foreground);
+  --dp-range-between-border-color: var(--muted);
+}
+
+.dp__theme_light {
+  --dp-background-color: var(--background);
+  --dp-text-color: var(--foreground);
+  --dp-hover-color: var(--muted);
+  --dp-hover-text-color: var(--foreground);
+  --dp-hover-icon-color: var(--muted-foreground);
+  --dp-primary-color: var(--primary);
+  --dp-primary-disabled-color: var(--muted);
+  --dp-primary-text-color: var(--primary-foreground);
+  --dp-secondary-color: var(--secondary);
+  --dp-border-color: var(--border);
+  --dp-menu-border-color: var(--border);
+  --dp-border-color-hover: var(--ring);
+  --dp-disabled-color: var(--muted);
+  --dp-disabled-color-text: var(--muted-foreground);
+  --dp-scroll-bar-background: var(--background);
+  --dp-scroll-bar-color: var(--muted-foreground);
+  --dp-success-color: var(--accent);
+  --dp-success-color-disabled: var(--muted);
+  --dp-icon-color: var(--muted-foreground);
+  --dp-danger-color: var(--destructive);
+  --dp-marker-color: var(--destructive);
+  --dp-tooltip-color: var(--popover);
+  --dp-highlight-color: color-mix(in srgb, var(--primary) 10%, transparent);
+  --dp-range-between-dates-background-color: var(--muted);
+  --dp-range-between-dates-text-color: var(--foreground);
+  --dp-range-between-border-color: var(--muted);
 }

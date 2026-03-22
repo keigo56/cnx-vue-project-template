@@ -1,8 +1,8 @@
 <script setup>
-import { cn } from "@/lib/utils";
-import { Label } from "reka-ui";
-import { computed } from "vue";
-import { labelVariants } from ".";
+import { cn } from '@/lib/utils';
+import { Label } from 'reka-ui';
+import { computed } from 'vue';
+import { labelVariants } from '.';
 
 const props = defineProps({
   for: { type: String, required: false },

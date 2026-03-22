@@ -1,26 +1,26 @@
 <template>
   <form
-    @submit.prevent="submit()"
     class="border-0 border-transparent"
+    @submit.prevent="submit()"
   >
-    <slot />
+    <slot></slot>
   </form>
 </template>
 <script setup>
-import { api } from "@/api/api.js";
-import { ref } from "vue";
+import { api } from '@/api/api.js';
+import { ref } from 'vue';
 const props = defineProps({
   data: {
     type: Object,
-    default: {},
+    default: () => {},
   },
   url: {
     type: String,
-    default: "",
+    default: '',
   },
   method: {
     type: String,
-    default: "GET",
+    default: 'GET',
   },
 
   multipart: {
@@ -32,7 +32,7 @@ const props = defineProps({
 const result = ref({});
 const loading = ref(false);
 
-const emit = defineEmits(["onSuccess", "onError", "onFormValidationError"]);
+const emit = defineEmits(['onSuccess', 'onError', 'onFormValidationError']);
 
 defineExpose({
   loading,
@@ -45,10 +45,10 @@ async function submit() {
     let headers = {};
 
     if (props.multipart) {
-      headers["Content-Type"] = "multipart/form-data";
+      headers['Content-Type'] = 'multipart/form-data';
     }
 
-    if (props.method === "GET") {
+    if (props.method === 'GET') {
       result.value = await api.get(
         props.url,
         {
@@ -58,15 +58,15 @@ async function submit() {
           headers: headers,
         },
       );
-    } else if (props.method === "POST") {
+    } else if (props.method === 'POST') {
       result.value = await api.post(props.url, props.data, {
         headers: headers,
       });
-    } else if (props.method === "PUT") {
+    } else if (props.method === 'PUT') {
       result.value = await api.put(props.url, props.data, {
         headers: headers,
       });
-    } else if (props.method === "DELETE") {
+    } else if (props.method === 'DELETE') {
       result.value = await api.delete(
         props.url,
         {
@@ -78,16 +78,16 @@ async function submit() {
       );
     }
     loading.value = false;
-    emit("onSuccess", result.value);
+    emit('onSuccess', result.value);
   } catch (error) {
     loading.value = false;
-    if (error.code === "ERR_BAD_REQUEST") {
+    if (error.code === 'ERR_BAD_REQUEST') {
       if (error.response.status === 422) {
-        return emit("onFormValidationError", error.response.data);
+        return emit('onFormValidationError', error.response.data);
       }
-      emit("onError", error);
+      emit('onError', error);
     } else {
-      return emit("onError", error);
+      return emit('onError', error);
     }
   }
 }

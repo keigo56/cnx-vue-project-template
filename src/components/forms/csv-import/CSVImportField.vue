@@ -1,15 +1,15 @@
 <template>
   <div class="flex flex-col h-72">
     <div
-      @dragover="onDragOver"
-      @dragleave="onDragLeave"
-      @drop.prevent="onFileDrop"
       class="h-full border-2 border-dashed rounded dark:border-neutral-900 border-spacing-4"
       :class="[
         hasFileBeingDragged
           ? 'bg-neutral-200/80 dark:bg-neutral-800/50'
           : 'bg-neutral-50 dark:bg-neutral-950 ',
       ]"
+      @dragover="onDragOver"
+      @dragleave="onDragLeave"
+      @drop.prevent="onFileDrop"
     >
       <div
         class="relative grid transition-all"
@@ -21,10 +21,10 @@
       >
         <input
           ref="fileInput"
-          @change.prevent="onFileInputChanged"
           accept="text/csv"
           type="file"
           class="hidden"
+          @change.prevent="onFileInputChanged"
         />
         <div
           class="absolute bottom-0 w-full px-10 pointer-events-none top-10"
@@ -53,10 +53,10 @@
           </p>
           <Button
             type="button"
-            @click="fileInput.click()"
             :variant="themeStore.isDarkMode ? 'secondary' : 'default'"
-            class="mt-4"
+            class="mt-4 px-3 py-1.5"
             size="xs"
+            @click="fileInput.click()"
           >
             Choose a file
           </Button>
@@ -64,9 +64,9 @@
             <div
               class="h-[0.5px] w-12 bg-neutral-300 dark:bg-neutral-700/60"
             ></div>
-            <span class="text-xs text-neutral-600 dark:text-neutral-500"
-              >or</span
-            >
+            <span class="text-xs text-neutral-600 dark:text-neutral-500">
+              or
+            </span>
             <div
               class="h-[0.5px] w-12 bg-neutral-300 dark:bg-neutral-700/60"
             ></div>
@@ -79,7 +79,8 @@
               class="text-xs font-semibold dark:text-white hover:underline"
               :href="props.importTemplateUrl"
               download
-              >{{ props.importTemplateName }}
+            >
+              {{ props.importTemplateName }}
             </a>
           </div>
         </div>
@@ -88,14 +89,14 @@
 
     <ImportFileCard
       v-if="uploadedFile"
-      @file-removed="handleFileRemoved"
       :name="uploadedFile.name"
       :size="uploadedFile.size"
       :type="uploadedFile.type"
+      @file-removed="handleFileRemoved"
     />
     <CSVImportErrorMessage
-      class="mt-4"
       v-if="hasErrorMessage"
+      class="mt-4"
       :message="errorMessage"
     />
 
@@ -108,18 +109,18 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import Button from "@/components/ui/button/Button.vue";
-import TableImageDark from "@/assets/svgs/TableImageDark.vue";
-import TableImageLight from "@/assets/svgs/TableImageLight.vue";
-import ImportFileCard from "@/components/forms/csv-import/ImportFileCard.vue";
-import CSVImportErrorMessage from "@/components/forms/csv-import/CSVImportErrorMessage.vue";
-import { useThemeStore } from "@/store/themeStore";
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import Button from '@/components/ui/button/Button.vue';
+import TableImageDark from '@/assets/svgs/TableImageDark.vue';
+import TableImageLight from '@/assets/svgs/TableImageLight.vue';
+import ImportFileCard from '@/components/forms/csv-import/ImportFileCard.vue';
+import CSVImportErrorMessage from '@/components/forms/csv-import/CSVImportErrorMessage.vue';
+import { useThemeStore } from '@/store/themeStore';
 
 const props = defineProps({
   error: { type: String },
   importTemplateUrl: { type: String },
-  importTemplateName: { type: String, default: "Import Template.csv" },
+  importTemplateName: { type: String, default: 'Import Template.csv' },
 });
 
 const themeStore = useThemeStore();
@@ -127,15 +128,15 @@ const themeStore = useThemeStore();
 const fileInput = ref(null);
 
 const uploadedFile = ref(null);
-const errorMessage = ref("");
+const errorMessage = ref('');
 
 const hasImportFile = computed(() => uploadedFile.value !== null);
 
 const hasErrorMessage = computed(() => {
-  return errorMessage.value !== "";
+  return errorMessage.value !== '';
 });
 
-const emit = defineEmits(["update:modelValue", "fileRemoved", "fileAdded"]);
+const emit = defineEmits(['update:modelValue', 'fileRemoved', 'fileAdded']);
 
 const hasFileBeingDragged = ref(false);
 
@@ -149,18 +150,18 @@ function onDragLeave(e) {
 
 function onFileInputChanged(e) {
   let file = processFiles(e.target.files);
-  emit("update:modelValue", file);
+  emit('update:modelValue', file);
 }
 
 function onFileDrop(e) {
   let file = processFiles(e.dataTransfer.files);
-  emit("update:modelValue", file);
+  emit('update:modelValue', file);
 }
 
 function processFiles(files) {
   hasFileBeingDragged.value = false;
   uploadedFile.value = null;
-  errorMessage.value = "";
+  errorMessage.value = '';
 
   if (!isValidFile(files)) {
     return null;
@@ -174,25 +175,25 @@ function processFiles(files) {
     type: file.type,
   };
 
-  emit("fileAdded");
+  emit('fileAdded');
   return file ?? null;
 }
 
 function isValidFile(files) {
   if (files.length !== 1) {
-    errorMessage.value = "You cannot upload multiple files.";
+    errorMessage.value = 'You cannot upload multiple files.';
     return false;
   }
 
   let file = files[0];
 
-  if (file.type !== "text/csv") {
+  if (file.type !== 'text/csv') {
     errorMessage.value =
-      "Invalid file format given. Only *.csv files are allowed.";
+      'Invalid file format given. Only *.csv files are allowed.';
     return false;
   }
   if (file.size > 2 * 1024 * 1024) {
-    errorMessage.value = "File size too large. File size must be 2MB or below.";
+    errorMessage.value = 'File size too large. File size must be 2MB or below.';
     return false;
   }
 
@@ -203,7 +204,7 @@ function preventDefaults(e) {
   e.preventDefault();
 }
 
-const events = ["dragenter", "dragover", "dragleave", "drop"];
+const events = ['dragenter', 'dragover', 'dragleave', 'drop'];
 
 onMounted(() => {
   events.forEach((eventName) => {
@@ -220,13 +221,13 @@ onUnmounted(() => {
 function handleFileRemoved() {
   fileInput.value.value = null;
   uploadedFile.value = null;
-  emit("update:modelValue", null);
-  emit("fileRemoved");
+  emit('update:modelValue', null);
+  emit('fileRemoved');
 }
 
 function resetField() {
   uploadedFile.value = null;
-  errorMessage.value = "";
+  errorMessage.value = '';
 }
 
 defineExpose({

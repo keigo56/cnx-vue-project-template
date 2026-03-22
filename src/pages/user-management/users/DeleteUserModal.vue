@@ -1,49 +1,51 @@
 <template>
-  <AlertDialog v-model:open="isOpen">
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Remove User</AlertDialogTitle>
-        <AlertDialogDescription>
+  <Dialog v-model:open="isOpen">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Remove User</DialogTitle>
+        <DialogDescription>
           Are you sure you want to remove this user?
-        </AlertDialogDescription>
-      </AlertDialogHeader>
+        </DialogDescription>
+      </DialogHeader>
       <Form
+        id="delete_user_form"
         :data="formData"
         url="/api/users/delete"
         method="DELETE"
-        id="delete_user_form"
         @on-success="successHandler"
         @on-form-validation-error="formValidationErrorHandler"
-      >
-      </Form>
-      <AlertDialogFooter>
-        <AlertDialogCancel @click="closeModal()">Cancel</AlertDialogCancel>
-        <AlertDialogAction
+      />
+      <DialogFooter>
+        <Button
+          variant="ghost"
+          @click="closeModal()"
+        >
+          Cancel
+        </Button>
+        <Button
           form="delete_user_form"
           type="submit"
-          variant="destructive"
         >
           Remove
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>
 
 <script setup>
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { ref } from "vue";
-import Form from "@/components/forms/Form.vue";
-import { toast } from "vue-sonner";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import Button from '@/components/ui/button/Button.vue';
+import { ref } from 'vue';
+import Form from '@/components/forms/Form.vue';
+import { toast } from 'vue-sonner';
 
 const isOpen = ref(false);
 
@@ -55,7 +57,7 @@ defineExpose({
   setData,
 });
 
-const emit = defineEmits(["success"]);
+const emit = defineEmits(['success']);
 
 function openModal() {
   isOpen.value = true;
@@ -71,19 +73,19 @@ function resetForm() {
 }
 
 function successHandler() {
-  toast.success("Success", {
-    description: "Removed User successfully",
+  toast.success('Success', {
+    description: 'Removed User successfully',
   });
 
   closeModal();
-  emit("success");
+  emit('success');
   resetForm();
 }
 
 function formValidationErrorHandler(errorResponse) {
   console.error(errorResponse);
 
-  toast.error("Something went wrong!", {
+  toast.error('Something went wrong!', {
     description: errorResponse.errors.email[0],
   });
 

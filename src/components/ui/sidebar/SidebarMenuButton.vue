@@ -52,7 +52,10 @@ const delegatedProps = computed(() => {
       <template v-if="typeof tooltip === 'string'">
         {{ tooltip }}
       </template>
-      <component :is="tooltip" v-else />
+      <component
+        :is="tooltip"
+        v-else
+      />
     </TooltipContent>
   </Tooltip>
 </template>

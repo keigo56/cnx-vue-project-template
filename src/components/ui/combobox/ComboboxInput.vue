@@ -1,8 +1,8 @@
 <script setup>
-import { cn } from "@/lib/utils";
-import { SearchIcon } from "lucide-vue-next";
-import { ComboboxInput, useForwardPropsEmits } from "reka-ui";
-import { computed } from "vue";
+import { cn } from '@/lib/utils';
+import { SearchIcon } from 'lucide-vue-next';
+import { ComboboxInput, useForwardPropsEmits } from 'reka-ui';
+import { computed } from 'vue';
 
 defineOptions({
   inheritAttrs: false,
@@ -19,7 +19,7 @@ const props = defineProps({
   loading: { type: Boolean, required: false, default: false },
 });
 
-const emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(['update:modelValue']);
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props;

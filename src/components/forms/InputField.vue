@@ -2,18 +2,19 @@
   <div>
     <div class="flex flex-col-reverse gap-y-2">
       <Input
+        :id="props.id"
         :type="props.type"
         :model-value="props.modelValue"
-        @update:model-value="($event) => emit('update:modelValue', $event)"
         :disabled="props.disabled"
         :placeholder="props.placeholder"
-        :id="props.id"
         :variant="hasError ? 'error' : 'default'"
+        @update:model-value="($event) => emit('update:modelValue', $event)"
       />
       <Label
         v-show="showLabel"
         :for="props.id"
         :variant="hasError ? 'error' : 'default'"
+        :class="disabled ? 'cursor-not-allowed opacity-50' : ''"
       >
         {{ props.label }}
       </Label>
@@ -28,14 +29,14 @@
 </template>
 
 <script setup>
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { computed } from "vue";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { computed } from 'vue';
 
 const props = defineProps({
   type: {
     type: String,
-    default: "text",
+    default: 'text',
     required: true,
   },
   id: {
@@ -48,15 +49,15 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "Form Label",
-    required: true,
+    default: 'Form Label',
   },
   placeholder: {
     type: String,
-    default: "",
+    default: '',
   },
   modelValue: {
     type: [String, Number],
+    required: true,
   },
   disabled: {
     type: Boolean,
@@ -68,7 +69,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const hasError = computed(() => {
   if (Array.isArray(props.error)) {
@@ -79,8 +80,8 @@ const hasError = computed(() => {
 
 const errorMessage = computed(() => {
   if (Array.isArray(props.error)) {
-    return props.error[0] || "";
+    return props.error[0] || '';
   }
-  return props.error || "";
+  return props.error || '';
 });
 </script>

@@ -5,6 +5,7 @@
         v-model="selectedItem"
         by="label"
         :disabled="disabled"
+        @update:open="handleUpdateOpen"
       >
         <ComboboxAnchor as-child>
           <ComboboxTrigger
@@ -73,9 +74,9 @@
   </div>
 </template>
 <script setup>
-import { ref, watch, onMounted } from "vue";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { ref, watch, onMounted } from 'vue';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   Combobox,
   ComboboxAnchor,
@@ -86,10 +87,10 @@ import {
   ComboboxItemIndicator,
   ComboboxList,
   ComboboxTrigger,
-} from "@/components/ui/combobox";
-import { Check, ChevronsUpDown, Search } from "lucide-vue-next";
-import { computed } from "vue";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/combobox';
+import { Check, ChevronsUpDown, Search } from 'lucide-vue-next';
+import { computed } from 'vue';
+import { Label } from '@/components/ui/label';
 
 const props = defineProps({
   id: {
@@ -102,15 +103,15 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "Form Label",
-    required: true,
+    default: 'Form Label',
   },
   modelValue: {
     type: [String, Number, Object],
+    required: true,
   },
   placeholder: {
     type: String,
-    default: "Select item...",
+    default: 'Select item...',
   },
   showLabel: {
     type: Boolean,
@@ -134,7 +135,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:modelValue", "search"]);
+const emit = defineEmits(['update:modelValue', 'search', 'selected']);
 
 const selectedItem = ref();
 
@@ -142,6 +143,13 @@ onMounted(() => {
   selectedItem.value =
     props.items.find((item) => item.value === props.modelValue) || undefined;
 });
+
+function handleUpdateOpen(isOpen) {
+  if (!isOpen) {
+    return;
+  }
+  emit('selected');
+}
 
 watch(
   () => props.modelValue,
@@ -169,7 +177,7 @@ watch(selectedItem, (newVal) => {
   if (!newVal) {
     return;
   }
-  emit("update:modelValue", newVal.value);
+  emit('update:modelValue', newVal.value);
 });
 
 const hasError = computed(() => {
@@ -181,9 +189,9 @@ const hasError = computed(() => {
 
 const errorMessage = computed(() => {
   if (Array.isArray(props.error)) {
-    return props.error[0] || "";
+    return props.error[0] || '';
   }
-  return props.error || "";
+  return props.error || '';
 });
 
 let searchTimeout = null;
@@ -194,7 +202,7 @@ const handleSearch = (event) => {
   }
 
   searchTimeout = setTimeout(() => {
-    emit("search", event.target.value);
+    emit('search', event.target.value);
   }, props.debounceMs);
 };
 </script>

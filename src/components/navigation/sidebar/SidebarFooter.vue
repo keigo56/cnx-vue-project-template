@@ -50,8 +50,7 @@
               <Switch
                 v-model="isDarkMode"
                 @click.stop
-              >
-              </Switch>
+              />
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
@@ -68,8 +67,8 @@
   </SidebarMenu>
 </template>
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { onMounted, ref, watch } from 'vue';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,18 +77,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { Switch } from "@/components/ui/switch";
-import { useThemeStore } from "@/store/themeStore";
-import { ChevronsUpDown, LogOut } from "lucide-vue-next";
-import { useLogoutDialogStore } from "@/store/logoutDialogStore";
-import { useAuthStore } from "@/store/authStore";
+} from '@/components/ui/sidebar';
+import { Switch } from '@/components/ui/switch';
+import { useThemeStore } from '@/store/themeStore';
+import { ChevronsUpDown, LogOut } from 'lucide-vue-next';
+import { useLogoutDialogStore } from '@/store/logoutDialogStore';
+import { useAuthStore } from '@/store/authStore';
 
 const { isMobile } = useSidebar();
 
@@ -101,11 +100,11 @@ const themeStore = useThemeStore();
 const isDarkMode = ref(false);
 
 watch(isDarkMode, () => {
-  const theme = isDarkMode.value === true ? "dark" : "light";
+  const theme = isDarkMode.value === true ? 'dark' : 'light';
   themeStore.setTheme(theme);
 });
 onMounted(() => {
-  isDarkMode.value = themeStore.theme === "dark";
+  isDarkMode.value = themeStore.theme === 'dark';
 });
 
 const logoutDialogStore = useLogoutDialogStore();

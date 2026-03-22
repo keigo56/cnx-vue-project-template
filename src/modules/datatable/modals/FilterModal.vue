@@ -1,14 +1,17 @@
 <template>
-  <BaseModal :title="title" :is-open="isOpen">
+  <BaseModal
+    :title="title"
+    :is-open="isOpen"
+  >
     <div class="mt-2">
       <p>To Follow</p>
     </div>
 
     <div class="mt-4">
       <button
-        @click="closeModal()"
         type="button"
         class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        @click="closeModal()"
       >
         Close
       </button>
@@ -22,12 +25,12 @@ import {
   ListboxButton,
   ListboxOptions,
   ListboxOption,
-} from "@headlessui/vue";
-import BaseModal from "@/components/overlays/BaseModal.vue";
-import { ref } from "vue";
+} from '@headlessui/vue';
+import BaseModal from '@/components/overlays/BaseModal.vue';
+import { ref } from 'vue';
 
 const isOpen = ref(false);
-const title = ref("Filter Modal");
+const title = ref('Filter Modal');
 const columns = ref([]);
 
 /*

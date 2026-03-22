@@ -1,4 +1,4 @@
-import middlewareList from "@/middleware/index.js";
+import middlewareList from '@/middleware/index.js';
 
 export default class MiddlewareResolver {
   constructor(to, from) {
@@ -19,10 +19,10 @@ export default class MiddlewareResolver {
 
   async resolve() {
     for (const entry of this.middlewares) {
-      if (typeof entry !== "string")
+      if (typeof entry !== 'string')
         throw new Error(`Invalid middleware entry: ${entry}`);
 
-      let [middlewareName, arg] = entry.split(":");
+      let [middlewareName, arg] = entry.split(':');
 
       if (!(middlewareName in middlewareList))
         throw new Error(`Middleware "${middlewareName}" not found`);
@@ -31,12 +31,12 @@ export default class MiddlewareResolver {
       const result = await middlewareFn({ to: this.to, from: this.from }, arg);
 
       // If the result is an object, exit the loop and return the result
-      if (result && typeof result === "object" && !Array.isArray(result)) {
+      if (result && typeof result === 'object' && !Array.isArray(result)) {
         return result; // redirect object
       }
 
       // If the result is a boolean
-      if (typeof result === "boolean") {
+      if (typeof result === 'boolean') {
         if (!result) return false; // false means to stop the navigation
         continue; // true means to continue to the next middleware
       }

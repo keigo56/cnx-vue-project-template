@@ -1,17 +1,17 @@
 export const authRoutes = [
   // SSO Authentication
   {
-    path: "/login",
-    component: () => import("@/pages/auth/SSOLoginPage.vue"),
+    path: '/login',
+    component: () => import('@/pages/auth/SSOLoginPage.vue'),
     meta: {
-      middleware: ["guest"],
+      middleware: ['guest'],
     },
   },
   {
-    path: "/auth/validate",
-    component: () => import("@/pages/auth/SSOCallbackPage.vue"),
+    path: '/auth/validate',
+    component: () => import('@/pages/auth/SSOCallbackPage.vue'),
     meta: {
-      middleware: ["guest"],
+      middleware: ['guest'],
     },
   },
   //User Basic Authentication with OTP (placeholder for future implementation)

@@ -6,19 +6,19 @@
         <DialogDescription> Add a new user to the system. </DialogDescription>
       </DialogHeader>
       <Form
+        id="add_user_form"
         :data="formData"
         url="/api/users/store"
         method="POST"
-        id="add_user_form"
+        class="space-y-4 mb-2"
         @on-success="successHandler"
         @on-form-validation-error="formValidationErrorHandler"
-        class="space-y-4 mb-2"
       >
         <div class="space-y-4">
           <ComboBoxField
-            placeholder="Select Email"
             id="user_email"
             v-model="formData.email"
+            placeholder="Select Email"
             label="Email"
             :error="formValidationErrors.email"
             :items="employees"
@@ -27,10 +27,10 @@
           />
 
           <SelectField
-            placeholder="Select Role"
-            :items="roles"
             id="role_id"
             v-model="formData.role_id"
+            placeholder="Select Role"
+            :items="roles"
             label="Role"
             :error="formValidationErrors.role_id"
           />
@@ -63,14 +63,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
-import { onMounted, ref } from "vue";
-import Form from "@/components/forms/Form.vue";
-import { api } from "@/api/api.js";
-import SelectField from "@/components/forms/SelectField.vue";
-import ComboBoxField from "@/components/forms/ComboBoxField.vue";
-import { toast } from "vue-sonner";
-import Button from "@/components/ui/button/Button.vue";
+} from '@/components/ui/dialog';
+import { ref } from 'vue';
+import Form from '@/components/forms/Form.vue';
+import { api } from '@/api/api.js';
+import SelectField from '@/components/forms/SelectField.vue';
+import ComboBoxField from '@/components/forms/ComboBoxField.vue';
+import { toast } from 'vue-sonner';
+import Button from '@/components/ui/button/Button.vue';
 
 const isOpen = ref(false);
 const formData = ref({});
@@ -79,20 +79,15 @@ const roles = ref([]);
 const formValidationErrors = ref({});
 const isSearching = ref(false);
 
-onMounted(() => {
-  getAllRoles();
-  searchEmployees("");
-});
-
 defineExpose({
   openModal,
   closeModal,
 });
 
-const emit = defineEmits(["success"]);
+const emit = defineEmits(['success']);
 
 function getAllRoles() {
-  api.get("/api/users/roles").then((response) => {
+  api.get('/api/users/roles').then((response) => {
     roles.value = response.data.roles.map((item) => {
       return { value: item.id, label: item.name };
     });
@@ -102,7 +97,7 @@ function getAllRoles() {
 async function searchEmployees(query) {
   isSearching.value = true;
   try {
-    const response = await api.get("/api/users/employee/search", {
+    const response = await api.get('/api/users/employee/search', {
       params: { query },
     });
     employees.value = response.data.result;
@@ -113,6 +108,9 @@ async function searchEmployees(query) {
 
 function openModal() {
   isOpen.value = true;
+  getAllRoles();
+  getAllSites();
+  searchEmployees('');
 }
 
 function closeModal() {
@@ -126,12 +124,12 @@ function resetForm() {
 }
 
 function successHandler() {
-  toast.success("Success", {
-    description: "Added User successfully",
+  toast.success('Success', {
+    description: 'Added User successfully',
   });
 
   closeModal();
-  emit("success");
+  emit('success');
   resetForm();
 }
 

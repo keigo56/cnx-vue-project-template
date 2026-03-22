@@ -1,10 +1,10 @@
 <template>
   <div class="fixed right-10 top-10">
     <button
-      @click="isDarkMode = false"
       v-show="isDarkMode"
       type="button"
       class="py-3 px-3 focus:outline-none rounded-full hover:bg-gray-100 hover:text-blue-700 focus:z-10 dark:bg-dark-900 dark:hover:bg-dark-100"
+      @click="isDarkMode = false"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -23,10 +23,10 @@
     </button>
 
     <button
-      @click="isDarkMode = true"
       v-show="!isDarkMode"
       type="button"
       class="py-3 px-3 focus:outline-none rounded-full hover:bg-gray-100 hover:text-blue-700 focus:z-10 dark:bg-dark-900 dark:hover:bg-dark-100"
+      @click="isDarkMode = true"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@
       <div class="mt-4 flex flex-col items-center">
         <p class="dark:text-gray-500 text-sm">Version 1.0.0</p>
         <p class="dark:text-gray-500 text-sm">
-          Copyright 2023 Business Analytics
+          Copyright 2023 Innovation PH Build Team
         </p>
         <p class="dark:text-gray-500 text-sm">All Rights Reserved.</p>
       </div>
@@ -95,9 +95,9 @@
 </template>
 
 <script setup>
-import { useThemeStore } from "@/store/themeStore.js";
-import logo from "@/assets/logo.svg";
-import { onMounted, ref, watch } from "vue";
+import { useThemeStore } from '@/store/themeStore.js';
+import logo from '@/assets/logo.svg';
+import { onMounted, ref, watch } from 'vue';
 
 const SSO_LOGIN_URL = import.meta.env.VITE_SSO_LOGIN_URL;
 const themeStore = useThemeStore();
@@ -105,10 +105,10 @@ const themeStore = useThemeStore();
 const isDarkMode = ref(false);
 
 watch(isDarkMode, () => {
-  const theme = isDarkMode.value === true ? "dark" : "light";
+  const theme = isDarkMode.value === true ? 'dark' : 'light';
   themeStore.setTheme(theme);
 });
 onMounted(() => {
-  isDarkMode.value = themeStore.theme === "dark";
+  isDarkMode.value = themeStore.theme === 'dark';
 });
 </script>

@@ -8,7 +8,10 @@ const props = defineProps({
 </script>
 
 <template>
-  <DrawerTrigger data-slot="drawer-trigger" v-bind="props">
+  <DrawerTrigger
+    data-slot="drawer-trigger"
+    v-bind="props"
+  >
     <slot />
   </DrawerTrigger>
 </template>

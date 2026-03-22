@@ -21,7 +21,9 @@ const delegatedProps = computed(() => {
   <ComboboxGroup
     data-slot="combobox-group"
     v-bind="delegatedProps"
-    :class="cn('overflow-hidden p-1 text-foreground', props.class)"
+    :class="
+      cn('overflow-x-hidden overflow-y-auto p-1 text-foreground', props.class)
+    "
   >
     <ComboboxLabel
       v-if="heading"

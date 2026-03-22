@@ -1,31 +1,30 @@
 <template>
   <div class="w-full font-inter">
     <div class="flex items-center justify-between mb-3">
-      <div
-        class="relative flex items-center"
-        v-show="withSearch"
-      >
-        <div class="absolute left-2.5 pointer-events-none">
-          <div
-            class="w-4 h-4 mr-2 loader"
-            v-show="isSearching"
-          ></div>
-          <MagnifyingGlassIcon
-            v-show="!isSearching"
-            class="w-4 h-4 text-neutral-700 dark:text-neutral-400"
-          />
-        </div>
+      <div>
+        <template v-if="withSearch">
+          <div class="relative flex items-center">
+            <div class="absolute left-2.5 pointer-events-none">
+              <div
+                v-show="isSearching"
+                class="w-4 h-4 mr-2 loader"
+              ></div>
+              <MagnifyingGlassIcon
+                v-show="!isSearching"
+                class="w-4 h-4 text-neutral-700 dark:text-neutral-400"
+              />
+            </div>
 
-        <input
-          :disabled="isInitialLoad"
-          v-model="searchTerm"
-          type="text"
-          id="search_term"
-          class="pl-8 text-sm rounded-lg h-11 border-1 w-96 bg-neutral-50 dark:bg-background border-input placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          :class="[isInitialLoad && 'cursor-not-allowed']"
-          placeholder="Search..."
-        />
-        <!-- <button
+            <input
+              id="search_term"
+              v-model="searchTerm"
+              :disabled="isInitialLoad"
+              type="text"
+              class="pl-8 text-sm rounded-lg h-11 border-1 w-96 bg-neutral-50 dark:bg-background border-input placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              :class="[isInitialLoad && 'cursor-not-allowed']"
+              placeholder="Search..."
+            />
+            <!-- <button
           @click="openFilterModal()"
           type="button"
           class="py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-800 dark:hover:text-white dark:hover:bg-neutral-700"
@@ -33,18 +32,21 @@
           <FunnelIcon class="inline w-4 h-4 mr-2" />
           <span>Filter</span>
         </button> -->
+          </div>
+        </template>
       </div>
+
       <!--
           Action Items
       -->
       <div class="flex items-center space-x-2 justify-evenly">
         <slot name="actionItems"></slot>
         <Button
-          :disabled="isInitialLoad || exportLoading"
           v-if="props.canExport"
-          @click="exportItems()"
+          :disabled="isInitialLoad || exportLoading"
           type="button"
-          variant="secondary"
+          :variant="props.exportButtonVariant"
+          @click="exportItems()"
         >
           <div class="flex items-center justify-center">
             <ArrowDownTrayIcon
@@ -52,8 +54,8 @@
               class="inline w-4 h-4 mr-2"
             />
             <div
-              class="w-4 h-4 mr-2 loader"
               v-show="exportLoading"
+              class="w-4 h-4 mr-2 loader"
             ></div>
             <!-- <ArrowPathIcon class="inline w-4 h-4 mr-2 animate-spin" /> -->
             <span>Export</span>
@@ -111,20 +113,20 @@
           <TableHead
             ref="tableHeading"
             :columns="visibleColumns"
-            @sort-column="sortColumn"
-            @select-all-changed="selectAllChanged"
             :multi-select="props.multiSelect"
             :with-action-items="props.withActionItems"
             :action-item-position="props.actionItemPosition"
             :show-loading="props.showLoading"
+            @sort-column="sortColumn"
+            @select-all-changed="selectAllChanged"
           />
           <tbody>
             <TableRow
-              class="bg-gray-100 dark:bg-neutral-900"
               v-if="
                 !!datatableData.rows.data &&
                 datatableData.rows.data.length === 0
               "
+              class="bg-gray-100 dark:bg-neutral-900"
             >
               <TableData
                 class="py-5 text-center"
@@ -137,48 +139,54 @@
                 No record found
               </TableData>
             </TableRow>
-            <TableRow
+            <template
               v-if="
                 visibleColumns.length === 0 &&
                 isLoading === true &&
                 showLoading === true
               "
-              v-for="row in 10"
-              class="bg-white border-b dark:bg-neutral-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
             >
-              <TableData
-                v-for="column in 5"
-                class="px-6 py-2.5 whitespace-nowrap"
+              <TableRow
+                v-for="row in 10"
+                :key="row"
+                class="bg-white border-b dark:bg-neutral-900 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-900"
               >
-                <div class="relative w-full h-full">
-                  <span>
-                    <span class="opacity-0">Loading...</span>
-                    <div
-                      class="absolute top-0 left-0 flex items-center w-full py-1.5"
-                      :class="[
-                        showLoading === true && isLoading === true
-                          ? 'opacity-100'
-                          : 'opacity-0',
-                      ]"
-                    >
-                      <div class="w-full animate-pulse">
-                        <div
-                          class="w-full h-2 rounded-full bg-neutral-200 dark:bg-neutral-800"
-                        ></div>
+                <TableData
+                  v-for="column in 5"
+                  :key="column"
+                  class="px-6 py-2.5 whitespace-nowrap"
+                >
+                  <div class="relative w-full h-full">
+                    <span>
+                      <span class="opacity-0">Loading...</span>
+                      <div
+                        class="absolute top-0 left-0 flex items-center w-full py-1.5"
+                        :class="[
+                          showLoading === true && isLoading === true
+                            ? 'opacity-100'
+                            : 'opacity-0',
+                        ]"
+                      >
+                        <div class="w-full animate-pulse">
+                          <div
+                            class="w-full h-2 rounded-full bg-neutral-200 dark:bg-neutral-800"
+                          ></div>
+                        </div>
                       </div>
-                    </div>
-                  </span>
-                </div>
-              </TableData>
-            </TableRow>
+                    </span>
+                  </div>
+                </TableData>
+              </TableRow>
+            </template>
+
             <TableRow
-              v-for="(row, index) in datatableData.rows.data"
+              v-for="row in datatableData.rows.data"
               :key="row['id']"
               class="bg-white border-b dark:bg-background dark:border-neutral-800 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50"
             >
               <TableData
-                class="w-4 px-4 py-3"
                 v-if="props.multiSelect"
+                class="w-4 px-4 py-3"
               >
                 <div class="flex items-center">
                   <input
@@ -191,8 +199,8 @@
               </TableData>
               <TableData
                 v-show="props.actionItemPosition === 'start'"
-                class="px-6 py-2.5 flex items-center space-x-3"
                 v-if="props.withActionItems"
+                class="px-6 py-2.5 flex items-center space-x-3"
               >
                 <div class="relative w-full h-full">
                   <div
@@ -275,8 +283,8 @@
 
               <TableData
                 v-show="props.actionItemPosition === 'end'"
-                class="px-6 py-2.5 flex items-center space-x-3"
                 v-if="props.withActionItems"
+                class="px-6 py-2.5 flex items-center space-x-3"
               >
                 <div class="relative w-full h-full">
                   <div
@@ -310,8 +318,8 @@
         </table>
       </div>
       <Pagination
-        @change-page="changePage"
         :rows="datatableData.rows"
+        @change-page="changePage"
       />
     </Card>
   </div>
@@ -323,28 +331,31 @@ import {
   TableCellsIcon,
   InformationCircleIcon,
   ArrowDownTrayIcon,
-} from "@heroicons/vue/24/outline";
-import Button from "@/components/ui/button/Button.vue";
-import { MagnifyingGlassIcon } from "@heroicons/vue/24/solid";
-import Card from "@/modules/datatable/components/Card.vue";
-import Pagination from "@/modules/datatable/components/Pagination.vue";
-import { computed, onMounted, ref, watch, provide } from "vue";
-import { api } from "@/api/api.js";
-import { useFilter } from "./composables/useFilter.js";
-import TableHead from "@/modules/datatable/components/TableHead.vue";
-import TableRow from "@/modules/datatable/components/TableRow.vue";
-import TableData from "@/modules/datatable/components/TableData.vue";
-import { watchDebounced } from "@vueuse/core";
-import FilterModal from "@/modules/datatable/modals/FilterModal.vue";
+} from '@heroicons/vue/24/outline';
+import Button from '@/components/ui/button/Button.vue';
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
+import Card from '@/modules/datatable/components/Card.vue';
+import Pagination from '@/modules/datatable/components/Pagination.vue';
+import { computed, onMounted, ref, watch, provide } from 'vue';
+import { api } from '@/api/api.js';
+import { useFilter } from './composables/useFilter.js';
+import TableHead from '@/modules/datatable/components/TableHead.vue';
+import TableRow from '@/modules/datatable/components/TableRow.vue';
+import TableData from '@/modules/datatable/components/TableData.vue';
+import { watchDebounced } from '@vueuse/core';
+import FilterModal from '@/modules/datatable/modals/FilterModal.vue';
 
 const props = defineProps({
-  sourceUrl: String,
+  sourceUrl: {
+    type: String,
+    required: true,
+  },
   exportUrl: {
-    default: "/",
+    default: '/',
     type: String,
   },
   exportFileName: {
-    default: "file.csv",
+    default: 'file.csv',
     type: String,
   },
   multiSelect: {
@@ -359,9 +370,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  exportButtonVariant: {
+    type: String,
+    default: 'outline',
+  },
   actionItemPosition: {
     type: String,
-    default: "end",
+    default: 'end',
   },
   withSearch: {
     type: Boolean,
@@ -377,11 +392,11 @@ const props = defineProps({
   },
   size: {
     type: String,
-    default: "default",
+    default: 'default',
   },
 });
 
-const emit = defineEmits(["exportError"]);
+const emit = defineEmits(['exportError']);
 
 const provideAllProps = () => {
   let propsConvertedToArray = Object.entries(props);
@@ -399,11 +414,11 @@ const datatableData = ref({
 const currentPage = ref(1);
 
 const columnForSorting = ref({
-  key: "",
-  direction: "",
+  key: '',
+  direction: '',
 });
 
-const searchTerm = ref("");
+const searchTerm = ref('');
 
 const filterModal = ref(null);
 
@@ -412,7 +427,7 @@ const tableHeading = ref(null);
 const selectedItems = ref([]);
 
 const hasError = ref(false);
-const errorMessage = ref("Something went wrong. Unable to load data.");
+const errorMessage = ref('Something went wrong. Unable to load data.');
 
 const visibleColumns = computed(() => {
   return datatableData.value.columns.filter((item) => item.visible === true);
@@ -443,7 +458,7 @@ watch(
 watch(selectedItems, () => {
   for (let i = 0; i < datatableData.value.rows.data.length; i++) {
     let isInArray = selectedItems.value.includes(
-      datatableData.value.rows.data[i]["id"],
+      datatableData.value.rows.data[i]['id'],
     );
     if (!isInArray) {
       tableHeading.value.unselectAll();
@@ -465,18 +480,18 @@ watchDebounced(
 );
 
 function fetchData() {
-  errorMessage.value = "Something went wrong. Unable to load data.";
+  errorMessage.value = 'Something went wrong. Unable to load data.';
   hasError.value = false;
   isLoading.value = true;
   api
     .post(
       props.sourceUrl,
       {
-        ...(columnForSorting.value.key !== "" && {
+        ...(columnForSorting.value.key !== '' && {
           sort_by: columnForSorting.value.key,
           sort_direction: columnForSorting.value.direction,
         }),
-        ...(searchTerm.value !== "" && { search: searchTerm.value }),
+        ...(searchTerm.value !== '' && { search: searchTerm.value }),
         ...(filters.value.length !== 0 && { filters: filters.value }),
       },
       {
@@ -486,7 +501,7 @@ function fetchData() {
       },
     )
     .then((response) => {
-      if (response.data.hasOwnProperty("datatable")) {
+      if (response.data.hasOwnProperty('datatable')) {
         datatableData.value = response.data.datatable;
       } else {
         console.log(
@@ -496,6 +511,9 @@ function fetchData() {
     })
     .catch((error) => {
       hasError.value = true;
+      errorMessage.value =
+        error?.response?.data?.message ??
+        'Something went wrong. Unable to load data.';
       datatableData.value.rows.data = [];
     })
     .then(() => {
@@ -511,14 +529,14 @@ function changePage(pageNumber) {
 function selectAllChanged(isSelectAllChecked) {
   if (isSelectAllChecked) {
     datatableData.value.rows.data.forEach((item) => {
-      selectedItems.value.push(item["id"]);
+      selectedItems.value.push(item['id']);
     });
     return;
   }
 
   //Remove IDS in the selected items
   datatableData.value.rows.data.forEach((item) => {
-    selectedItems.value = selectedItems.value.filter((e) => e !== item["id"]);
+    selectedItems.value = selectedItems.value.filter((e) => e !== item['id']);
   });
 }
 
@@ -535,25 +553,25 @@ function exportItems() {
     .post(
       props.exportUrl,
       {
-        ...(columnForSorting.value.key !== "" && {
+        ...(columnForSorting.value.key !== '' && {
           sort_by: columnForSorting.value.key,
           sort_direction: columnForSorting.value.direction,
         }),
-        ...(searchTerm.value !== "" && { search: searchTerm.value }),
+        ...(searchTerm.value !== '' && { search: searchTerm.value }),
         ...(filters.value.length !== 0 && { filters: filters.value }),
       },
       {
-        responseType: "blob",
+        responseType: 'blob',
         timeout: 60000,
       },
     )
     .then((response) => {
       console.log(response);
       let fileURL = window.URL.createObjectURL(new Blob([response.data]));
-      let fileLink = document.createElement("a");
+      let fileLink = document.createElement('a');
 
       fileLink.href = fileURL;
-      fileLink.setAttribute("download", props.exportFileName);
+      fileLink.setAttribute('download', props.exportFileName);
       document.body.appendChild(fileLink);
 
       fileLink.click();
@@ -561,7 +579,7 @@ function exportItems() {
     })
     .catch(async (error) => {
       console.error(error);
-      errorMessage.value = "Unable to export data. Something went wrong.";
+      errorMessage.value = 'Unable to export data. Something went wrong.';
       hasError.value = true;
 
       // Check if the error response is a blob
@@ -571,20 +589,20 @@ function exportItems() {
           // Attempt to parse JSON error message
           const errorJson = JSON.parse(errorText);
           errorMessage.value =
-            errorJson.message || "Unable to export data. Something went wrong.";
+            errorJson.message || 'Unable to export data. Something went wrong.';
 
-          emit("exportError", errorJson);
+          emit('exportError', errorJson);
           return;
         } catch {
           // Fallback if JSON parsing fails
           errorMessage.value =
-            errorText || "Unable to export data. Something went wrong.";
+            errorText || 'Unable to export data. Something went wrong.';
         }
       } else {
-        errorMessage.value = "Unable to export data. Something went wrong.";
+        errorMessage.value = 'Unable to export data. Something went wrong.';
       }
 
-      emit("exportError", error);
+      emit('exportError', error);
     })
     .then(() => {
       exportLoading.value = false;
@@ -602,8 +620,8 @@ function getDatatableColumns() {
 
 const isLoading = ref(false);
 const isSearching = ref(false);
-provide("is-loading", isLoading);
-provide("is-searching", isSearching);
+provide('is-loading', isLoading);
+provide('is-searching', isSearching);
 provideAllProps();
 
 const { filters, addFilter, setFilters } = useFilter();

@@ -1,15 +1,15 @@
-import { api, removeInterceptors, setupInterceptors } from "@/api/api";
-import { toast } from "vue-sonner";
-import { useAuthStore } from "@/store/authStore";
-import router from "@/router/router.js";
+import { api, removeInterceptors, setupInterceptors } from '@/api/api';
+import { toast } from 'vue-sonner';
+import { useAuthStore } from '@/store/authStore';
+import router from '@/router/router.js';
 
 class AuthService {
   constructor() {
     this.ENDPOINTS = {
-      VALIDATE_TOKEN: "/auth/token/validate",
-      LOGOUT: "/auth/logout",
-      USER: "/api/user",
-      CSRF: "sanctum/csrf-cookie",
+      VALIDATE_TOKEN: '/auth/token/validate',
+      LOGOUT: '/auth/logout',
+      USER: '/api/user',
+      CSRF: 'sanctum/csrf-cookie',
     };
   }
 
@@ -17,7 +17,7 @@ class AuthService {
     try {
       await this.fetchUser();
     } catch (error) {
-      console.error("Authentication initialization error:", error);
+      console.error('Authentication initialization error:', error);
     }
   }
 
@@ -30,7 +30,7 @@ class AuthService {
       return data;
     } catch (error) {
       if (!(error.response?.status === 401)) {
-        console.error("User fetch error:", error);
+        console.error('User fetch error:', error);
         const authStore = useAuthStore();
         authStore.error = error;
       }
@@ -40,8 +40,8 @@ class AuthService {
   }
 
   async validateToken(token) {
-    if (!token || typeof token !== "string") {
-      console.error("Invalid token provided");
+    if (!token || typeof token !== 'string') {
+      console.error('Invalid token provided');
       return;
     }
 
@@ -53,13 +53,13 @@ class AuthService {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            Accept: "application/json",
+            Accept: 'application/json',
           },
         },
       );
       return await this.fetchUser();
     } catch (error) {
-      console.error("Token validation error:", error);
+      console.error('Token validation error:', error);
     }
   }
 
@@ -67,7 +67,7 @@ class AuthService {
     try {
       await api.delete(this.ENDPOINTS.LOGOUT);
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error('Logout error:', error);
     } finally {
       await this.clearAuthState();
     }
@@ -76,7 +76,7 @@ class AuthService {
   async clearAuthState() {
     const authStore = useAuthStore();
     authStore.reset();
-    router.push({ path: "/login" });
+    router.push({ path: '/login' });
   }
 }
 

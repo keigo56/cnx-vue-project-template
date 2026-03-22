@@ -1,5 +1,5 @@
 <script setup>
-import { Toaster as Sonner } from "vue-sonner";
+import { Toaster as Sonner } from 'vue-sonner';
 
 const props = defineProps({
   invert: { type: Boolean, required: false },
