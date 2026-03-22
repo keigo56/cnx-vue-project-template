@@ -177,7 +177,6 @@ import Form from '@/components/forms/Form.vue';
 import InputField from '@/components/forms/InputField.vue';
 import { api } from '@/api/api.js';
 import Button from '@/components/ui/button/Button.vue';
-import RolePermissionSelector from './RolePermissionSelector.vue';
 
 const isOpen = ref(false);
 

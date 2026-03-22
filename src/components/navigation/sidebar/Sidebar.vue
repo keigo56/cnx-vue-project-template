@@ -79,27 +79,27 @@ const data = {
           icon: UserPen,
           isActive: route.path.includes('/user-management'),
           isVisible:
-            hasPermission('view_users') ||
-            hasPermission('view_roles') ||
-            hasPermission('view_permissions'),
+            hasPermission('users_view') ||
+            hasPermission('roles_view') ||
+            hasPermission('permissions_view'),
           items: [
             {
               title: 'Users',
               url: '/user-management/users',
               isActive: route.path.includes('/user-management/users'),
-              isVisible: hasPermission('view_users'),
+              isVisible: hasPermission('users_view'),
             },
             {
               title: 'Roles',
               url: '/user-management/roles',
               isActive: route.path.includes('/user-management/roles'),
-              isVisible: hasPermission('view_roles'),
+              isVisible: hasPermission('roles_view'),
             },
             {
               title: 'Permissions',
               url: '/user-management/permissions',
               isActive: route.path.includes('/user-management/permissions'),
-              isVisible: hasPermission('view_permissions'),
+              isVisible: hasPermission('permissions_view'),
             },
           ],
         },
@@ -108,13 +108,13 @@ const data = {
           url: '#',
           icon: Shield,
           isActive: route.path.includes('/audit-trail'),
-          isVisible: hasPermission('view_logs'),
+          isVisible: hasPermission('logs_view'),
           items: [
             {
               title: 'Logs',
               url: '/audit-trail/logs',
               isActive: route.path.includes('/audit-trail/logs'),
-              isVisible: hasPermission('view_logs'),
+              isVisible: hasPermission('logs_view'),
             },
           ],
         },
