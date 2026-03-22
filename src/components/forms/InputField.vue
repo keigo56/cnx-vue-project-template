@@ -14,6 +14,7 @@
         v-show="showLabel"
         :for="props.id"
         :variant="hasError ? 'error' : 'default'"
+        :class="disabled ? 'cursor-not-allowed opacity-50' : ''"
       >
         {{ props.label }}
       </Label>
@@ -36,6 +37,7 @@ const props = defineProps({
   type: {
     type: String,
     default: 'text',
+    required: true,
   },
   id: {
     type: String,

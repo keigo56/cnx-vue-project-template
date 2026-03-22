@@ -1,18 +1,16 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
-    Users
-  </h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Users</h1>
 
   <DataTable
     ref="usersDatatable"
     source-url="/api/datatable/users"
-    :can-export="hasPermission('export_users')"
+    :can-export="hasPermission('users_export')"
     export-url="/api/datatable/users/export"
     export-file-name="users.csv"
   >
     <template #actionItems>
       <Button
-        v-if="hasPermission('add_users')"
+        v-if="hasPermission('users_add')"
         @click="addUserModal.openModal()"
       >
         <Plus class="w-5 h-5" />
@@ -22,7 +20,7 @@
 
     <template #rowActionItems="props">
       <a
-        v-if="hasPermission('edit_users')"
+        v-if="hasPermission('users_edit')"
         href="#"
         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
         @click="editRow(props.row)"
@@ -30,7 +28,7 @@
         Edit
       </a>
       <a
-        v-if="hasPermission('delete_users')"
+        v-if="hasPermission('users_delete')"
         href="#"
         class="font-medium text-red-600 dark:text-red-500 hover:underline"
         @click="deleteRow(props.row)"

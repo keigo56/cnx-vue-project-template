@@ -5,6 +5,7 @@
         v-model="selectedItem"
         by="label"
         :disabled="disabled"
+        @update:open="handleUpdateOpen"
       >
         <ComboboxAnchor as-child>
           <ComboboxTrigger
@@ -134,7 +135,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:modelValue', 'search']);
+const emit = defineEmits(['update:modelValue', 'search', 'selected']);
 
 const selectedItem = ref();
 
@@ -142,6 +143,13 @@ onMounted(() => {
   selectedItem.value =
     props.items.find((item) => item.value === props.modelValue) || undefined;
 });
+
+function handleUpdateOpen(isOpen) {
+  if (!isOpen) {
+    return;
+  }
+  emit('selected');
+}
 
 watch(
   () => props.modelValue,

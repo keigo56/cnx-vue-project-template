@@ -43,7 +43,7 @@
                 size="sm"
                 @click="changeSelection()"
               >
-                {{ allPermissionSelected ? "Unselect All" : "Select All" }}
+                {{ allPermissionSelected ? 'Unselect All' : 'Select All' }}
               </Button>
             </div>
 
@@ -74,7 +74,7 @@
               {{
                 !!formValidationErrors?.permissions
                   ? formValidationErrors.permissions[0]
-                  : ""
+                  : ''
               }}
             </p>
           </div>

@@ -3,7 +3,6 @@ import RolesIndexPage from '@/pages/user-management/roles/RolesIndexPage.vue';
 import PermissionsIndexPage from '@/pages/user-management/permissions/PermissionsIndexPage.vue';
 import LogsIndexPage from '@/pages/audit-trail/logs/LogsIndexPage.vue';
 import IndexPage from '@/pages/IndexPage.vue';
-
 export const appRoutes = [
   {
     path: '/',
@@ -21,7 +20,7 @@ export const appRoutes = [
         path: 'user-management/users',
         component: UsersIndexPage,
         meta: {
-          middleware: ['auth', 'can:view_users'],
+          middleware: ['auth', 'can:users_view'],
           breadcrumb: ['User Management', 'Users'],
         },
       },
@@ -29,7 +28,7 @@ export const appRoutes = [
         path: 'user-management/roles',
         component: RolesIndexPage,
         meta: {
-          middleware: ['auth', 'can:view_roles'],
+          middleware: ['auth', 'can:roles_view'],
           breadcrumb: ['User Management', 'Roles'],
         },
       },
@@ -37,7 +36,7 @@ export const appRoutes = [
         path: 'user-management/permissions',
         component: PermissionsIndexPage,
         meta: {
-          middleware: ['auth', 'can:view_permissions'],
+          middleware: ['auth', 'can:permissions_view'],
           breadcrumb: ['User Management', 'Permissions'],
         },
       },
@@ -45,7 +44,7 @@ export const appRoutes = [
         path: 'audit-trail/logs',
         component: LogsIndexPage,
         meta: {
-          middleware: ['auth', 'can:view_logs'],
+          middleware: ['auth', 'can:audit_trail_logs_export'],
           breadcrumb: ['Audit Trail', 'Logs'],
         },
       },

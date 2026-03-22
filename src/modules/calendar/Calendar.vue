@@ -4,20 +4,20 @@
     <div>
       <div class="flex items-center justify-start space-x-4">
         <SelectField
-          id="site"
-          v-model="searchParams.site"
           searchable
           class="w-64 text-left"
           placeholder="Select Site"
+          id="site"
+          v-model="searchParams.site"
           :items="sites"
           :show-label="false"
         />
         <SelectField
-          id="room-name"
-          v-model="searchParams.roomName"
           searchable
           class="w-64 text-left"
           placeholder="Select Room Name"
+          id="room-name"
+          v-model="searchParams.roomName"
           :items="roomNames"
           :show-label="false"
         />
@@ -48,8 +48,8 @@
           >
             <template #dp-input="{ value }">
               <button
-                id="week-range-input"
                 type="button"
+                id="week-range-input"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-1 block w-full p-2.5 dark:bg-dark-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
               >
                 <div class="flex items-center justify-between">
@@ -78,8 +78,8 @@
       </div>
     </div>
     <div
-      v-show="!loading"
       class="relative rounded overflow-hidden"
+      v-show="!loading"
     >
       <!-- Header -->
       <div
@@ -91,8 +91,6 @@
         <div class="flex-grow">
           <div class="grid grid-cols-7">
             <div
-              v-for="(day, index) in days"
-              :key="day.day"
               class="h-20 py-4 px-4 border-t border-b-2 border-gray-300 dark:border-dark-100"
               :class="[
                 day.isToday
@@ -100,6 +98,8 @@
                   : '',
                 index !== days.length - 1 ? 'border-r' : '',
               ]"
+              v-for="(day, index) in days"
+              :key="day.day"
             >
               <div
                 :class="[
@@ -108,9 +108,7 @@
                     : 'text-gray-800 dark:text-gray-400',
                 ]"
               >
-                <p class="text-xl font-semibold">
-                  {{ day.day }}
-                </p>
+                <p class="text-xl font-semibold">{{ day.day }}</p>
                 <p
                   class="text-xs"
                   :class="[day.isToday && 'font-semibold']"
@@ -131,13 +129,13 @@
       >
         <div class="w-16 flex-shrink-0">
           <div
-            v-for="(timeSlot, timeSlotIndex) in timeSlots"
-            :key="timeSlot.label"
             class="border-gray-300 border-l border-r dark:border-neutral-800"
             :class="[timeSlotIndex === timeSlots.length - 1 && 'border-b']"
             :style="{
               height: calendarStore.rowHeightInRems + 'rem',
             }"
+            v-for="(timeSlot, timeSlotIndex) in timeSlots"
+            :key="timeSlot.label"
           >
             <p class="text-center text-xs dark:text-gray-300">
               {{ timeSlot.label }}
@@ -147,17 +145,17 @@
         <div class="relative flex-grow">
           <div class="grid grid-cols-7">
             <div
+              class="border-r border-gray-300 dark:border-neutral-800"
               v-for="day in days"
               :key="day.day"
-              class="border-r border-gray-300 dark:border-neutral-800"
             >
               <div
-                v-for="timeSlot in timeSlots"
-                :key="timeSlot.timeValue"
                 class="border-b border-gray-300 dark:border-neutral-800"
                 :style="{
                   height: calendarStore.rowHeightInRems + 'rem',
                 }"
+                v-for="timeSlot in timeSlots"
+                :key="timeSlot.timeValue"
               ></div>
             </div>
           </div>
@@ -169,20 +167,17 @@
               :key="day.dateValue"
             >
               <div
-                v-for="timeSlot in timeSlots"
-                :key="timeSlot.label"
                 :style="{
                   height: calendarStore.rowHeightInRems + 'rem',
                 }"
+                v-for="timeSlot in timeSlots"
+                :key="timeSlot.label"
               >
-                <div
-                  v-for="schedule in schedules"
-                  :key="schedule"
-                >
+                <div v-for="schedule in schedules">
                   <ScheduleCard
                     v-if="
                       day.dateValue === schedule.date &&
-                        timeSlot.timeValue === schedule.time.start
+                      timeSlot.timeValue === schedule.time.start
                     "
                     :schedule="schedule"
                   />
@@ -195,8 +190,8 @@
     </div>
 
     <div
-      v-show="loading"
       class="relative rounded overflow-hidden"
+      v-show="loading"
     >
       <!-- Header -->
       <div
@@ -208,10 +203,10 @@
         <div class="flex-grow">
           <div class="grid grid-cols-7">
             <div
-              v-for="index in 7"
-              :key="index"
               class="h-20 py-4 px-4 border-t border-b-2 border-gray-300 dark:border-dark-100"
               :class="[index !== 6 ? 'border-r' : '']"
+              v-for="index in 7"
+              :key="index"
             >
               <div class="text-gray-800 dark:text-gray-400">
                 <div
@@ -219,12 +214,8 @@
                     searchParams.site !== '' && searchParams.roomName !== ''
                   "
                 >
-                  <p class="text-xl font-semibold">
-                    ...
-                  </p>
-                  <p class="text-xs">
-                    ...
-                  </p>
+                  <p class="text-xl font-semibold">...</p>
+                  <p class="text-xs">...</p>
                 </div>
 
                 <div
@@ -249,13 +240,13 @@
       >
         <div class="w-16 flex-shrink-0">
           <div
-            v-for="(timeSlot, timeSlotIndex) in timeSlots"
-            :key="timeSlot.label"
             class="border-gray-300 border-l border-r dark:border-neutral-800"
             :class="[timeSlotIndex === timeSlots.length - 1 && 'border-b']"
             :style="{
               height: calendarStore.rowHeightInRems + 'rem',
             }"
+            v-for="(timeSlot, timeSlotIndex) in timeSlots"
+            :key="timeSlot.label"
           >
             <p class="text-center text-xs dark:text-gray-300">
               {{ timeSlot.label }}
@@ -268,14 +259,12 @@
           >
             <span
               v-show="searchParams.site !== '' && searchParams.roomName !== ''"
+              >Please wait. Loading schedules...</span
             >
-              Please wait. Loading schedules...
-            </span>
             <span
               v-show="searchParams.site === '' || searchParams.roomName === ''"
+              >Please select site and room</span
             >
-              Please select site and room
-            </span>
           </h1>
         </div>
       </div>
@@ -283,7 +272,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { api } from '@/api/api';
 import { ref, watch, onMounted, reactive } from 'vue';
 import { ScheduleData } from '@/modules/calendar/types/ScheduleData';
@@ -293,6 +282,13 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { useThemeStore } from '@/store/themeStore';
 import SelectField from '@/components/forms/SelectField.vue';
+
+interface Day {
+  day: string;
+  dateValue: string;
+  dayOfTheWeek: string;
+  isToday: boolean;
+}
 
 onMounted(() => {
   setDefaultDate();
@@ -410,9 +406,9 @@ const timeSlots = ref([
   },
 ]);
 
-const days = ref([]);
+const days = ref<Day[]>([]);
 
-const schedules = ref([
+const schedules = ref<ScheduleData[]>([
   {
     date: '2024-03-08',
     time: {

@@ -21,18 +21,14 @@
       <div class="flex flex-col items-center">
         <div class="mb-8 flex flex-col items-center">
           <img
-            class="size-18"
-            src="/vite.svg"
+            class="size-30"
+            src="/logo.png"
             alt=""
           />
         </div>
         <div class="text-sm text-center mb-5">
-          <h1 class="text-2xl text-foreground font-semibold mb-1">
-            Welcome back
-          </h1>
-          <p class="text-sm text-foreground/50">
-            Login to your account
-          </p>
+          <h1 class="text-2xl text-foreground font-semibold mb-1">CNXQ</h1>
+          <p class="text-sm text-foreground/50">Login to your account</p>
         </div>
         <Button
           as="a"
@@ -44,15 +40,10 @@
         </Button>
 
         <div class="mt-4 flex flex-col items-center text-foreground/50">
-          <p class="text-xs">
-            Version 1.0.0
-          </p>
-          <p class="text-xs">
-            Copyright 2025 Concentrix
-          </p>
-          <p class="text-xs">
-            All Rights Reserved
-          </p>
+          <p class="text-xs">Version 1.0.0</p>
+          <p class="text-xs">Copyright 2025 Concentrix</p>
+          <p class="text-xs">Innovation PH Build Team</p>
+          <p class="text-xs">All Rights Reserved</p>
         </div>
       </div>
     </Card>

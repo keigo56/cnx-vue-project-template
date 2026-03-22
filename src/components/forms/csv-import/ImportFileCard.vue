@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-16 relative cursor-pointer border border-green-700/60 dark:border-green-700/60 bg-neutral-50 bg-green-900/10 dark:bg-green-900/5 hover:bg-green-900/15 dark:hover:bg-green-900/10 rounded-md mt-4 px-3 py-3"
+    class="h-16 relative cursor-pointer border border-green-700/60 dark:border-green-700/60 bg-green-900/10 dark:bg-green-900/5 hover:bg-green-900/15 dark:hover:bg-green-900/10 rounded-md mt-4 px-3 py-3"
   >
     <div class="absolute right-2 top-2">
       <Button

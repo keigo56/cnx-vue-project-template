@@ -1,11 +1,9 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
-    Permissions
-  </h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Permissions</h1>
 
   <DataTable
     source-url="/api/datatable/permissions"
-    :can-export="hasPermission('export_permissions')"
+    :can-export="hasPermission('permissions_export')"
     export-url="/api/datatable/permissions/export"
     export-file-name="permissions.csv"
     :with-action-items="false"

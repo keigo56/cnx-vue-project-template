@@ -1,11 +1,9 @@
 <template>
   <SidebarProvider :default-open="defaultOpen">
     <AppSidebar />
-    <SidebarInset>
+    <SidebarInset class="overflow-x-hidden">
       <Navbar />
-      <main class="overflow-auto max-h-screen pb-20">
-        <router-view />
-      </main>
+      <router-view />
     </SidebarInset>
   </SidebarProvider>
 </template>

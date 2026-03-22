@@ -25,8 +25,8 @@ import CSVImportField from '@/components/forms/csv-import/CSVImportField.vue';
 import Form from '@/components/forms/Form.vue';
 
 const props = defineProps({
-  url: { type: String, required: true },
-  importTemplateUrl: { type: String, required: true },
+  url: { type: String },
+  importTemplateUrl: { type: String },
   importTemplateName: { type: String, default: 'Import Template.csv' },
 });
 

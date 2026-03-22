@@ -54,7 +54,7 @@
           <Button
             type="button"
             :variant="themeStore.isDarkMode ? 'secondary' : 'default'"
-            class="mt-4"
+            class="mt-4 px-3 py-1.5"
             size="xs"
             @click="fileInput.click()"
           >
@@ -118,8 +118,8 @@ import CSVImportErrorMessage from '@/components/forms/csv-import/CSVImportErrorM
 import { useThemeStore } from '@/store/themeStore';
 
 const props = defineProps({
-  error: { type: String, required: true },
-  importTemplateUrl: { type: String, required: true },
+  error: { type: String },
+  importTemplateUrl: { type: String },
   importTemplateName: { type: String, default: 'Import Template.csv' },
 });
 

@@ -42,11 +42,11 @@ const props = defineProps({
   },
   label: {
     type: String,
-    required: true,
+    default: 'Form Label',
   },
   modelValue: {
     type: [String, Number],
-    default: '',
+    required: true,
   },
 });
 

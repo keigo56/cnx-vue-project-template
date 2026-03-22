@@ -1,18 +1,16 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
-    Roles
-  </h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Roles</h1>
 
   <DataTable
     ref="rolesDatatable"
     source-url="/api/datatable/roles"
-    :can-export="hasPermission('export_roles')"
+    :can-export="hasPermission('roles_export')"
     export-url="/api/datatable/roles/export"
     export-file-name="roles.csv"
   >
     <template #actionItems>
       <Button
-        v-if="hasPermission('add_roles')"
+        v-if="hasPermission('roles_add')"
         @click="addRoleModal.openModal()"
       >
         <Plus class="w-5 h-5" />
@@ -22,7 +20,7 @@
 
     <template #rowActionItems="props">
       <a
-        v-if="hasPermission('edit_roles')"
+        v-if="hasPermission('roles_edit')"
         href="#"
         class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
         @click="editRow(props.row)"
@@ -30,7 +28,7 @@
         Edit
       </a>
       <a
-        v-if="hasPermission('delete_roles')"
+        v-if="hasPermission('roles_delete')"
         href="#"
         class="font-medium text-red-600 dark:text-red-500 hover:underline"
         @click="deleteRow(props.row)"

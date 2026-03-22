@@ -28,11 +28,12 @@
       </TableHeading>
 
       <!-- ACTUAL COLUMN HEADERS -->
+
       <template
         v-if="
           props.columns.length === 0 &&
-            isLoading === true &&
-            showLoading === true
+          isLoading === true &&
+          showLoading === true
         "
       >
         <TableHeading
@@ -49,7 +50,6 @@
           </div>
         </TableHeading>
       </template>
-
       <TableHeading
         v-for="column in props.columns"
         :key="column.key"
@@ -66,7 +66,7 @@
           <ArrowUpIcon
             v-if="
               selectedColumn.key === column.key &&
-                selectedColumn.direction === 'asc'
+              selectedColumn.direction === 'asc'
             "
             :class="['w-4 h-4']"
           />
@@ -74,7 +74,7 @@
           <ArrowDownIcon
             v-if="
               selectedColumn.key === column.key &&
-                selectedColumn.direction === 'desc'
+              selectedColumn.direction === 'desc'
             "
             :class="['w-4 h-4']"
           />
@@ -104,7 +104,7 @@ const selectPage = ref(false);
 const props = defineProps({
   columns: {
     type: Array,
-    default: () => [],
+    required: true,
   },
 });
 

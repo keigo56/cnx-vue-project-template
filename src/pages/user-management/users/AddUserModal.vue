@@ -64,7 +64,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import Form from '@/components/forms/Form.vue';
 import { api } from '@/api/api.js';
 import SelectField from '@/components/forms/SelectField.vue';
@@ -78,11 +78,6 @@ const employees = ref([]);
 const roles = ref([]);
 const formValidationErrors = ref({});
 const isSearching = ref(false);
-
-onMounted(() => {
-  getAllRoles();
-  searchEmployees('');
-});
 
 defineExpose({
   openModal,
@@ -113,6 +108,9 @@ async function searchEmployees(query) {
 
 function openModal() {
   isOpen.value = true;
+  getAllRoles();
+  getAllSites();
+  searchEmployees('');
 }
 
 function closeModal() {

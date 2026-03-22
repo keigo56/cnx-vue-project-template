@@ -1,7 +1,5 @@
 <template>
-  <h1 class="mb-5 text-2xl font-semibold dark:text-white">
-    Logs
-  </h1>
+  <h1 class="mb-5 text-2xl font-semibold dark:text-white">Logs</h1>
 
   <DataTable
     ref="logsDatatable"
@@ -9,7 +7,7 @@
     export-url="/api/datatable/audit-trail/logs/export"
     export-file-name="logs.csv"
     :with-action-items="false"
-    :can-export="hasPermission('export_logs')"
+    :can-export="hasPermission('audit_trail_logs_export')"
   />
 </template>
 

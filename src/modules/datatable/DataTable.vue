@@ -1,31 +1,30 @@
 <template>
   <div class="w-full font-inter">
     <div class="flex items-center justify-between mb-3">
-      <div
-        v-show="withSearch"
-        class="relative flex items-center"
-      >
-        <div class="absolute left-2.5 pointer-events-none">
-          <div
-            v-show="isSearching"
-            class="w-4 h-4 mr-2 loader"
-          ></div>
-          <MagnifyingGlassIcon
-            v-show="!isSearching"
-            class="w-4 h-4 text-neutral-700 dark:text-neutral-400"
-          />
-        </div>
+      <div>
+        <template v-if="withSearch">
+          <div class="relative flex items-center">
+            <div class="absolute left-2.5 pointer-events-none">
+              <div
+                v-show="isSearching"
+                class="w-4 h-4 mr-2 loader"
+              ></div>
+              <MagnifyingGlassIcon
+                v-show="!isSearching"
+                class="w-4 h-4 text-neutral-700 dark:text-neutral-400"
+              />
+            </div>
 
-        <input
-          id="search_term"
-          v-model="searchTerm"
-          :disabled="isInitialLoad"
-          type="text"
-          class="pl-8 text-sm rounded-lg h-11 border-1 w-96 bg-neutral-50 dark:bg-background border-input placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          :class="[isInitialLoad && 'cursor-not-allowed']"
-          placeholder="Search..."
-        />
-        <!-- <button
+            <input
+              id="search_term"
+              v-model="searchTerm"
+              :disabled="isInitialLoad"
+              type="text"
+              class="pl-8 text-sm rounded-lg h-11 border-1 w-96 bg-neutral-50 dark:bg-background border-input placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              :class="[isInitialLoad && 'cursor-not-allowed']"
+              placeholder="Search..."
+            />
+            <!-- <button
           @click="openFilterModal()"
           type="button"
           class="py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-neutral-900 dark:text-gray-400 dark:border-neutral-800 dark:hover:text-white dark:hover:bg-neutral-700"
@@ -33,7 +32,10 @@
           <FunnelIcon class="inline w-4 h-4 mr-2" />
           <span>Filter</span>
         </button> -->
+          </div>
+        </template>
       </div>
+
       <!--
           Action Items
       -->
@@ -43,7 +45,7 @@
           v-if="props.canExport"
           :disabled="isInitialLoad || exportLoading"
           type="button"
-          variant="secondary"
+          :variant="props.exportButtonVariant"
           @click="exportItems()"
         >
           <div class="flex items-center justify-center">
@@ -88,9 +90,9 @@
         <div
           v-show="
             isInitialLoad === true &&
-              !props.autoFetch &&
-              props.showLoading === true &&
-              !isLoading
+            !props.autoFetch &&
+            props.showLoading === true &&
+            !isLoading
           "
           class="w-full h-[700px] flex justify-center items-center"
         >
@@ -122,7 +124,7 @@
             <TableRow
               v-if="
                 !!datatableData.rows.data &&
-                  datatableData.rows.data.length === 0
+                datatableData.rows.data.length === 0
               "
               class="bg-gray-100 dark:bg-neutral-900"
             >
@@ -130,8 +132,8 @@
                 class="py-5 text-center"
                 :colspan="
                   datatableData.columns.length +
-                    (props.multiSelect ? 1 : 0) +
-                    (props.withActionItems ? 1 : 0)
+                  (props.multiSelect ? 1 : 0) +
+                  (props.withActionItems ? 1 : 0)
                 "
               >
                 No record found
@@ -140,8 +142,8 @@
             <template
               v-if="
                 visibleColumns.length === 0 &&
-                  isLoading === true &&
-                  showLoading === true
+                isLoading === true &&
+                showLoading === true
               "
             >
               <TableRow
@@ -176,6 +178,7 @@
                 </TableData>
               </TableRow>
             </template>
+
             <TableRow
               v-for="row in datatableData.rows.data"
               :key="row['id']"
@@ -203,7 +206,7 @@
                   <div
                     v-if="
                       showLoading === false ||
-                        (showLoading === true && isLoading === false)
+                      (showLoading === true && isLoading === false)
                     "
                   >
                     <slot
@@ -241,7 +244,7 @@
                     class="text-gray-800 dark:text-gray-200"
                     :class="[
                       showLoading === false ||
-                        (showLoading === true && isLoading === false)
+                      (showLoading === true && isLoading === false)
                         ? 'opacity-100'
                         : 'opacity-0',
                     ]"
@@ -287,7 +290,7 @@
                   <div
                     :class="[
                       showLoading === false ||
-                        (showLoading === true && isLoading === false)
+                      (showLoading === true && isLoading === false)
                         ? 'opacity-100'
                         : 'opacity-0',
                     ]"
@@ -366,6 +369,10 @@ const props = defineProps({
   canExport: {
     type: Boolean,
     default: false,
+  },
+  exportButtonVariant: {
+    type: String,
+    default: 'outline',
   },
   actionItemPosition: {
     type: String,
@@ -504,6 +511,9 @@ function fetchData() {
     })
     .catch((error) => {
       hasError.value = true;
+      errorMessage.value =
+        error?.response?.data?.message ??
+        'Something went wrong. Unable to load data.';
       datatableData.value.rows.data = [];
     })
     .then(() => {

@@ -37,7 +37,13 @@
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger as-child>
-                  <SidebarMenuButton :tooltip="item.title">
+                  <SidebarMenuButton
+                    :tooltip="item.title"
+                    :is-active="
+                      (item.isActive && open && item.title === 'Home') ||
+                      (item.isActive && !open)
+                    "
+                  >
                     <component
                       :is="item.icon"
                       v-if="item.icon"
@@ -93,6 +99,9 @@ import {
   SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import { ChevronRight } from 'lucide-vue-next';
+import { useSidebar } from '@/components/ui/sidebar/utils.js';
+
+const { open } = useSidebar();
 
 defineProps({
   content: {

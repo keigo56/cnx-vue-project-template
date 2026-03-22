@@ -5,6 +5,7 @@
         :model-value="modelValue"
         :disabled="disabled"
         @update:model-value="$emit('update:modelValue', $event)"
+        @update:open="handleUpdateOpen"
       >
         <SelectTrigger
           :class="[
@@ -103,7 +104,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'selected']);
+
+function handleUpdateOpen(isOpen) {
+  if (!isOpen) {
+    return;
+  }
+  emit('selected');
+}
 
 const hasError = computed(() => {
   if (Array.isArray(props.error)) {

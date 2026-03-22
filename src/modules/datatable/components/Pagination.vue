@@ -67,29 +67,27 @@ import Button from '@/components/ui/button/Button.vue';
 const props = defineProps({
   rows: {
     type: Object,
-    default: () => {
-      return {
-        current_page: 1,
-        data: [],
-        first_page_url: '',
-        from: 1,
-        last_page: 1,
-        last_page_url: '',
-        links: [
-          {
-            url: '',
-            label: '1',
-            active: true,
-          },
-        ],
-        next_page_url: null,
-        path: '',
-        per_page: 15,
-        prev_page_url: null,
-        to: 4,
-        total: 4,
-      };
-    },
+    default: () => ({
+      current_page: 1,
+      data: [],
+      first_page_url: '',
+      from: 1,
+      last_page: 1,
+      last_page_url: '',
+      links: [
+        {
+          url: '',
+          label: '1',
+          active: true,
+        },
+      ],
+      next_page_url: null,
+      path: '',
+      per_page: 15,
+      prev_page_url: null,
+      to: 4,
+      total: 4,
+    }),
   },
 });
 

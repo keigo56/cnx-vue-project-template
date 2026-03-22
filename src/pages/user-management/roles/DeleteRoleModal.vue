@@ -1,46 +1,49 @@
 <template>
-  <AlertDialog v-model:open="isOpen">
-    <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Delete Role</AlertDialogTitle>
-        <AlertDialogDescription>
+  <Dialog v-model:open="isOpen">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Delete Role</DialogTitle>
+        <DialogDescription>
           Are you sure you want to delete this role?
-        </AlertDialogDescription>
-      </AlertDialogHeader>
+        </DialogDescription>
+      </DialogHeader>
       <Form
         id="delete_role_form"
         :data="formData"
         url="/api/datatable/roles/delete"
         method="DELETE"
         @on-success="successHandler"
+        @on-error="errorHandler"
       />
-      <AlertDialogFooter>
-        <AlertDialogCancel @click="closeModal()">
+      <DialogFooter>
+        <Button
+          variant="ghost"
+          @click="closeModal()"
+        >
           Cancel
-        </AlertDialogCancel>
-        <AlertDialogAction
+        </Button>
+        <Button
           form="delete_role_form"
           type="submit"
           variant="destructive"
         >
-          Delete
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
+          Remove
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>
 
 <script setup>
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import Button from '@/components/ui/button/Button.vue';
 import { ref } from 'vue';
 import Form from '@/components/forms/Form.vue';
 import { toast } from 'vue-sonner';
@@ -91,5 +94,18 @@ function successHandler() {
   closeModal();
   emit('success');
   resetForm();
+}
+
+function errorHandler(error) {
+  if (error.response.status === 403) {
+    toast.error('Unable to perform this action', {
+      description: error.response.data.message,
+    });
+    return;
+  }
+
+  toast.error('Something went wrong', {
+    description: error.response.data.message,
+  });
 }
 </script>

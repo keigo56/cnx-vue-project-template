@@ -66,7 +66,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import Form from '@/components/forms/Form.vue';
 import { api } from '@/api/api.js';
 import SelectField from '@/components/forms/SelectField.vue';
@@ -79,10 +79,6 @@ const formData = ref({});
 const roles = ref([]);
 const formValidationErrors = ref({});
 const employees = ref([]);
-
-onMounted(() => {
-  getAllRoles();
-});
 
 defineExpose({
   openModal,
@@ -102,6 +98,8 @@ function getAllRoles() {
 
 function openModal() {
   isOpen.value = true;
+  getAllRoles();
+  getAllSites();
 }
 
 function closeModal() {
