@@ -7,7 +7,7 @@
     export-url="/api/datatable/audit-trail/logs/export"
     export-file-name="logs.csv"
     :with-action-items="false"
-    :can-export="hasPermission('audit_trail_logs_export')"
+    :can-export="hasPermission('logs_export')"
   />
 </template>
 

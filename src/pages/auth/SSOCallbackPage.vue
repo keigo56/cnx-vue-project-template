@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center mb-10">
       <img
         class="w-24 h-24 mb-3"
-        src="/logo.png"
+        src="/vite.svg"
         alt=""
       />
       <p class="mb-1 text-xl font-semibold">Please wait for a moment</p>

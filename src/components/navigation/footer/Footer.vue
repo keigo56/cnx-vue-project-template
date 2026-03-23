@@ -1,8 +1,8 @@
 <template>
   <footer
-    class="rounded-lg shadow bg-gradient-to-br from-purple-400 to-blue-300 m-4 transition-all duration-1000 ease-in-out"
+    class="rounded-lg shadow bg-linear-to-br from-purple-400 to-blue-300 m-4 transition-all duration-1000 ease-in-out"
   >
-    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+    <div class="w-full max-w-7xl mx-auto p-4 md:py-8">
       <div class="sm:flex sm:items-center sm:justify-between">
         <img
           :src="cnxlogo"

@@ -22,7 +22,7 @@
         <div class="mb-8 flex flex-col items-center">
           <img
             class="size-30"
-            src="/logo.png"
+            src="/vite.svg"
             alt=""
           />
         </div>

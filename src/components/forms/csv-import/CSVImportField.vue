@@ -118,8 +118,8 @@ import CSVImportErrorMessage from '@/components/forms/csv-import/CSVImportErrorM
 import { useThemeStore } from '@/store/themeStore';
 
 const props = defineProps({
-  error: { type: String },
-  importTemplateUrl: { type: String },
+  error: { type: String, required: true },
+  importTemplateUrl: { type: String, required: true },
   importTemplateName: { type: String, default: 'Import Template.csv' },
 });
 

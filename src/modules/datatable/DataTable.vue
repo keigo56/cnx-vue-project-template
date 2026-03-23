@@ -20,7 +20,7 @@
               v-model="searchTerm"
               :disabled="isInitialLoad"
               type="text"
-              class="pl-8 text-sm rounded-lg h-11 border-1 w-96 bg-neutral-50 dark:bg-background border-input placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              class="pl-8 text-sm rounded-lg h-11 border w-96 bg-neutral-50 dark:bg-background border-input placeholder:text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:border-input focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               :class="[isInitialLoad && 'cursor-not-allowed']"
               placeholder="Search..."
             />

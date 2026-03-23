@@ -4,12 +4,15 @@ import globals from 'globals';
 import { globalIgnores } from 'eslint/config';
 
 export default [
-  globalIgnores(['src/components/ui/**/*']), // Ignore all files in src/components/ui (shadcn-vue)
+  globalIgnores(['src/components/ui/**/*', 'src/modules/calendar/**/*']), // Ignore all files in src/components/ui (shadcn-vue)
   eslintConfigPrettier,
   ...pluginVue.configs['flat/recommended'],
   {
     rules: {
       'vue/multi-word-component-names': 'off', // Allow single-word component names
+      'vue/multiline-html-element-content-newline': 'off',
+      'vue/singleline-html-element-content-newline': 'off',
+      'vue/html-indent': 'off',
       quotes: ['error', 'single', { avoidEscape: true }],
       'vue/html-self-closing': [
         'error',

@@ -44,7 +44,7 @@ export const appRoutes = [
         path: 'audit-trail/logs',
         component: LogsIndexPage,
         meta: {
-          middleware: ['auth', 'can:audit_trail_logs_export'],
+          middleware: ['auth', 'can:logs_view'],
           breadcrumb: ['Audit Trail', 'Logs'],
         },
       },
